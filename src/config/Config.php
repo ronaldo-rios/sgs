@@ -8,12 +8,13 @@ class Config
     {  
         try {
             $conn = new \PDO(
-                "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}",
-                $_ENV['DB_USER'],
-                $_ENV['DB_PASSWORD']
+                "mysql:host=" . getEnv('DB_HOST') . ";dbname=" . getEnv('DB_NAME'),
+                getEnv('DB_USER'),
+                getEnv('DB_PASSWORD')
             );
             return $conn;
-        } catch (\PDOException $e) 
+        } 
+        catch (\PDOException $e) 
         {
             echo "Erro: {$e->getMessage()}";
         }
