@@ -3,9 +3,14 @@
 require '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
+use src\config\Conexao;
+use src\models\Auth;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
+
+$auth = new Auth($pdo);
+$usuarioInfo = $auth::checkToken();
 
 ?>
 <!DOCTYPE html>

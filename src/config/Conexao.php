@@ -2,7 +2,7 @@
 
 namespace src\config;
 
-class Config 
+class Conexao 
 {
     public static function getDb() 
     {  

@@ -1,3 +1,15 @@
+<?php
+
+require '../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+use src\config\Conexao;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+?>
+
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -128,7 +140,7 @@
               </div>
              
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="LoginAction.php" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">Usuário</label>
                   <input
