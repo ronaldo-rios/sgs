@@ -6,6 +6,7 @@ use src\config\Config;
 use src\models\Usuario;
 use src\interfaces\UsuarioInterface;
 
+// Implementação do CRUD:
 class UsuarioDaoMySql implements UsuarioInterface
 {
     private $pdo;

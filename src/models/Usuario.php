@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace src\models;
-
+// É a classe com os atributos da Tabela do Banco
 class Usuario
 {
     private int $id;
