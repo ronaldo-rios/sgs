@@ -34,15 +34,15 @@ if ($nome && $permissao && $email && $senha){
         $usuario->setSenha($senha);
         $usuarioDao->inserirUsuario($usuario);
 
-        header('Location: /public/index.php');
+        header('Location:'.$_ENV['BASE_URL'].'/index.php');
         exit;
     } 
     else {
-        header('Location: /public/adm_principal.php');
+        header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
         exit;
 
     }
 } else {
-    header('Location: /public/adm_principal.php');
+    header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
     exit;
 }

@@ -1,14 +1,3 @@
-<?php
-
-require '../vendor/autoload.php';
-
-use Dotenv\Dotenv;
-use src\config\Conexao;
-
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-
-?>
 
 <!DOCTYPE html>
 

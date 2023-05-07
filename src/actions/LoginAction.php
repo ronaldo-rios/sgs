@@ -12,9 +12,9 @@ if($email && $senha){
 
     $auth = new Auth($pdo);
     if($auth->validateLogin($email, $senha)){
-        header("Location: index.php");
+        header("Location:".$_ENV['BASE_URL']."/index.php");
         exit;
     }
     
 }
-header("Location: public/login.php");
+header("Location:".$_ENV['BASE_URL']."/login.php");

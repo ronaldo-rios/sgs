@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace src\models;
 
+use PDO;
+
 class Usuario
 {
     private int $id;
@@ -93,6 +95,9 @@ class Usuario
 
     public function setPermissao(string $permissao):void
     {
+        if (!Permissao::validar($permissao)) {
+            throw new \Exception('Permissão inválida.');
+        }
         $this->permissao = $permissao;
     }
 

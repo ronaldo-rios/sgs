@@ -10,4 +10,4 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 if ($id) {
     $usuarioDao->deletarUsuario($id);  
 } 
-header('Location: /public/adm_principal.php');
+header('Location:' . $_ENV['BASE_URL'] .'/adm_principal.php');
