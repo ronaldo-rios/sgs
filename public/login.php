@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -128,7 +129,7 @@
               </div>
              
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="LoginAction.php" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">Usuário</label>
                   <input

@@ -2,7 +2,9 @@
 
 namespace src\config;
 
-class Config 
+session_start();
+
+class Conexao 
 {
     public static function getDb() 
     {  

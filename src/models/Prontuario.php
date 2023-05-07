@@ -164,7 +164,7 @@ class Prontuario
 
     public function getBronquite(): bool
     {
-        return $this->$bronquite;
+        return $this->bronquite;
     }
 
     public function setBronquite(bool $bronquite): void
