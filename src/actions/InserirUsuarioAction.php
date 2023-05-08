@@ -2,7 +2,7 @@
 
 namespace src\actions;
 
-use src\config\Conexao;
+require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;
 
@@ -15,14 +15,10 @@ $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($nome && $permissao && $email && $senha){
-
-    $pdo = Conexao::getDb();
+    
     $usuarioDao = new UsuarioDaoMySql($pdo);
 
-    if ($usuarioDao->findByEmail($email) === false 
-    && $usuarioDao->findByCpf($cpf) === false 
-    && $usuarioDao->findBySiap($siap) === false 
-    && $usuarioDao->findByCrm($crm) === false)
+    if ($usuarioDao->findByEmail($email))
     {
         $$usuario = new Usuario();
         $usuario->setNome($nome);
@@ -34,15 +30,15 @@ if ($nome && $permissao && $email && $senha){
         $usuario->setSenha($senha);
         $usuarioDao->inserirUsuario($usuario);
 
-        header('Location:'.$_ENV['BASE_URL'].'/index.php');
+        header('Location:'.$baseUrl);
         exit;
     } 
     else {
-        header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
+        header('Location:'.$baseUrl.'public/adm_principal.php');
         exit;
 
     }
 } else {
-    header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
+    header('Location:'.$baseUrl.'public/adm_principal.php');
     exit;
 }

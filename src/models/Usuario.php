@@ -1,10 +1,6 @@
 <?php 
 
-declare(strict_types=1);
-
 namespace src\models;
-
-use PDO;
 
 class Usuario
 {

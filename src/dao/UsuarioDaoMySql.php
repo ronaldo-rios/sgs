@@ -2,7 +2,6 @@
 
 namespace src\dao;
 
-use src\config\Conexao;
 use src\models\Usuario;
 use src\interfaces\UsuarioDaoInterface;
 
@@ -10,9 +9,9 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
 {
     private $pdo;
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        $this->pdo = Conexao::getDb();
+        $this->pdo = $pdo;
     }
     
     // Método auxiliar para gerar um objeto de Usuario existente no banco de dados a partir de um array:
@@ -53,54 +52,6 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         if(!empty($token)){
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE token = :token");
             $sql->bindValue(':token', $token);
-            $sql->execute();
-
-            if($sql->rowCount() > 0){
-                $dados = $sql->fetch(\PDO::FETCH_ASSOC);
-                $usuario = $this->gerarUsuario($dados);
-                return $usuario;
-            }
-        }
-    }
-
-    // procurar usuário por CPF:
-    public function findByCpf($cpf)
-    {
-        if(!empty($cpf)){
-            $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE cpf = :cpf");
-            $sql->bindValue(':cpf', $cpf);
-            $sql->execute();
-
-            if($sql->rowCount() > 0){
-                $dados = $sql->fetch(\PDO::FETCH_ASSOC);
-                $usuario = $this->gerarUsuario($dados);
-                return $usuario;
-            }
-        }
-    }
-
-    // procurar usuário por SIAP:
-    public function findBySiap($siap)
-    {
-        if(!empty($siap)){
-            $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE siap = :siap");
-            $sql->bindValue(':siap', $siap);
-            $sql->execute();
-
-            if($sql->rowCount() > 0){
-                $dados = $sql->fetch(\PDO::FETCH_ASSOC);
-                $usuario = $this->gerarUsuario($dados);
-                return $usuario;
-            }
-        }
-    }
-
-    // procurar usuário por CRM:
-    public function findByCrm($crm)
-    {
-        if(!empty($crm)){
-            $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE crm = :crm");
-            $sql->bindValue(':crm', $crm);
             $sql->execute();
 
             if($sql->rowCount() > 0){
