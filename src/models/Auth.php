@@ -40,7 +40,7 @@ class Auth
     {
         // verifica se existe usuário com o e-mail:
         $usuario = $this->usuarioDao->findByEmail($email);
-
+        
         if($usuario){
             // verifica se a senha está correta:
             if(password_verify($senha, $usuario->getSenha())){
@@ -49,6 +49,7 @@ class Auth
                 $_SESSION['token'] = $token;
                 $usuario->setToken($token);
                 $this->usuarioDao->atualizarUsuario($usuario);
+                return true;
             }
         }
         return false;

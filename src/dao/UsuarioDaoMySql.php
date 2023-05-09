@@ -44,6 +44,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
                 return $usuario;
             }
         }
+        return false;
     }
 
     // prourar usuário por token:
@@ -137,7 +138,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         $sql->bindValue(':crm', $u->getCrm());
         $sql->bindValue(':permissao', $u->getPermissao());
         $sql->bindValue(':email', $u->getEmail());
-        $sql->bindValue(':senha', password_hash($u->getSenha(), PASSWORD_BCRYPT));
+        $sql->bindValue(':senha', $u->getSenha());
         $sql->bindValue(':token', $u->getToken());
         $sql->bindValue(':id', $u->getId());
         $sql->execute();

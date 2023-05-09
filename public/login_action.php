@@ -1,11 +1,12 @@
 <?php
 
 // verificação e validação de dados:
-require '../../conexao.php';
+require '../conexao.php';
+
 use src\models\Auth;
 ini_set('display_errors', 1);
-exit;
 ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $senha = filter_input(INPUT_POST, 'senha');
@@ -15,9 +16,10 @@ if($email && $senha){
 
     $auth = new Auth($pdo, $baseUrl);
     if($auth->validateLogin($email, $senha)){
-        header("Location:". $baseUrl);
+        header("Location:".$baseUrl);
         exit;
     }
     
 }
-header("Location:".$baseUrl."public/login.php");
+$_SESSION['flash'] = 'E-mail e/ou senha incorreta!';
+header("Location:".$baseUrl."/public/login.php");
