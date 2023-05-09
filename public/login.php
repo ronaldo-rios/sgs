@@ -129,7 +129,7 @@
               </div>
              
 
-              <form id="formAuthentication" class="mb-3" action="<?=$baseUrl;?>../public/login_action.php" method="POST">
+              <form id="formAuthentication" class="mb-3" action="<?=$baseUrl;?>../src/actions/login_action.php" method="POST">
               <?php if(!empty($_SESSION['flash'])) : ?>
                 <?php 
                    echo $_SESSION['flash']

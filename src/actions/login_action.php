@@ -1,7 +1,7 @@
 <?php
 
 // verificação e validação de dados:
-require '../conexao.php';
+require '../../conexao.php';
 
 use src\models\Auth;
 ini_set('display_errors', 1);
