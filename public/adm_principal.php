@@ -6,12 +6,6 @@ use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\models\Auth;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-
-$pdo = Conexao::getDb();
-// $auth = Auth::checkToken();
-
 ?>
 
 <!DOCTYPE html>
@@ -484,18 +478,20 @@ $pdo = Conexao::getDb();
 <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
+
+     
         <div class="modal-header">
            <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
+<form action="<?=$baseUrl;?>../src/actions/inserir_usuario_action.php" id="cad" method="POST">
 
 <div class="row">
   <div class="col mb-3">
-  <form action="<?=$_ENV['BASE_URL']?>/src/actions/InserirUsuarioAction.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
     <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" name ="nome"class="form-control" placeholder="Nome" />
+    <input type="text" name ="nome" class="form-control" placeholder="Nome" required />
       </div>
 
 <div class="col mb-0">
@@ -519,19 +515,19 @@ $pdo = Conexao::getDb();
 <div class ="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">permissao</label>
-    <input type="text" name="permissao" class="form-control" placeholder="E-mail" />
+    <input type="text" name="permissao" class="form-control" placeholder="E-mail" required />
       </div>
 
 
 <div class="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="E-mail" />
+    <input type="text" name="email" class="form-control" placeholder="E-mail" required />
       </div>
 
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Senha</label>
-    <input type="text" name="senha" class="form-control" placeholder="Senha" />
+    <input type="text" name="senha" class="form-control" placeholder="Senha" required />
       </div>
         </div>
 
@@ -543,17 +539,18 @@ $pdo = Conexao::getDb();
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
   Salvar
-    </button>
-    </form>
+    </button> 
+   
+
         </div>
           </div>
             </div>
               </div>
             </div>
           </div>
-
+          </form>
 <div class="content-backdrop fade">
 
 </div>
@@ -594,3 +591,4 @@ $pdo = Conexao::getDb();
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+

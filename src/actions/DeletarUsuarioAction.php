@@ -1,13 +1,13 @@
 <?php
 
-use src\config\Conexao;
+require '../../conexao.php';
 use src\dao\UsuarioDaoMySql;
 
-$usuarioDao = new UsuarioDaoMySql(Conexao::getDb());
+$usuarioDao = new UsuarioDaoMySql($pdo);
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($id) {
     $usuarioDao->deletarUsuario($id);  
 } 
-header('Location:' . $_ENV['BASE_URL'] .'/adm_principal.php');
+header('Location:' . $baseUrl .'/adm_principal.php');

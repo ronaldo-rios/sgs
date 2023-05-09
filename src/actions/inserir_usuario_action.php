@@ -1,12 +1,13 @@
 <?php
 
 namespace src\actions;
-
-use src\config\Conexao;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;
-$pdo = Conexao::getDb();
 
+echo "Helooo";
 $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 $cpf = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS);
 $siap = filter_input(INPUT_POST, 'siap', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -16,11 +17,10 @@ $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($nome && $permissao && $email && $senha){
-
-    $pdo = Conexao::getDb();
+    
     $usuarioDao = new UsuarioDaoMySql($pdo);
 
-    if ($usuarioDao->findByEmail($email) === false)
+    if ($usuarioDao->findByEmail($email))
     {
         $$usuario = new Usuario();
         $usuario->setNome($nome);
@@ -32,15 +32,17 @@ if ($nome && $permissao && $email && $senha){
         $usuario->setSenha($senha);
         $usuarioDao->inserirUsuario($usuario);
 
-        header('Location:'.$_ENV['BASE_URL'].'/index.php');
+        header('Location:'.$baseUrl);
         exit;
     } 
     else {
-        header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
+        echo "Email já cadastrado";
+        header('Location:'.$baseUrl.'/public/adm_principal.php');
         exit;
 
     }
 } else {
-    header('Location:'.$_ENV['BASE_URL'].'/adm_principal.php');
+    echo "Dados não preenchidos";
+    header('Location:'.$baseUrl.'/public/adm_principal.php');
     exit;
 }

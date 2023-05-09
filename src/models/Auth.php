@@ -1,7 +1,5 @@
 <?php 
 
-declare(strict_types=1);
-
 namespace src\models;
 
 use src\dao\UsuarioDaoMySql;
@@ -10,36 +8,39 @@ class Auth
 {
     private $pdo;
     private $usuarioDao;
-    public function __construct(\PDO $pdo)
+    private $baseUrl;
+
+    public function __construct(\PDO $pdo, $baseUrl)
     {
         $this->pdo = $pdo;
+        $this->baseUrl = $baseUrl;
         $this->usuarioDao = new UsuarioDaoMySql($this->pdo);
     }
 
     // se o token da sessão pertence a algum usuário, retorna o usuário logado.
     // Senão, volta para o a página de login login:
-    public static function checkToken()
+    public function checkToken()
     {
         if(!empty($_SESSION['token'])) {
             $token = $_SESSION['token'];
             // cria nova instância e usa o método findByToken para procurar o usuário pelo token:
-            $usuario = self::$usuarioDao->findByToken($token);
+            $usuario = $this->usuarioDao->findByToken($token);
             if($usuario){
                 return $usuario;
             }
         }
         else {
             // Se não tiver token, volta para a página de login:
-            header('Location:'.$_ENV['BASE_URL'].'/login.php');
+            header('Location:'. $this->baseUrl .'/public/login.php');
             exit;
         }
     }
         
-    public static function validateLogin($email, $senha)
+    public function validateLogin($email, $senha)
     {
         // verifica se existe usuário com o e-mail:
-        $usuario = self::$usuarioDao->findByEmail($email);
-
+        $usuario = $this->usuarioDao->findByEmail($email);
+        
         if($usuario){
             // verifica se a senha está correta:
             if(password_verify($senha, $usuario->getSenha())){
@@ -47,7 +48,8 @@ class Auth
                 $token = bin2hex(random_bytes(16));
                 $_SESSION['token'] = $token;
                 $usuario->setToken($token);
-                self::$usuarioDao->atualizarUsuario($usuario);
+                $this->usuarioDao->atualizarUsuario($usuario);
+                return true;
             }
         }
         return false;
