@@ -10,7 +10,7 @@ $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 $pdo = Conexao::getDb();
-$auth = Auth::checkToken();
+// $auth = Auth::checkToken();
 
 ?>
 
@@ -493,31 +493,60 @@ $auth = Auth::checkToken();
 
 <div class="row">
   <div class="col mb-3">
+  <form action="<?=$_ENV['BASE_URL']?>/src/actions/InserirUsuarioAction.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
     <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+    <input type="text" name ="nome"class="form-control" placeholder="Nome" />
+      </div>
+
+<div class="col mb-0">
+    <label for="dobBasic" class="form-label">CPF</label>
+     <input type="text" name="cpf" class="form-control" placeholder="CPF" />
+       </div>
+         </div>
+
+<div class ="row g-2">
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">SIAP</label>
+    <input type="text" name="siap" class="form-control" placeholder="E-mail" />
+      </div>
+
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">CRM</label>
+    <input type="text" name="crm" class="form-control" placeholder="Senha" />
       </div>
         </div>
+
+<div class ="row g-2">
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">permissao</label>
+    <input type="text" name="permissao" class="form-control" placeholder="E-mail" />
+      </div>
+
 
 <div class="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" id="emailBasic" class="form-control" placeholder="Informe o e-mail do adiministrador" />
-        </div>
- <div class="col mb-0">
-    <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" id="dobBasic" class="form-control" placeholder="Informe o CPF do administrador" />
-       </div>
-           </div>
-              </div>
+    <input type="text" name="email" class="form-control" placeholder="E-mail" />
+      </div>
 
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">Senha</label>
+    <input type="text" name="senha" class="form-control" placeholder="Senha" />
+      </div>
+        </div>
+
+ 
+ 
+</div>
 <div class="modal-footer">
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD">
   Salvar
     </button>
+    </form>
         </div>
           </div>
             </div>

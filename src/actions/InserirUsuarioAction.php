@@ -5,6 +5,7 @@ namespace src\actions;
 use src\config\Conexao;
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;
+$pdo = Conexao::getDb();
 
 $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 $cpf = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -19,10 +20,7 @@ if ($nome && $permissao && $email && $senha){
     $pdo = Conexao::getDb();
     $usuarioDao = new UsuarioDaoMySql($pdo);
 
-    if ($usuarioDao->findByEmail($email) === false 
-    && $usuarioDao->findByCpf($cpf) === false 
-    && $usuarioDao->findBySiap($siap) === false 
-    && $usuarioDao->findByCrm($crm) === false)
+    if ($usuarioDao->findByEmail($email) === false)
     {
         $$usuario = new Usuario();
         $usuario->setNome($nome);

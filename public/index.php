@@ -9,8 +9,8 @@ use src\models\Auth;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-$pdo = Conexao::getDb();
-$auth = Auth::checkToken();
+// $pdo = Conexao::getDb();
+// $auth = Auth::checkToken();
 
 ?>
 <!DOCTYPE html>

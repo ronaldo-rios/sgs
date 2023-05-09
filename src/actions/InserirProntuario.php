@@ -1,5 +1,3 @@
-action:
-
 <?php
 
 namespace src\actions;
@@ -68,7 +66,10 @@ $id_usuario = filter_input(INPUT_POST, 'id_usuario', FILTER_SANITIZE_SPECIAL_CHA
         $prontuario->setOutro($outro);
         $prontuario->setIdPaciente($is_paciente);
         $prontuario->setIdUsuario($id_usuario);
+        $prontuarioDao->add($prontuario);
+      
 
 
-        $prontuarioDao->($prontuario);
+
+        
 
