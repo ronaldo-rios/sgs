@@ -8,8 +8,8 @@ use Phan\Config\Initializer;
 
 // $dotenv = Dotenv::createImmutable(__DIR__);
 // $dotenv->load
-//$auth = new Auth($pdo, $baseUrl);
-//$usuarioInfo = $auth->checkToken();
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
 
 ?>
 <!DOCTYPE html>

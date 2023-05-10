@@ -36,7 +36,7 @@ $id_usuario = filter_input(INPUT_POST, 'id_usuario', FILTER_SANITIZE_SPECIAL_CHA
 
 
 
-    $pdo = Conexao::getDb();
+    
     $prontuarioDao = new ProntuarioDaoMySql($pdo);
 
         $$pronturio = new Prontuario();

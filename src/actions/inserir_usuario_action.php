@@ -7,12 +7,11 @@ require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;
 
-echo "Helooo";
+$permissao = filter_input(INPUT_POST, 'permissao', FILTER_SANITIZE_SPECIAL_CHARS);
 $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 $cpf = filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS);
 $siap = filter_input(INPUT_POST, 'siap', FILTER_SANITIZE_SPECIAL_CHARS);
 $crm = filter_input(INPUT_POST, 'crm', FILTER_SANITIZE_SPECIAL_CHARS);
-$permissao = filter_input(INPUT_POST, 'permissao', FILTER_SANITIZE_SPECIAL_CHARS);
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -20,9 +19,9 @@ if ($nome && $permissao && $email && $senha){
     
     $usuarioDao = new UsuarioDaoMySql($pdo);
 
-    if ($usuarioDao->findByEmail($email))
+    if ($usuarioDao->emailExists($email) === false)
     {
-        $$usuario = new Usuario();
+        $usuario = new Usuario();
         $usuario->setNome($nome);
         $usuario->setCpf($cpf);
         $usuario->setSiap($siap);
@@ -30,19 +29,19 @@ if ($nome && $permissao && $email && $senha){
         $usuario->setPermissao($permissao);
         $usuario->setEmail($email);
         $usuario->setSenha($senha);
+        $token = bin2hex(random_bytes(16));
+        $usuario->setToken($token);
         $usuarioDao->inserirUsuario($usuario);
 
-        header('Location:'.$baseUrl);
+        header('Location:'. $baseUrl . '/public/adm_principal.php');
         exit;
     } 
     else {
-        echo "Email já cadastrado";
         header('Location:'.$baseUrl.'/public/adm_principal.php');
         exit;
 
     }
 } else {
-    echo "Dados não preenchidos";
     header('Location:'.$baseUrl.'/public/adm_principal.php');
     exit;
 }
