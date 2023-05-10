@@ -1,7 +1,7 @@
 <?php
 
 require '../vendor/autoload.php';
-
+require '../config.php'; 
 use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\models\Auth;
