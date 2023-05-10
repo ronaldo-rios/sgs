@@ -13,4 +13,5 @@ interface UsuarioDaoInterface
     public function inserirUsuario(Usuario $u);
     public function atualizarUsuario(Usuario $u);
     public function deletarUsuario(Usuario $u);
+    public function emailExists($email);
 }

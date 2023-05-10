@@ -22,7 +22,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $server_version = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
     $client_version = $pdo->getAttribute(PDO::ATTR_CLIENT_VERSION);
-    // echo "Conectado ao banco de dados: {$db_name} com sucesso!";
+    //echo "Conectado ao banco de dados: {$db_name} com sucesso!";
 
     } 
     catch (PDOException $e) {

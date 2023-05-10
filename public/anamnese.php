@@ -1,7 +1,7 @@
 <?php
 
 require '../vendor/autoload.php';
-require '../config.php'; 
+require '../conexao.php';
 use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\models\Auth;
@@ -1003,285 +1003,164 @@ use src\models\Auth;
   Cadastrar
      </button>
      <div class="modal fade" id="cadastrar" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-fullscreen" role="document">
+      <div class="modal-dialog" role="document">
        <div class="modal-content">
          <div class="modal-header">
-          <h5 class="modal-title" id="modalFullTitle">Cadastro Anamnese</h5>
+          <h5 class="modal-title azul-marinho" id="modalFullTitle">Cadastro Anamnese</h5>
            <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close"></button>
              </div>
 <!-- Corpo Modal Cadastrar -->  
-   <div class="modal-body">
-      <div class="row g-2">
-         <div class="col mb-0">
-           <label for="emailBasic" class="form-label">Nome</label>
-           <input type="text" id="nome" class="form-control"  value=""/>
-               </div>
-           <div class="col mb-0">
-             <label for="dobBasic" class="form-label">Idade</label>
-             <input type="number" id="data" class="form-control" value=""/>
-               </div>
-         <div class="col mb-0">
-           <label for="emailBasic" class="form-label">Curso</label>
-           <input type="text" id="telefone" class="form-control"  value="" />
-            </div>
-         <div class="col mb-0">
-           <label for="dobBasic" class="form-label">Turma</label>
-           <input type="text" id="matricula" class="form-control" value="" />
-                 </div>
-                   </div>
-   
-   <div class="row g-2">
-     <div class="col mb-0">
+
+<div class="modal-body">
+   <form action="/dao/ProntuarioDaoMySql.php" method="post" novalidate="novalidate" enctype="multipart/form-data">
+      
+   <label for="matriculas" class="form-label">Matricula do aluno:</label>
+  <select name="matricula_paciente" class="form-select" >
+    <option value="">20000</option>
+  </select>
+ </div>
+ <div class="row g-2">      
+     <div class="col mb-3">
        <label for="emailBasic" class="form-label">ESF</label>
-       <input type="text" id="nome" class="form-control"  value=""/>
+       <input type="text" name="esf" class="form-control" placeholder="ESF">
           </div>
      <div class="col mb-0">
        <label for="dobBasic" class="form-label">Plano de Saúde</label>
-       <input type="number" id="data" class="form-control" value=""/>
+       <input type="text" name="plano_saude" class="form-control" placeholder="Plano de Saude"/>
         </div>   
+</div>
      <div class="col mb-0">
        <label for="emailBasic" class="form-label">Cartão do SUS</label>
-       <input type="text" id="telefone" class="form-control"  value="" />
+       <input type="text" name="numero_cartao_sus" class="form-control"  placeholder="Cartão do SUS" />
         </div>                                
-           </div>
-   
-   <div class="row g-2">
-      <div class="col mb-0">
-         <label for="emailBasic" class="form-label">Medicamento Controlado</label>
-         <input type="text" id="nome" class="form-control"  value=""/>
-           </div>
-     <div class="col mb-0">
-       <label for="dobBasic" class="form-label">Alergia a Medicamento</label>
-       <input type="text" id="data" class="form-control" value=""/>
-        </div>
-         </div>
-   
+
+<br>
+<br>
    <div class="table-responsive">
      <table class="table table-striped table-borderless border-bottom">
        <thead>
          <tr>
-         <th class="text-nowrap">Doença</th>                
+         <th class="text-nowrap">Preencha as informações sobre o histórico de saude do aluno</th>                
          </tr>
        </thead>
-   <tbody>
-     <tr>
-       <td class="text-nowrap">Diabetes</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
+<tbody>
+  <tr>
+    <td class="text-nowrap">Diabetes
+      <input class="form-check-input" type="radio" name="diabetes"/>
+      </td>
      </tr>
-   
-     <tr>
-       <td class="text-nowrap">Pressão Alta</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-   
-     <tr>
-       <td class="text-nowrap">Pressão Baixa</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Asma</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Bronquite</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Anemia</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Ansiedade</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Insonia</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Hemofilia</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Tuberculose</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Eplepsia</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-   
-     <tr>
-       <td class="text-nowrap">Desmaios</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
-         </div>
-        </td>
-     </tr>
-     
-     <tr>
-       <td class="text-nowrap">Fumante</td>
-       <td>
-         <div class="col-md">
-           <div class="form-check form-check-inline mt-3">
-             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"/>
-             <label class="form-check-label" for="inlineRadio1">SIM</label>
-           </div>
-           <div class="form-check form-check-inline">
-             <input class="form-check-input" type="radio"  name="inlineRadioOptions"id="inlineRadio2"value="option2"/>
-             <label class="form-check-label" for="inlineRadio2">NÃO</label>
-           </div>
-           
+<tr>
+  <td class="text-nowrap">Pressão Alta
+    <input class="form-check-input" type="radio" name="pressao_alta"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Pressão Baixa
+    <input class="form-check-input" type="radio" name="pressao_baixa"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Asma
+    <input class="form-check-input" type="radio" name="asma"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Bronquite
+    <input class="form-check-input" type="radio" name="bronquite"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Anemia
+    <input class="form-check-input" type="radio" name="anemia" />
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Ansiedade
+    <input class="form-check-input" type="radio" name="ansiedade"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Depressão
+    <input class="form-check-input" type="radio" name="depressao"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Insonia
+    <input class="form-check-input" type="radio" name="insonia"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Hemofilia
+    <input class="form-check-input" type="radio" name="hemofilia" />
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Tuberculose
+    <input class="form-check-input" type="radio" name="tuberculose"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Eplepsia
+    <input class="form-check-input" type="radio" name="eplepsia"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Fumante
+    <input class="form-check-input" type="radio" name="fumante"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Desmaios
+    <input class="form-check-input" type="radio" name="desmaios"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Outros
+     <input type="text" name="outro" class="form-control" placeholder="Outros"/>  
+    </td>
+    </tr>
+
+
+<tr>
+  <td class="text-nowrap">Uso de medicamento controlado
+    <input class="form-check-input" type="radio" name="medicamento_controlado"/>
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Medicamento Controlado
+     <input type="number" name="nome_medicamento_controlado" class="form-control" placeholder="Medicamento Controlado"/>  
+    </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Possui Alergia a algum remédio
+    <input class="form-check-input" type="radio" name="alergia_medicamento" />
+      </td>
+    </tr>
+
+<tr>
+  <td class="text-nowrap">Alergia Remédio
+     <input type="text" name="nome_medicamento_alergia" class="form-control" placeholder="Alergia Remédio"/>  
+    </td>
+    </tr>
+
+    <input type="hidden" name="id" class="form-control">
+    
+        </form>      
          </div>
         </td>
        </tr>                                                 
