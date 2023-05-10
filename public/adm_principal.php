@@ -1,3 +1,15 @@
+<?php
+
+require '../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+use src\config\Conexao;
+use src\models\Auth;
+
+
+
+?>
+
 <!DOCTYPE html>
 
 <!-- =========================================================
