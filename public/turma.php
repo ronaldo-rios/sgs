@@ -1,3 +1,13 @@
+<?php
+
+require '../vendor/autoload.php';
+require '../conexao.php';
+use Dotenv\Dotenv;
+use src\config\Conexao;
+use src\models\Auth;
+
+?>
+
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -420,8 +430,10 @@
 
 <div class="row">
   <div class="col mb-3">
+<form action="/src/dao/TurmaDaoMySql.php" method="post"  enctype="multipart/form-data">
     <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+    <input type="text" id="nome" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+</form>
       </div>
         </div>
 

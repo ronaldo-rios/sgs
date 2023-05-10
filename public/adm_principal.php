@@ -1,12 +1,10 @@
 <?php
 
 require '../vendor/autoload.php';
-
+require '../conexao.php';
 use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\models\Auth;
-
-
 
 ?>
 
@@ -480,47 +478,79 @@ use src\models\Auth;
 <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
+
+     
         <div class="modal-header">
            <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
+<form action="<?=$baseUrl;?>../src/actions/inserir_usuario_action.php" id="cad" method="POST">
 
 <div class="row">
   <div class="col mb-3">
     <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+    <input type="text" name ="nome" class="form-control" placeholder="Nome" required />
+      </div>
+
+<div class="col mb-0">
+    <label for="dobBasic" class="form-label">CPF</label>
+     <input type="text" name="cpf" class="form-control" placeholder="CPF" />
+       </div>
+         </div>
+
+<div class ="row g-2">
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">SIAP</label>
+    <input type="text" name="siap" class="form-control" placeholder="E-mail" />
+      </div>
+
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">CRM</label>
+    <input type="text" name="crm" class="form-control" placeholder="Senha" />
       </div>
         </div>
+
+<div class ="row g-2">
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">permissao</label>
+    <input type="text" name="permissao" class="form-control" placeholder="E-mail" required />
+      </div>
+
 
 <div class="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" id="emailBasic" class="form-control" placeholder="Informe o e-mail do adiministrador" />
-        </div>
- <div class="col mb-0">
-    <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" id="dobBasic" class="form-control" placeholder="Informe o CPF do administrador" />
-       </div>
-           </div>
-              </div>
+    <input type="text" name="email" class="form-control" placeholder="E-mail" required />
+      </div>
 
+  <div class="col mb-0">
+    <label for="emailBasic" class="form-label">Senha</label>
+    <input type="text" name="senha" class="form-control" placeholder="Senha" required />
+      </div>
+        </div>
+
+ 
+ 
+</div>
 <div class="modal-footer">
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
   Salvar
-    </button>
+    </button> 
+   
+
         </div>
           </div>
             </div>
               </div>
             </div>
           </div>
-
+          </form>
 <div class="content-backdrop fade">
 
 </div>
@@ -561,3 +591,4 @@ use src\models\Auth;
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
+

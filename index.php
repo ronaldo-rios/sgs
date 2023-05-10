@@ -1,11 +1,15 @@
 <?php
 
-require '../vendor/autoload.php';
-
+require __DIR__ . '/vendor/autoload.php';
+require 'conexao.php';
+use src\models\Auth;
 use Dotenv\Dotenv;
+use Phan\Config\Initializer;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
+// $dotenv = Dotenv::createImmutable(__DIR__);
+// $dotenv->load
+//$auth = new Auth($pdo, $baseUrl);
+//$usuarioInfo = $auth->checkToken();
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +31,7 @@ $dotenv->load();
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="assets/"
+  data-assets-path="public/assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -42,7 +46,7 @@ $dotenv->load();
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="public/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,26 +57,26 @@ $dotenv->load();
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="assets/fonts/boxicons.css" />
+    <link rel="stylesheet" href="public/assets/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="assets/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="assets/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="public/assets/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="public/assets/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="public/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="assets/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="public/assets/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="assets/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="public/assets/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="assets/js/helpers.js"></script>
+    <script src="public/assets/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="assets/js/config.js"></script>
+    <script src="public/assets/js/config.js"></script>
   </head>
 
   <body>
@@ -85,7 +89,7 @@ $dotenv->load();
           <div class="app-brand demo">
             <a href="index.php" class="app-brand-link">
               <span class="app-brand-logo demo">
-                <img scr="logo.png" >
+                <img scr="public/logo.png" >
                   <defs>
                     <path
                       d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
@@ -132,7 +136,7 @@ $dotenv->load();
                     </g>
                   </g>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src="logo.png " style="width:100px;"></span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src="public/logo.png " style="width:100px;"></span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -156,25 +160,25 @@ $dotenv->load();
             </li>
             <li class="menu-item">
 
-              <a href="adm_principal.php" class="menu-link">
+              <a href="public/adm_principal.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-user-check"></i>
                
                 <div data-i18n="Basic" class="azul">Administrador</div>
               </a>
 
 
-              <a href="servidor.php" class="menu-link">
+              <a href="public/servidor.php" class="menu-link">
                 <i class="menu-icon bx bx-group"></i>   
                 <div data-i18n="Basic" class="azul">Servidores</div>
               </a>
               
-              <a href="aluno.php" class="menu-link">
+              <a href="public/aluno.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-face"></i>
                
                 <div data-i18n="Basic" class="azul" >Alunos</div>
               </a>
 
-              <a href="medico.php" class="menu-link">
+              <a href="public/medico.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-face-mask"></i>
                 <div data-i18n="Basic" class="azul" >Médico</div>
               </a>
@@ -185,17 +189,17 @@ $dotenv->load();
 
         
             <li class="menu-item">
-              <a href="anamnese.php" class="menu-link ">
+              <a href="public/anamnese.php" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-capsule red"></i>
                 <div data-i18n="Layouts" class="azul">Anamnese</div>
               </a>
 
-              <a href="atestado.php" class="menu-link ">
+              <a href="public/atestado.php" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-cabinet red"></i>
                 <div data-i18n="User interface"  class="azul" >Atestados</div>
               </a>
 
-              <a href="vacina.php" class="menu-link ">
+              <a href="public/vacina.php" class="menu-link ">
                 <i class="menu-icon tf-icons bx bxs-virus red"></i>
                 <div data-i18n="User interface"  class="azul" >Vacinas</div>
               </a>
@@ -208,18 +212,18 @@ $dotenv->load();
   
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="consulta_aluno.php" class="menu-link" target="_blank">
+                    <a href="public/consulta_aluno.php" class="menu-link" target="_blank">
                       <div data-i18n="Basic" class="azul">Aluno</div>
                     </a>
                   </li>
                   
                   <li class="menu-item">
-                    <a href="consulta_anamnese.php" class="menu-link" target="_blank">
+                    <a href="public/consulta_anamnese.php" class="menu-link" target="_blank">
                       <div data-i18n="Basic" class="azul">Anamnese</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="consulta_soap.php" class="menu-link" target="_blank" style="color:#017EC3;">
+                    <a href="public/consulta_soap.php" class="menu-link" target="_blank" style="color:#017EC3;">
                       <div data-i18n="Basic" class="azul">SOAP</div>
                     </a>
                   </li>
@@ -234,14 +238,14 @@ $dotenv->load();
 <li class="menu-header small text-uppercase"><span class="menu-header-text azul-marinho">Cadastros</span></li>
            
 <li class="menu-item">
-  <a href="curso.php" class="menu-link ">
+  <a href="public/curso.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bxs-graduation red"></i>
     <div data-i18n="User interface"  class="azul" >Curso</div>
   </a>
 </li>
 
   <li class="menu-item">
-    <a href="turma.php" class="menu-link ">
+    <a href="public/turma.php" class="menu-link ">
       <i class="menu-icon tf-icons bx bxs-group red"></i>
       <div data-i18n="User interface"  class="azul" >Turma</div>
     </a>
@@ -286,22 +290,22 @@ $dotenv->load();
 
     <!-- Core JS -->
     <!-- build:js assets/js/core.js -->
-    <script src="assets/libs/jquery/jquery.js"></script>
-    <script src="assets/libs/popper/popper.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="public/assets/libs/jquery/jquery.js"></script>
+    <script src="public/assets/libs/popper/popper.js"></script>
+    <script src="public/assets/js/bootstrap.js"></script>
+    <script src="public/assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="assets/js/menu.js"></script>
+    <script src="public/assets/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="assets/libs/apex-charts/apexcharts.js"></script>
+    <script src="public/assets/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="public/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="assets/js/dashboards-analytics.js"></script>
+    <script src="public/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
