@@ -32,7 +32,7 @@ if ($nome && $permissao && $email && $senha){
         $token = bin2hex(random_bytes(16));
         $usuario->setToken($token);
         $usuarioDao->inserirUsuario($usuario);
-
+        $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
         header('Location:'. $baseUrl . '/public/adm_principal.php');
         exit;
     } 

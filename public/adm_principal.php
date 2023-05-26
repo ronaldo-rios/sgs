@@ -4,6 +4,10 @@ require '../vendor/autoload.php';
 require '../conexao.php';
 
 use Dotenv\Dotenv;
+use src\dao\UsuarioDaoMySql;
+
+$usuario = new UsuarioDaoMySql($pdo);
+$usuarios = $usuario->findAll();
 
 ?>
 
@@ -82,7 +86,7 @@ use Dotenv\Dotenv;
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.php" class="app-brand-link">
+            <a href="<?=$baseUrl;?>" class="app-brand-link">
                   <defs>
                     <path
                       d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
@@ -148,7 +152,6 @@ use Dotenv\Dotenv;
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
             </li>
-
            
   <!-- Menu Usuários -->
   <li class="menu-header small text-uppercase">
@@ -289,6 +292,10 @@ use Dotenv\Dotenv;
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
        <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Administrador Principal</h4>
+    <?php if(!empty($_SESSION['flash'])) : ?>
+        <?= $_SESSION['flash']; ?>
+        <?= $_SESSION['flash'] = ''; ?> 
+    <?php endif; ?>
 
  <!-- Inicio Barra Pesquisa-->      
          <div class="navbar-nav align-items-left" >
@@ -302,6 +309,7 @@ use Dotenv\Dotenv;
  
 
 <!-- Inicio da Tabela -->
+
   <div class="card">
     <div class="table-responsive text-nowrap">
       <table class="table">
@@ -316,38 +324,35 @@ use Dotenv\Dotenv;
         <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
         
       </tr>
-        </thead>
+    </thead>
 
 <!-- Corpo da Tabela -->
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-
-<td>
-  <i class="fab fa-angular fa-lg text-danger me-3"></i> 
+<!-- INÍCIO DO LOOP FOREACH DE USUÁRIOS -->
+<?php foreach($usuarios as $u): ?>
+  <td>
+    <i class="fab fa-angular fa-lg text-danger me-3"></i> 
 <!-- Busca de todos os usuarios admins: -->
-  <strong>
-    <?php
-    $sql = "SELECT * FROM usuarios WHERE permissao = 'admin'";
-    $resultado = $pdo->query($sql);
-    if($resultado->rowCount() > 0):
-      foreach($resultado->fetchAll() as $usuario): ?>
-          <?= "<br>" . $usuario['nome'] . "<br>"; ?>
-      <?php endforeach;
-    endif;
-    ?>
-  </strong>
-</td>
+    <strong>
+      <?php 
+        echo $u->getNome();
+      ?>
+    </strong>
+  </td>
 
-    
+ 
 <!-- Modal Visualizar-->
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show" style="background-color:#cdf3fb;border:none">
+<!-- <?= $u->getId(); ?> -->
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $u->getId() ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
   
-<div class="modal fade" id="show" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="show-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -360,16 +365,16 @@ use Dotenv\Dotenv;
 <div class="list-group list-group-flush">
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p>Nome</p>
-      Danilo Escobar
+      <?= $u->getNome(); ?>
         </p>  
      </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p>CPF</p>
-    0534563434
+      <?= $u->getCpf(); ?>
         </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
   <p> E-mail</p>
-  danilo.santos@gmail.com
+  <?= $u->getEmail(); ?>
   </p>
      </div>
           </div>
@@ -388,11 +393,11 @@ use Dotenv\Dotenv;
 <!--Incio Modal Editar-->
  <td>
 
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editar-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -407,7 +412,7 @@ use Dotenv\Dotenv;
 <div class="row">
   <div class="col mb-3">
    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" value="" /> 
+    <input type="text" id="nameBasic" class="form-control" value="<?= $u->getNome(); ?>" /> 
     </div>
       </div>
 
@@ -415,11 +420,11 @@ use Dotenv\Dotenv;
 <div class="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" id="emailBasic" class="form-control" value="" />
+    <input type="text" id="emailBasic" class="form-control" value="<?= $u->getEmail(); ?>" />
         </div>
   <div class="col mb-0">
     <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" id="dobBasic" class="form-control" value="" />
+     <input type="text" id="dobBasic" class="form-control" value="<?= $u->getCpf(); ?>" />
       </div>
         </div>
           </div>
@@ -458,9 +463,11 @@ use Dotenv\Dotenv;
    </div>
 
 <div class="modal-footer">
+<a href="<?=$baseUrl;?>/src/actions/deletar_usuario_action.php?id=<?= $u->getId(); ?>">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
     Excluir 
   </button>
+</a>
 
   <button type="button" class="btn btn-primary"   style="background-color:#2B5AAD">
     Cancelar
@@ -473,6 +480,8 @@ use Dotenv\Dotenv;
                 </div>
  </td>
     </tr>
+    <!-- FIM DO LOOP DE USUARIOS -->
+    <?php endforeach; ?>
        </tbody>
           </table>
             </div>
@@ -605,9 +614,4 @@ use Dotenv\Dotenv;
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
-
->>>>>>> 3c09c9157760a76ca94a12732d59f0e371440dc3
