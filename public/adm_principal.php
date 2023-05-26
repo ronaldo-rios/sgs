@@ -346,8 +346,6 @@ $usuarios = $usuario->findAll();
 <!-- Modal Visualizar-->
 <td>
 
-<!-- <?= $u->getId(); ?> -->
-
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $u->getId() ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
@@ -408,11 +406,14 @@ $usuarios = $usuario->findAll();
       </div>
 
 <div class="modal-body">
+<form action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" id="cad" method="POST">
+<input type="hidden" name="id" value="<?= $u->getId(); ?>" />
+<input type="hidden" name="permissao" value="admin" />
 
 <div class="row">
   <div class="col mb-3">
    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" value="<?= $u->getNome(); ?>" /> 
+    <input type="text" id="nameBasic" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
     </div>
       </div>
 
@@ -420,37 +421,39 @@ $usuarios = $usuario->findAll();
 <div class="row g-2">
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" id="emailBasic" class="form-control" value="<?= $u->getEmail(); ?>" />
+    <input type="text" id="emailBasic" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
         </div>
+
   <div class="col mb-0">
     <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" id="dobBasic" class="form-control" value="<?= $u->getCpf(); ?>" />
+     <input type="text" id="dobBasic" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
       </div>
         </div>
           </div>
       
 <div class="modal-footer">
-<button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
 
- <button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" id="cad" form="cad" style="background-color:#2B5AAD">Editar</button>
+
+<button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
+</form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </td>
-
+      
                     
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -459,12 +462,12 @@ $usuarios = $usuario->findAll();
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $u->getNome(); ?>?</div>
    </div>
 
 <div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_usuario_action.php?id=<?= $u->getId(); ?>">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
+<a href="<?=$baseUrl;?>/src/actions/deletar_usuario_action.php?id=<?=$u->getId();?>">
+  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
     Excluir 
   </button>
 </a>
