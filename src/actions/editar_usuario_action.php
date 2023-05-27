@@ -12,14 +12,8 @@ $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
 if ($id && $nome && $cpf && $email) {
 
-    if ($usuarioDao->emailExists($email) === true)
-    {
-        $_SESSION['flash'] = "<div class='alert alert-danger'>E-mail inválido pois já está cadastrado!</div>";
-        header('Location:'.$baseUrl.'/public/adm_principal.php');
-        exit;
-    }
-
     $usuario = $usuarioDao->findById($id);
+    
     $usuario->setNome($nome);
     $usuario->setCpf($cpf);
     $usuario->setEmail($email);
