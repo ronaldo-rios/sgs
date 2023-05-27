@@ -390,7 +390,6 @@ $usuarios = $usuario->findAll();
 
 <!--Incio Modal Editar-->
  <td>
-
 <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
@@ -406,8 +405,10 @@ $usuarios = $usuario->findAll();
       </div>
 
 <div class="modal-body">
-  <form action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" id="edit" method="POST">
+  <form id="editForm-<?= $u->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" method="POST">
+
   <input type="hidden" name="id" value="<?= $u->getId(); ?>" />
+  <input type="hidden" name="permissao" value="<?= $u->getPermissao(); ?>" />
   <div class="row">
     <div class="col mb-3">
       <label for="name" class="form-label">Nome</label>
@@ -422,16 +423,24 @@ $usuarios = $usuario->findAll();
       <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
     </div>
 
+    <div class="row g-2">
+    <div class="col mb-0">
+      <label for="senha" class="form-label">Senha</label>
+      <input type="password" name="senha" class="form-control" value="<?= $u->getSenha(); ?>" />
+    </div>
+
     <div class="col mb-0">
       <label for="cpf" class="form-label">CPF</label>
       <input type="text" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
         </div>
         </div>
       </div>
+
+    
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul" form="edit" id="edit" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editForm-<?= $u->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
                     </div>

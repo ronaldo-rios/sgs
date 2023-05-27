@@ -1,8 +1,7 @@
 <?php
 
 namespace src\actions;
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+
 require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;

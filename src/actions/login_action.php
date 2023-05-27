@@ -13,7 +13,7 @@ $senha = filter_input(INPUT_POST, 'senha');
 
 // Verificar se os dados batem com os dados do usuário no banco para fazer o login:
 if($email && $senha){
-    echo "email e senha validados";
+    
     $auth = new Auth($pdo, $baseUrl);
     
     if($auth->validateLogin($email, $senha)){
