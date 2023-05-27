@@ -406,43 +406,41 @@ $usuarios = $usuario->findAll();
       </div>
 
 <div class="modal-body">
-<form action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" id="cad" method="POST">
-<input type="hidden" name="id" value="<?= $u->getId(); ?>" />
-<input type="hidden" name="permissao" value="admin" />
-
-<div class="row">
-  <div class="col mb-3">
-   <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
+  <form action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" id="edit" method="POST">
+  <input type="hidden" name="id" value="<?= $u->getId(); ?>" />
+  <div class="row">
+    <div class="col mb-3">
+      <label for="name" class="form-label">Nome</label>
+      <input type="text" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
     </div>
-      </div>
+  </div>
 
 
-<div class="row g-2">
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" id="emailBasic" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
+  <div class="row g-2">
+    <div class="col mb-0">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
+    </div>
+
+    <div class="col mb-0">
+      <label for="cpf" class="form-label">CPF</label>
+      <input type="text" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
         </div>
-
-  <div class="col mb-0">
-    <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" id="dobBasic" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
-      </div>
         </div>
-          </div>
+      </div>
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul" id="cad" form="cad" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="edit" id="edit" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
-</form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </form>
         </td>
       
                     
@@ -569,7 +567,6 @@ $usuarios = $usuario->findAll();
 <button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
   Salvar
     </button> 
-   
 
         </div>
           </div>

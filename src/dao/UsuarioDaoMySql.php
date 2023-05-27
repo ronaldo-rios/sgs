@@ -132,7 +132,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
             token = :token 
             WHERE id = :id"
             );
-
+        
         $sql->bindValue(':nome', $u->getNome());
         $sql->bindValue(':cpf', $u->getCpf());
         $sql->bindValue(':siap', $u->getSiap());
