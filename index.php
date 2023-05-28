@@ -4,7 +4,6 @@ require __DIR__ . '/vendor/autoload.php';
 require 'conexao.php';
 use src\models\Auth;
 use Dotenv\Dotenv;
-use Phan\Config\Initializer;
 
 // $dotenv = Dotenv::createImmutable(__DIR__);
 // $dotenv->load
@@ -82,9 +81,13 @@ $usuarioInfo = $auth->checkToken();
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
+    <?php if(!empty($_SESSION['alert'])) : ?>
+        <?= $_SESSION['alert']; ?>
+        <?= $_SESSION['alert'] = ''; ?> 
+        
+        <?php endif; ?>
       <div class="layout-container">
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.php" class="app-brand-link">
@@ -160,7 +163,7 @@ $usuarioInfo = $auth->checkToken();
             </li>
             <li class="menu-item">
 
-              <a href="public/adm_principal.php" class="menu-link">
+              <a href="<?=$baseUrl;?>/public/adm_principal.php" class="menu-link" id="admin-link">
                 <i class="menu-icon tf-icons bx bxs-user-check"></i>
                
                 <div data-i18n="Basic" class="azul">Administrador</div>
@@ -309,5 +312,28 @@ $usuarioInfo = $auth->checkToken();
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        var baseUrl = '<?=$baseUrl;?>';
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+        e.preventDefault();
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', baseUrl + '/src/middleware/check_permissao_admin.php', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              if (this.responseText === 'admin') {
+                window.location.href = baseUrl + '/public/adm_principal.php';
+              } else {
+                alert('Apenas administradores têm acesso a essa área.');
+              }
+            }
+          }
+          xhr.send();
+        });
+    </script>
+
   </body>
 </html>
+

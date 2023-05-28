@@ -159,7 +159,7 @@ $usuarios = $usuario->findServidor();
   </li>
   <li class="menu-item">
 
-    <a href="adm_principal.php" class="menu-link">
+    <a href="adm_principal.php" class="menu-link" id="admin-link" >
       <i class="menu-icon tf-icons bx bxs-user-check"></i>
      
       <div data-i18n="Basic" class="azul">Administrador</div>

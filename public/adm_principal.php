@@ -5,6 +5,14 @@ require '../conexao.php';
 
 use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
+use src\models\Auth;
+
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin') {
+    header('Location: access_denied.php');
+    exit();
+}
 
 $usuario = new UsuarioDaoMySql($pdo);
 $usuarios = $usuario->findAdm();
@@ -83,7 +91,6 @@ $usuarios = $usuario->findAdm();
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="<?=$baseUrl;?>" class="app-brand-link">
@@ -159,7 +166,7 @@ $usuarios = $usuario->findAdm();
   </li>
   <li class="menu-item">
 
-    <a href="adm_principal.php" class="menu-link">
+    <a href="adm_principal.php" class="menu-link" >
       <i class="menu-icon tf-icons bx bxs-user-check"></i>
      
       <div data-i18n="Basic" class="azul">Administrador</div>

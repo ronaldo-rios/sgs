@@ -155,7 +155,7 @@ use src\models\Auth;
           </li>
           <li class="menu-item">
 
-            <a href="adm_principal.php" class="menu-link">
+            <a href="adm_principal.php" class="menu-link" id="admin-link">
               <i class="menu-icon tf-icons bx bxs-user-check"></i>
              
               <div data-i18n="Basic" class="azul">Administrador</div>
@@ -607,5 +607,27 @@ use src\models\Auth;
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        var baseUrl = '<?=$baseUrl;?>';
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+        e.preventDefault();
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', baseUrl + '/src/middleware/check_permissao_admin.php', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              if (this.responseText === 'admin') {
+                window.location.href = baseUrl + '/public/adm_principal.php';
+              } else {
+                alert('Apenas administradores têm acesso a essa área.');
+              }
+            }
+          }
+          xhr.send();
+        });
+    </script>
+
   </body>
 </html>
