@@ -12,12 +12,23 @@ if ($id) {
     if ($usuario) {
         $usuarioDao->deletarUsuario($usuario);
         $_SESSION['flash'] = "<div class='alert alert-success'>Deletado com sucesso!</div>";
-        header('Location:'. $baseUrl . '/public/adm_principal.php');
-        exit;
+        
+        if($usuario->getPermissao() == 'admin'){
+            header('Location:'.$baseUrl.'/public/adm_principal.php');
+            exit;
+        }
+        elseif($usuario->getPermissao() == 'medico'){
+            header('Location:'.$baseUrl.'/public/medico.php');
+            exit;
+        }
+        elseif($usuario->getPermissao() == 'servidor'){
+            header('Location:'.$baseUrl.'/public/servidor.php');
+            exit;
+        }
     }
     else {
-    header('Location:'.$baseUrl.'/public/adm_principal.php');
-    exit;
+        header('Location:'.$baseUrl);
+        exit;
     }
 } 
-header('Location:' . $baseUrl .'/public/adm_principal.php');
+header('Location:' . $baseUrl);

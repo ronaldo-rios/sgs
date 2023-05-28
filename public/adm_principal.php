@@ -7,7 +7,7 @@ use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
 
 $usuario = new UsuarioDaoMySql($pdo);
-$usuarios = $usuario->findAll();
+$usuarios = $usuario->findAdm();
 
 ?>
 
@@ -535,48 +535,24 @@ $usuarios = $usuario->findAll();
 
 <div class ="row g-2">
   <div class="col mb-0">
-    <label for="emailBasic" class="form-label">SIAP</label>
-    <input type="text" name="siap" class="form-control" placeholder="Informe o SIAP" />
-      </div>
-
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">CRM</label>
-    <input type="text" name="crm" class="form-control" placeholder="CRM se for médico" />
-      </div>
-        </div>
-
-<!-- <div class ="row g-2">
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">permissao</label>
-    <input type="text" name="permissao" class="form-control" placeholder="E-mail" required />
-      </div> -->
-
-
-<div class="row g-2">
-  <div class="col mb-0">
     <label for="emailBasic" class="form-label">Email</label>
     <input type="text" name="email" class="form-control" placeholder="E-mail do novo Administrador" required />
       </div>
-</div>
-<div class="row g-2">
+
   <div class="col mb-0">
     <label for="emailBasic" class="form-label">Senha</label>
     <input type="password" name="senha" class="form-control" placeholder="Senha" required />
       </div>
         </div>
+          </div>
 
- 
- 
-</div>
 <div class="modal-footer">
-
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
 <button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
   Salvar
     </button> 
-
         </div>
           </div>
             </div>

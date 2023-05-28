@@ -94,6 +94,50 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         return $array;
     }
 
+    // Procurar todos os administradores:
+    public function findAdm()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'admin'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
+
+    // Procurar todos os servidores:
+    public function findServidor()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'servidor'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
+
+    // Procurar todos os médicos:
+    public function findMedico()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'medico'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
     // adicionar novo usuário
     public function inserirUsuario(Usuario $u)
     {

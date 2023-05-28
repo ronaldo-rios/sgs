@@ -1,7 +1,7 @@
 <?php
 
 namespace src\actions;
-
+echo"chegou aqui";
 require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;
@@ -32,15 +32,44 @@ if ($nome && $permissao && $email && $senha){
         $usuario->setToken($token);
         $usuarioDao->inserirUsuario($usuario);
         $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
-        header('Location:'. $baseUrl . '/public/adm_principal.php');
-        exit;
+
+        if($permissao == 'admin'){
+            header('Location:'. $baseUrl . '/public/adm_principal.php');
+            exit;
+        }
+        elseif($permissao == 'medico'){
+            header('Location:'. $baseUrl . '/public/medico.php');
+            exit;
+        }
+        elseif($permissao == 'servidor'){
+            header('Location:'. $baseUrl . '/public/servidor.php');
+            exit;
+        }
     } 
     else {
-        header('Location:'.$baseUrl.'/public/adm_principal.php');
-        exit;
+        if($permissao == 'admin'){
+            header('Location:'.$baseUrl.'/public/adm_principal.php');
+            exit;
+        }
+        elseif($permissao == 'medico'){
+            header('Location:'.$baseUrl.'/public/medico.php');
+            exit;
+        }
+       
 
     }
 } else {
-    header('Location:'.$baseUrl.'/public/adm_principal.php');
-    exit;
+    if ($permissao == 'admin'){
+        header('Location:'.$baseUrl.'/public/adm_principal.php');
+        exit;
+    }
+    elseif($permissao == 'medico'){
+        header('Location:'.$baseUrl.'/public/medico.php');
+        exit;
+    }
+    elseif($permissao == 'servidor'){
+        header('Location:'.$baseUrl.'/public/servidor.php');
+        exit;
+    }
+    
 }
