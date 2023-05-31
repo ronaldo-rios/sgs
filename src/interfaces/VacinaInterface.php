@@ -6,5 +6,5 @@ use src\models\Vacina;
 
 interface VacinaInterface
 {
-    public function add(Vacina $vacina);
+    public function adicionarVacina(Vacina $vacina);
 }

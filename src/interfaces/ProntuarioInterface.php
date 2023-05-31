@@ -6,5 +6,5 @@ use src\models\Prontuario;
 
 interface ProntuarioInterface
 {
-    public function add(Prontuario $prontuario);
+    public function criarProntuario(Prontuario $prontuario);
 }

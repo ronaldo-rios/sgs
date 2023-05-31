@@ -7,17 +7,17 @@ namespace src\models;
 class Prontuario
 {
     private int $id;
-    private int $matricula_paciente;
+    private int $matriculaPaciente;
     private string $esf;
-    private string $plano_saude;
-    private string $numero_cartao_sus;
-    private bool $alergia_medicamento;
-    private string $nome_medicamento_alergia;
-    private bool $medicamento_controlado;
-    private string $nome_medicamento_controlado;
+    private string $planoSaude;
+    private string $numeroCartaoSus;
+    private bool $alergiaMedicamento;
+    private string $nomeMedicamentoAlergia;
+    private bool $medicamentoControlado;
+    private string $nomeMedicamentoControlado;
     private bool $diabetes;
-    private bool $pressao_alta;
-    private bool $pressao_baixa;
+    private bool $pressaoAlta;
+    private bool $pressaoBaixa;
     private bool $asma;
     private bool $bronquite;
     private bool $anemia;
@@ -30,8 +30,7 @@ class Prontuario
     private bool $desmaios;
     private bool $fumante;
     private string $outro;
-    private int $id_paciente;
-    private int $id_usuario;
+    private int $idPaciente;
 
     public function getId(): int
     {
@@ -45,12 +44,12 @@ class Prontuario
 
     public function getMatriculaPaciente(): int
     {
-        return $this->matricula_paciente;
+        return $this->matriculaPaciente;
     }
 
-    public function setMatriculaPaciente(int $matricula_paciente): void
+    public function setMatriculaPaciente(int $matriculaPaciente): void
     {
-        $this->matricula_paciente = $matricula_paciente;
+        $this->matriculaPaciente = $matriculaPaciente;
     }
 
     public function getEsf(): string
@@ -65,62 +64,62 @@ class Prontuario
 
     public function getPlanoSaude(): string
     {
-        return $this->plano_saude;
+        return $this->planoSaude;
     }
 
-    public function setPlanoSaude(string $plano_saude): void
+    public function setPlanoSaude(string $planoSaude): void
     {
-        $this->plano_saude = $plano_saude;
+        $this->planoSaude = $planoSaude;
     }
 
     public function getNumeroCartaoSus(): string
     {
-        return $this->numero_cartao_sus;
+        return $this->numeroCartaoSus;
     }
 
-    public function setNumeroCartaoSus(string $numero_cartao_sus): void
+    public function setNumeroCartaoSus(string $numeroCartaoSus): void
     {
-        $this->numero_cartao_sus = $numero_cartao_sus;
+        $this->numeroCartaoSus = $numeroCartaoSus;
     }
 
     public function getAlergiaMedicamento(): bool
     {
-        return $this->alergia_medicamento;
+        return $this->alergiaMedicamento;
     }
 
-    public function setAlergiaMedicamento(bool $alergia_medicamento): void
+    public function setAlergiaMedicamento(bool $alergiaMedicamento): void
     {
-        $this->alergia_medicamento = $alergia_medicamento;
+        $this->alergiaMedicamento = $alergiaMedicamento;
     }
 
     public function getNomeMedicamentoAlergia(): string
     {
-        return $this->nome_medicamento_alergia;
+        return $this->nomeMedicamentoAlergia;
     }
 
-    public function setNomeMedicamentoAlergia(string $nome_medicamento_alergia): void
+    public function setNomeMedicamentoAlergia(string $nomeMedicamentoAlergia): void
     {
-        $this->nome_medicamento_alergia = $nome_medicamento_alergia;
+        $this->nomeMedicamentoAlergia = $nomeMedicamentoAlergia;
     }
 
     public function getMedicamentoControlado(): bool
     {
-        return $this->medicamento_controlado;
+        return $this->medicamentoControlado;
     }
 
-    public function setMedicamentoControlado(bool $medicamento_controlado): void
+    public function setMedicamentoControlado(bool $medicamentoControlado): void
     {
-        $this->medicamento_controlado = $medicamento_controlado;
+        $this->medicamentoControlado = $medicamentoControlado;
     }
 
     public function getNomeMedicamentoControlado(): string
     {
-        return $this->nome_medicamento_controlado;
+        return $this->nomeMedicamentoControlado;
     }
 
-    public function setNomeMedicamentoControlado(string $nome_medicamento_controlado): void
+    public function setNomeMedicamentoControlado(string $nomeMedicamentoControlado): void
     {
-        $this->nome_medicamento_controlado = $nome_medicamento_controlado;
+        $this->nomeMedicamentoControlado = $nomeMedicamentoControlado;
     }
     public function getDiabetes(): bool
     {
@@ -134,22 +133,22 @@ class Prontuario
 
     public function getPressaoAlta(): bool
     {
-        return $this->pressao_alta;
+        return $this->pressaoAlta;
     }
 
-    public function setPressaoAlta(bool $pressao_alta): void
+    public function setPressaoAlta(bool $pressaoAlta): void
     {
-        $this->pressao_alta = $pressao_alta;
+        $this->pressaoAlta = $pressaoAlta;
     }
 
     public function getPressaoBaixa(): bool
     {
-        return $this->pressao_baixa;
+        return $this->pressaoBaixa;
     }
 
-    public function setPressaoBaixa(bool $pressao_baixa): void
+    public function setPressaoBaixa(bool $pressaoBaixa): void
     {
-        $this->pressao_baixa = $pressao_baixa;
+        $this->pressaoBaixa = $pressaoBaixa;
     }
 
     public function getAsma(): bool
@@ -274,21 +273,12 @@ class Prontuario
 
     public function getIdPaciente(): int
     {
-        return $this->id_paciente;
+        return $this->idPaciente;
     }
 
-    public function setIdPaciente(int $id_paciente): void
+    public function setIdPaciente(int $idPaciente): void
     {
-        $this->id_paciente = $id_paciente;
+        $this->idPaciente = $idPaciente;
     }
 
-    public function setIdUsuario(int $id_usuario): void
-    {
-        $this->id_usuario = $id_usuario;
-    }
-
-    public function getIdUsuario(): int
-    {
-        return $this->id_usuario;
-    }
 }

@@ -6,5 +6,5 @@ use src\models\Soap;
 
 interface SoapInterface
 {
-    public function add(Soap $soap);
+    public function inserirSoap(Soap $soap);
 }

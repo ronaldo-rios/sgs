@@ -6,119 +6,81 @@ namespace src\models;
 
 class Atestado{
     private int $id;
-    private string $data_cadastro;
+    private string $dataCadastro;
     private string $descricao;
     private string $cid;
-    private string $atestado_doc;
-    private int $id_paciente;
-    private int $id_usuario;
+    private string $atestadoDoc;
+    private int $idPaciente;
+    private int $idUsuario;
 
 
-    /**
-     * Get the value of data_cadastro
-     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getDataCadastro(): string
     {
-        return $this->data_cadastro;
+        return $this->dataCadastro;
     }
 
-    /**
-     * Set the value of data_cadastro
-     */
-    public function setDataCadastro(string $data_cadastro): self
+    public function setDataCadastro(string $dataCadastro): void
     {
-        $this->data_cadastro = $data_cadastro;
-
-        return $this;
+        $this->dataCadastro = trim($dataCadastro);
     }
 
-    /**
-     * Get the value of descricao
-     */
     public function getDescricao(): string
     {
         return $this->descricao;
     }
 
-    /**
-     * Set the value of descricao
-     */
-    public function setDescricao(string $descricao): self
+    public function setDescricao(string $descricao): void
     {
-        $this->descricao = $descricao;
-
-        return $this;
+        $this->descricao = trim($descricao);
     }
 
-    /**
-     * Get the value of cid
-     */
     public function getCid(): string
     {
         return $this->cid;
     }
 
-    /**
-     * Set the value of cid
-     */
-    public function setCid(string $cid): self
+    public function setCid(string $cid): void
     {
-        $this->cid = $cid;
-
-        return $this;
+        $this->cid = trim($cid);
     }
 
-    /**
-     * Get the value of atestado_doc
-     */
     public function getAtestadoDoc(): string
     {
-        return $this->atestado_doc;
+        return $this->atestadoDoc;
     }
 
-    /**
-     * Set the value of atestado_doc
-     */
-    public function setAtestadoDoc(string $atestado_doc): self
+    public function setAtestadoDoc(string $atestadoDoc): void
     {
-        $this->atestado_doc = $atestado_doc;
-
-        return $this;
+        $this->atestadoDoc = $atestadoDoc;
     }
 
-    /**
-     * Get the value of id_paciente
-     */
     public function getIdPaciente(): int
     {
-        return $this->id_paciente;
+        return $this->idPaciente;
     }
 
-    /**
-     * Set the value of id_paciente
-     */
-    public function setIdPaciente(int $id_paciente): self
+    public function setIdPaciente(int $idPaciente): void
     {
-        $this->id_paciente = $id_paciente;
-
-        return $this;
+        $this->idPaciente = $idPaciente;
     }
 
-    /**
-     * Get the value of id_usuario
-     */
     public function getIdUsuario(): int
     {
-        return $this->id_usuario;
+        return $this->idUsuario;
     }
 
-    /**
-     * Set the value of id_usuario
-     */
-    public function setIdUsuario(int $id_usuario): self
+    public function setIdUsuario(int $idUsuario): void
     {
-        $this->id_usuario = $id_usuario;
-
-        return $this;
+        $this->idUsuario = $idUsuario;
     }
 }

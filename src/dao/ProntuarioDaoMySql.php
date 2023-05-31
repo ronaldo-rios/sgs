@@ -2,7 +2,6 @@
 
 namespace src\dao;
 
-use src\config\Config;
 use src\models\Prontuario;
 use src\interfaces\ProntuarioInterface;
 
@@ -11,23 +10,23 @@ class ProntuarioDaoMySql implements ProntuarioInterface
 {
     private $pdo;
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        $this->pdo = Config::getDb();
+        $this->pdo = $pdo;
     }
 
-    public function add(Prontuario $prontuario)
+    public function criarProntuario(Prontuario $prontuario)
     {
         $sql = $this->pdo->prepare("INSERT INTO prontuario 
         (matricula_paciente,esf,plano_saude,numero_cartao_sus,alergia_medicamento
         nome_medicamento_alergia,medicamento_controlado,nome_medicamento_controlado
         diabetes,pressao_alta,pressao_baixa,asma,anemia,ansiedade,depressao,insonia
-        hemofilia,tubercoluse,eplepsia,desmaio,fumante,outro,id_paciente,id_usuario)
+        hemofilia,tubercoluse,eplepsia,desmaio,fumante,outro,id_paciente)
 
          VALUES (:matricula_paciente,esf,plano_saude,numero_cartao_sus,alergia_medicamento
         nome_medicamento_alergia,medicamento_controlado,nome_medicamento_controlado
         diabetes,pressao_alta,pressao_baixa,asma,anemia,ansiedade,depressao,insonia
-        hemofilia,tubercoluse,eplepsia,desmaio,fumante,outro,id_paciente,id_usuario))");
+        hemofilia,tubercoluse,eplepsia,desmaio,fumante,outro,id_paciente))");
 
         $sql->bindValue(':matricula_paciente', $prontuario->getMatriculaPaciente());
         $sql->bindValue(':esf', $prontuario->getEsf());
@@ -48,7 +47,6 @@ class ProntuarioDaoMySql implements ProntuarioInterface
         $sql->bindValue(':eplepsia', $prontuario->getEplepsia());
         $sql->bindValue(':desmaio', $prontuario->getDesmaios());
         $sql->bindValue(':fumante', $prontuario->getFumante());
-        $sql->bindValue(':id_usuario', $prontuario->getIdUsuario());
         $sql->bindValue(':id_paciente', $prontuario->getIdPaciente());
         $sql->execute();
         return $prontuario;

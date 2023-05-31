@@ -6,82 +6,58 @@ namespace src\models;
 
 class PacienteVacina{
     private int $id;
-    private int $id_paciente;
-    private int $id_vacina;
+    private int $idPaciente;
+    private int $idVacina;
     private string $data;
     private string $dose;
 
-   
+   public function getId(): int
+    {
+        return $this->id;
+    }
 
-    /**
-     * Get the value of id_paciente
-     */
+    public function setId(int $id): void
+    {
+        $this->id= $id;
+    }
+
     public function getIdPaciente(): int
     {
-        return $this->id_paciente;
+        return $this->idPaciente;
     }
 
-    /**
-     * Set the value of id_paciente
-     */
-    public function setIdPaciente(int $id_paciente): self
+    public function setIdPaciente(int $idPaciente): void
     {
-        $this->id_paciente = $id_paciente;
-
-        return $this;
+        $this->idPaciente = $idPaciente;
     }
 
-    /**
-     * Get the value of id_vacina
-     */
     public function getIdVacina(): int
     {
-        return $this->id_vacina;
+        return $this->idVacina;
     }
 
-    /**
-     * Set the value of id_vacina
-     */
-    public function setIdVacina(int $id_vacina): self
+    public function setIdVacina(int $idVacina): void
     {
-        $this->id_vacina = $id_vacina;
-
-        return $this;
+        $this->idVacina = $idVacina;
     }
 
-    /**
-     * Get the value of data
-     */
     public function getData(): string
     {
         return $this->data;
     }
 
-    /**
-     * Set the value of data
-     */
-    public function setData(string $data): self
+    public function setData(string $data): void
     {
-        $this->data = $data;
-
-        return $this;
+        $this->data = trim($data);
     }
 
-    /**
-     * Get the value of dose
-     */
     public function getDose(): string
     {
         return $this->dose;
     }
 
-    /**
-     * Set the value of dose
-     */
-    public function setDose(string $dose): self
+    public function setDose(string $dose): void
     {
-        $this->dose = $dose;
-
-        return $this;
+        $this->dose = strtoupper(trim($dose));
     }
 }

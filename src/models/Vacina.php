@@ -6,44 +6,25 @@ namespace src\models;
 
 class Vacina {
     private int $id;
-    private int $id_usuario;
     private string $nome;
 
-
-
-    /**
-     * Get the value of id_usuario
-     */
-    public function getIdUsuario(): int
+    public function getId():int
     {
-        return $this->id_usuario;
+        return $this->id;
     }
 
-    /**
-     * Set the value of id_usuario
-     */
-    public function setIdUsuario(int $id_usuario): self
+    public function setId(int $id):void
     {
-        $this->id_usuario = $id_usuario;
-
-        return $this;
+        $this->id = $id;
     }
 
-    /**
-     * Get the value of nome
-     */
     public function getNome(): string
     {
         return $this->nome;
     }
 
-    /**
-     * Set the value of nome
-     */
-    public function setNome(string $nome): self
+    public function setNome(string $nome): void
     {
-        $this->nome = $nome;
-
-        return $this;
+        $this->nome = strtoupper(trim($nome));
     }
 }

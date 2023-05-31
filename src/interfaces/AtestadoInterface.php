@@ -6,5 +6,5 @@ use src\models\Atestado;
 
 interface AtestadoInterface
 {
-    public function add(Atestado $atestado);
+    public function adicionarAtestado(Atestado $atestado);
 }

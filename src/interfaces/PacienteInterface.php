@@ -10,5 +10,5 @@ use src\models\Paciente;
 // da tabela e o DAO que é a implementação do CRUD em si e persistência no banco de dados.
 interface PacienteInterface
 {
-    public function add(Paciente $paciente);
+    public function inserirPaciente(Paciente $paciente);
 }

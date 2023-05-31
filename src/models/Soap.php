@@ -11,113 +11,65 @@ class Soap{
     private string $avaliacao;
     private string $plano;
     private string $data;
-    private int $id_prontuario;
+    private int $idProntuario;
 
-    /**
-     * Get the value of subjetivo
-     */
     public function getSubjetivo(): string
     {
         return $this->subjetivo;
     }
 
-    /**
-     * Set the value of subjetivo
-     */
-    public function setSubjetivo(string $subjetivo): self
+    public function setSubjetivo(string $subjetivo): void
     {
-        $this->subjetivo = $subjetivo;
-
-        return $this;
+        $this->subjetivo = trim($subjetivo);
     }
 
-    /**
-     * Get the value of objetivo
-     */
     public function getObjetivo(): string
     {
         return $this->objetivo;
     }
 
-    /**
-     * Set the value of objetivo
-     */
-    public function setObjetivo(string $objetivo): self
+    public function setObjetivo(string $objetivo): void
     {
-        $this->objetivo = $objetivo;
-
-        return $this;
+        $this->objetivo = trim($objetivo);
     }
 
-    /**
-     * Get the value of avaliacao
-     */
     public function getAvaliacao(): string
     {
         return $this->avaliacao;
     }
 
-    /**
-     * Set the value of avaliacao
-     */
-    public function setAvaliacao(string $avaliacao): self
+    public function setAvaliacao(string $avaliacao): void
     {
-        $this->avaliacao = $avaliacao;
-
-        return $this;
+        $this->avaliacao = trim($avaliacao);
     }
 
-    /**
-     * Get the value of plano
-     */
     public function getPlano(): string
     {
         return $this->plano;
     }
 
-    /**
-     * Set the value of plano
-     */
-    public function setPlano(string $plano): self
+    public function setPlano(string $plano): void
     {
-        $this->plano = $plano;
-
-        return $this;
+        $this->plano = trim($plano);
     }
 
-    /**
-     * Get the value of data
-     */
     public function getData(): string
     {
         return $this->data;
     }
 
-    /**
-     * Set the value of data
-     */
-    public function setData(string $data): self
+    public function setData(string $data): void
     {
         $this->data = $data;
-
-        return $this;
     }
 
-    /**
-     * Get the value of id_prontuario
-     */
     public function getIdProntuario(): int
     {
-        return $this->id_prontuario;
+        return $this->idProntuario;
     }
 
-    /**
-     * Set the value of id_prontuario
-     */
-    public function setIdProntuario(int $id_prontuario): self
+    public function setIdProntuario(int $idProntuario): void
     {
-        $this->id_prontuario = $id_prontuario;
-
-        return $this;
+        $this->idProntuario = $idProntuario;
     }
 }

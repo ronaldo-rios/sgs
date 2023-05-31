@@ -12,131 +12,77 @@ class Paciente {
     private string $nascimento;
     private string $telefone;
     private int $id_usuario;
-    private int $id_paciente;
 
-    /**
-     * Get the value of matricula
-     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getMatricula(): string
     {
         return $this->matricula;
     }
 
-    /**
-     * Set the value of matricula
-     */
-    public function setMatricula(string $matricula): self
+    public function setMatricula(string $matricula): void
     {
-        $this->matricula = $matricula;
-
-        return $this;
+        $this->matricula = trim($matricula);
     }
 
-    /**
-     * Get the value of nome
-     */
     public function getNome(): string
     {
         return $this->nome;
     }
 
-    /**
-     * Set the value of nome
-     */
-    public function setNome(string $nome): self
+    public function setNome(string $nome): void
     {
-        $this->nome = $nome;
-
-        return $this;
+        $this->nome = ucwords(trim($nome));
     }
 
-    /**
-     * Get the value of email
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Set the value of email
-     */
-    public function setEmail(string $email): self
+    public function setEmail(string $email): void
     {
-        $this->email = $email;
-
-        return $this;
+        $this->email = strtolower(trim($email));
     }
 
-    /**
-     * Get the value of nascimento
-     */
     public function getNascimento(): string
     {
         return $this->nascimento;
     }
 
-    /**
-     * Set the value of nascimento
-     */
-    public function setNascimento(string $nascimento): self
+    public function setNascimento(string $nascimento): void
     {
-        $this->nascimento = $nascimento;
+        $this->nascimento = trim($nascimento);
 
-        return $this;
     }
 
-    /**
-     * Get the value of telefone
-     */
     public function getTelefone(): string
     {
         return $this->telefone;
     }
 
-    /**
-     * Set the value of telefone
-     */
-    public function setTelefone(string $telefone): self
+    public function setTelefone(string $telefone): void
     {
-        $this->telefone = $telefone;
+        $this->telefone = trim($telefone);
 
-        return $this;
     }
 
-    /**
-     * Get the value of id_usuario
-     */
     public function getIdUsuario(): int
     {
         return $this->id_usuario;
     }
 
-    /**
-     * Set the value of id_usuario
-     */
-    public function setIdUsuario(int $id_usuario): self
+    public function setIdUsuario(int $id_usuario): void
     {
         $this->id_usuario = $id_usuario;
-
-        return $this;
     }
 
-    /**
-     * Get the value of id_paciente
-     */
-    public function getIdPaciente(): int
-    {
-        return $this->id_paciente;
-    }
-
-    /**
-     * Set the value of id_paciente
-     */
-    public function setIdPaciente(int $id_paciente): self
-    {
-        $this->id_paciente = $id_paciente;
-
-        return $this;
-    }
 }
