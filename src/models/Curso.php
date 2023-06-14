@@ -28,6 +28,5 @@ class Curso
     {
         $this->nome = trim(strtoupper($nome));
     }
-
    
 }

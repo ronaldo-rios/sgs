@@ -1,7 +1,7 @@
 <?php
 
 namespace src\actions;
-echo"chegou aqui";
+
 require '../../conexao.php';
 use src\models\Usuario;
 use src\dao\UsuarioDaoMySql;

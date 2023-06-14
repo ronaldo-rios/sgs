@@ -4,7 +4,18 @@ require '../vendor/autoload.php';
 require '../conexao.php';
 use Dotenv\Dotenv;
 use src\config\Conexao;
+use src\dao\CursoDaoMySql;
 use src\models\Auth;
+
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin') {
+    header('Location: access_denied.php');
+    exit();
+}
+
+$curso = new CursoDaoMySql($pdo);
+$cursos = $curso->findAll();
 
 ?>
 
@@ -320,10 +331,16 @@ use src\models\Auth;
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-
+<!-- INÍCIO DO LOOP FOREACH DE CURSOS -->
+<?php foreach($cursos as $c): ?>
 <td>
   <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-  <strong>Danilo Escobar</strong>
+  
+  <strong>
+       <?php 
+        echo $c->getNome();
+      ?>
+  </strong>
 </td>
 
 
@@ -371,11 +388,11 @@ use src\models\Auth;
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $c->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $c->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -384,10 +401,11 @@ use src\models\Auth;
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $c->getNome(); ?>?</div>
    </div>
 
 <div class="modal-footer">
+<a href="<?=$baseUrl;?>/src/actions/deletar_curso_action.php?id=<?=$c->getId();?>">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
     Excluir 
   </button>
@@ -403,6 +421,8 @@ use src\models\Auth;
                 </div>
  </td>
     </tr>
+    <!-- FIM DO LOOP DE CURSOS -->
+    <?php endforeach; ?>
        </tbody>
           </table>
             </div>
@@ -426,11 +446,11 @@ use src\models\Auth;
                     </div>
 
 <div class="modal-body">
-
+<form action="<?=$baseUrl;?>/src/actions/inserir_curso_action.php" id="cad" method="POST">
 <div class="row">
   <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+    <label for="nameBasic" class="form-label">Nome do Curso</label>
+    <input type="text" name="nomecurso" id="nameBasic" class="form-control" placeholder="Informe o nome do curso" required />
       </div>
         </div>
 
@@ -441,7 +461,7 @@ use src\models\Auth;
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD">
   Salvar
     </button>
         </div>
@@ -450,7 +470,7 @@ use src\models\Auth;
               </div>
             </div>
           </div>
-
+          </form>
 <div class="content-backdrop fade">
 
 </div>

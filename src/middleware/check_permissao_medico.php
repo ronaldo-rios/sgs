@@ -6,8 +6,8 @@ use src\models\Auth;
 $auth = new Auth($pdo, $baseUrl);
 $usuarioInfo = $auth->checkToken();
 
-if ($usuarioInfo->getPermissao() === 'admin' || $usuarioInfo->getPermissao() === 'master'){
-    echo 'admin';
+if ($usuarioInfo->getPermissao() === 'medico'){
+    echo 'medico';
 } else {
-    echo 'not admin';
+    echo 'not medico';
 }
