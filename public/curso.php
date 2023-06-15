@@ -300,6 +300,20 @@ $cursos = $curso->findAll();
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
        <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Curso</h4>
+       <?php if(!empty($_SESSION['flash'])) : ?>
+      <div class="flash-message">
+        <?= $_SESSION['flash']; ?>
+      </div>
+        <?= $_SESSION['flash'] = ''; ?> 
+    <?php endif; ?>
+    <script>
+        setTimeout(function() {
+            var flashMessages = document.getElementsByClassName('flash-message');
+            for (var i = 0; i < flashMessages.length; i++) {
+                flashMessages[i].parentNode.removeChild(flashMessages[i]);
+            }
+        }, 3000);
+    </script>
 
  <!-- Inicio Barra Pesquisa-->      
          <div class="navbar-nav align-items-left" >
@@ -347,11 +361,11 @@ $cursos = $curso->findAll();
 <!--Incio Modal Editar-->
  <td>
 
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editarc-<?= $c->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editarc-<?= $c->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -362,11 +376,12 @@ $cursos = $curso->findAll();
       </div>
 
 <div class="modal-body">
-
+<form id="editFormc-<?= $c->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_curso_action.php" method="POST">
+<input type="hidden" name="id" value="<?= $c->getId(); ?>" />
 <div class="row">
   <div class="col mb-3">
    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" value="" /> 
+    <input type="text" name="nome" id="nameBasic" class="form-control" value="<?= $c->getNome(); ?>" /> 
     </div>
       </div>
           </div>
@@ -374,14 +389,14 @@ $cursos = $curso->findAll();
 <div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
 
- <button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editFormc-<?= $c->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+        </form>
         </td>
 
                     

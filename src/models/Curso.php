@@ -26,7 +26,7 @@ class Curso
 
     public function setNome(string $nome):void
     {
-        $this->nome = trim(strtoupper($nome));
+        $this->nome = strtoupper(trim($nome));
     }
    
 }

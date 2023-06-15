@@ -50,13 +50,13 @@ class CursoDaoMySql implements CursoDaoInterface
         $sql->bindValue(':id', $id);
         $sql->execute();
         if($sql->rowCount() > 0){
-            $data = $sql->fetch();
+            $dados = $sql->fetch(\PDO::FETCH_ASSOC);
             $curso = new Curso();
-            $curso->setId($data['id']);
-            $curso->setNome($data['nome']);
+            $curso->setId($dados['id']);
+            $curso->setNome($dados['nome']);
             return $curso;
         } else {
-            return false;
+            throw new \Exception("Curso não encontrado!");
         }
     }
 
