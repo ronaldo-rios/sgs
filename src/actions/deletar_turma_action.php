@@ -1,19 +1,19 @@
 <?php
 
 require '../../conexao.php';
-use src\dao\CursoDaoMySql;
+use src\dao\TurmaDaoMySql;
 
-$cursoDao = new CursoDaoMySql($pdo);
+$turmaDao = new TurmaDaoMySql($pdo);
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($id) {
-    $curso = $cursoDao->findById($id);
-    if ($curso) {
-        $cursoDao->deletarCurso($curso);
+    $turma = $turmaDao->findById($id);
+    if ($turma) {
+        $turmaDao->deletarTurma($turma);
         $_SESSION['flash'] = "<div class='alert alert-success'>Deletado com sucesso!</div>";
         
-        header('Location:'.$baseUrl.'public/curso.php');
+        header('Location:'.$baseUrl.'/public/turma.php');
         exit;
         
     }

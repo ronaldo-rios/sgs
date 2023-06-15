@@ -4,7 +4,18 @@ require '../vendor/autoload.php';
 require '../conexao.php';
 use Dotenv\Dotenv;
 use src\config\Conexao;
+use src\dao\TurmaDaoMySql;
 use src\models\Auth;
+
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin') {
+    header('Location: access_denied.php');
+    exit();
+}
+
+$turma = new TurmaDaoMySql($pdo);
+$turmas = $turma->findAll();
 
 ?>
 
@@ -213,7 +224,7 @@ use src\models\Auth;
     <ul class="menu-sub">
       <li class="menu-item">
         <a href="consulta_aluno.php" class="menu-link" target="_blank">
-          <div data-i18n="Basic" class="azul">Aluno</div>
+          <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>
       
@@ -249,7 +260,6 @@ use src\models\Auth;
     </a>
   </li>
 
-  
 
 
 <!-- Relatórios -->
@@ -290,6 +300,20 @@ use src\models\Auth;
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
        <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Turma</h4>
+       <?php if(!empty($_SESSION['flash'])) : ?>
+      <div class="flash-message">
+        <?= $_SESSION['flash']; ?>
+      </div>
+        <?= $_SESSION['flash'] = ''; ?> 
+    <?php endif; ?>
+    <script>
+        setTimeout(function() {
+            var flashMessages = document.getElementsByClassName('flash-message');
+            for (var i = 0; i < flashMessages.length; i++) {
+                flashMessages[i].parentNode.removeChild(flashMessages[i]);
+            }
+        }, 3000);
+    </script>
 
  <!-- Inicio Barra Pesquisa-->      
          <div class="navbar-nav align-items-left" >
@@ -321,21 +345,27 @@ use src\models\Auth;
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-
+<!-- INÍCIO DO LOOP FOREACH DE TURMAS -->
+<?php foreach($turmas as $t): ?>
 <td>
   <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-  <strong>Danilo Escobar</strong>
+  
+  <strong>
+       <?php 
+        echo $t->getNome();
+      ?>
+  </strong>
 </td>
 
 
 <!--Incio Modal Editar-->
  <td>
 
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editart-<?= $t->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editart-<?= $t->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -346,11 +376,12 @@ use src\models\Auth;
       </div>
 
 <div class="modal-body">
-
+<form id="editFormt-<?= $t->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_turma_action.php" method="POST">
+<input type="hidden" name="id" value="<?= $t->getId(); ?>" />
 <div class="row">
   <div class="col mb-3">
    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" value="" /> 
+    <input type="text" name="nometurma" id="nameBasic" class="form-control" value="<?= $t->getNome(); ?>" /> 
     </div>
       </div>
           </div>
@@ -358,37 +389,38 @@ use src\models\Auth;
 <div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
 
- <button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editFormt-<?= $t->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+        </form>
         </td>
 
                     
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $t->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $t->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro Turma</h5>
+       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Turma</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $t->getNome(); ?>?</div>
    </div>
 
 <div class="modal-footer">
+<a href="<?=$baseUrl;?>/src/actions/deletar_turma_action.php?id=<?=$t->getId();?>">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
     Excluir 
   </button>
@@ -404,6 +436,8 @@ use src\models\Auth;
                 </div>
  </td>
     </tr>
+    <!-- FIM DO LOOP DE TURMAS -->
+    <?php endforeach; ?>
        </tbody>
           </table>
             </div>
@@ -422,18 +456,16 @@ use src\models\Auth;
   <div class="modal-dialog" role="document">
      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro Turma</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Turma</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
-
+<form action="<?=$baseUrl;?>/src/actions/inserir_turma_action.php" id="cad" method="POST">
 <div class="row">
   <div class="col mb-3">
-<form action="/src/dao/TurmaDaoMySql.php" method="post"  enctype="multipart/form-data">
-    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nome" class="form-control" placeholder="Informe o nome completo do adiministrador" />
-</form>
+    <label for="nameBasic" class="form-label">Nome da Turma</label>
+    <input type="text" name="nome" id="nameBasic" class="form-control" placeholder="Informe o nome da Turma" required />
       </div>
         </div>
 
@@ -444,7 +476,7 @@ use src\models\Auth;
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD">
   Salvar
     </button>
         </div>
@@ -453,7 +485,7 @@ use src\models\Auth;
               </div>
             </div>
           </div>
-
+          </form>
 <div class="content-backdrop fade">
 
 </div>
