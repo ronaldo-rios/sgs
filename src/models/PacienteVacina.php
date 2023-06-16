@@ -5,21 +5,11 @@ declare(strict_types=1);
 namespace src\models;
 
 class PacienteVacina{
-    private int $id;
     private int $idPaciente;
     private int $idVacina;
     private string $data;
     private string $dose;
 
-   public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id= $id;
-    }
 
     public function getIdPaciente(): int
     {

@@ -2,6 +2,7 @@
 
 require '../vendor/autoload.php';
 require '../conexao.php';
+
 use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\dao\TurmaDaoMySql;
@@ -183,7 +184,7 @@ $turmas = $turma->findAll();
     <a href="aluno.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-face"></i>
      
-      <div data-i18n="Basic" class="azul" >Alunos</div>
+      <div data-i18n="Basic" class="azul" >Paciente</div>
     </a>
 
     <a href="medico.php" class="menu-link">

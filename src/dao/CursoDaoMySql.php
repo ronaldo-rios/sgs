@@ -15,7 +15,7 @@ class CursoDaoMySql implements CursoDaoInterface
     }
 
     // Inserção de novo curso:
-    public function inserirCurso(Curso $curso)
+    public function inserirCurso(Curso $curso): Curso
     {
         $sql = $this->pdo->prepare("INSERT INTO cursos (nome) VALUES (:nome)");
         $sql->bindValue(':nome', $curso->getNome());
@@ -25,7 +25,7 @@ class CursoDaoMySql implements CursoDaoInterface
     }
 
     // Editar um curso:
-    public function atualizarCurso(Curso $curso)
+    public function atualizarCurso(Curso $curso): Curso
     {
         $sql = $this->pdo->prepare("UPDATE cursos SET nome = :nome WHERE id = :id");
         $sql->bindValue(':nome', $curso->getNome());
@@ -35,7 +35,7 @@ class CursoDaoMySql implements CursoDaoInterface
     }
 
     // Exclusão de curso:
-    public function deletarCurso(Curso $curso)
+    public function deletarCurso(Curso $curso): bool
     {
         $sql = $this->pdo->prepare("DELETE FROM cursos WHERE id = :id");
         $sql->bindValue(':id', $curso->getId());
@@ -44,7 +44,7 @@ class CursoDaoMySql implements CursoDaoInterface
     }
 
     // Buscar por ID:
-    public function findById($id)
+    public function findById(int $id): Curso
     {
         $sql = $this->pdo->prepare("SELECT * FROM cursos WHERE id = :id");
         $sql->bindValue(':id', $id);
@@ -56,12 +56,12 @@ class CursoDaoMySql implements CursoDaoInterface
             $curso->setNome($dados['nome']);
             return $curso;
         } else {
-            throw new \Exception("Curso não encontrado!");
+            echo "Curso não encontrado!";
         }
     }
 
     // Buscar todos os cursos:
-    public function findAll()
+    public function findAll(): array
     {
         $arrayCursos = [];
 

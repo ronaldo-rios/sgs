@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace src\interfaces;
 
 use src\models\Turma;
@@ -10,9 +12,9 @@ use src\models\Turma;
 // da tabela e o DAO que é a implementação do CRUD em si e persistência no banco de dados.
 interface TurmaDaoInterface
 {
-    public function inserirTurma(Turma $turma);
-    public function atualizarTurma(Turma $turma);
-    public function deletarTurma(Turma $turma);
-    public function findById($id);
-    public function findAll();
+    public function inserirTurma(Turma $turma): Turma;
+    public function atualizarTurma(Turma $turma): Turma;
+    public function deletarTurma(Turma $turma): bool;
+    public function findById(int $id): Turma;
+    public function findAll(): array;
 }

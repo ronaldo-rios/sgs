@@ -16,7 +16,7 @@ class TurmaDaoMySql implements TurmaDaoInterface
     }
 
     // Inserção de nova turma:
-    public function inserirTurma(Turma $turma)
+    public function inserirTurma(Turma $turma): Turma
     {
         $sql = $this->pdo->prepare("INSERT INTO turmas (nome) VALUES (:nome)");
         $sql->bindValue(':nome', $turma->getNome());
@@ -26,7 +26,7 @@ class TurmaDaoMySql implements TurmaDaoInterface
     }
 
     // Editar uma turma:
-    public function atualizarTurma(Turma $turma)
+    public function atualizarTurma(Turma $turma): Turma
     {
         $sql = $this->pdo->prepare("UPDATE turmas SET nome = :nome WHERE id = :id");
         $sql->bindValue(':nome', $turma->getNome());
@@ -36,7 +36,7 @@ class TurmaDaoMySql implements TurmaDaoInterface
     }
 
     // Exclusão de turma:
-    public function deletarTurma(Turma $turma)
+    public function deletarTurma(Turma $turma): bool
     {
         $sql = $this->pdo->prepare("DELETE FROM turmas WHERE id = :id");
         $sql->bindValue(':id', $turma->getId());
@@ -45,7 +45,7 @@ class TurmaDaoMySql implements TurmaDaoInterface
     }
 
     // Buscar por ID:
-    public function findById($id)
+    public function findById($id): Turma
     {
         $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE id = :id");
         $sql->bindValue(':id', $id);
@@ -57,12 +57,12 @@ class TurmaDaoMySql implements TurmaDaoInterface
             $turma->setNome($data['nome']);
             return $turma;
         } else {
-            return false;
+            echo "Turma não encontrada!";
         }
     }
 
     // Buscar todos:
-    public function findAll()
+    public function findAll(): array
     {
         $sql = $this->pdo->prepare("SELECT * FROM turmas");
         $sql->execute();
@@ -76,7 +76,7 @@ class TurmaDaoMySql implements TurmaDaoInterface
             }
             return $lista;
         } else {
-            return false;
+            return [];
         }
     }
 }

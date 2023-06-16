@@ -15,7 +15,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
     
     // Método auxiliar para gerar um objeto de Usuario existente no banco de dados a partir de um array:
-    private function gerarUsuario($array)
+    private function gerarUsuario($array): Usuario
     {
         $usuario = new Usuario();
         $usuario->setId($array['id']);
@@ -31,7 +31,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // procurar usuário por e-mail:
-    public function findByEmail($email)
+    public function findByEmail($email): Usuario
     {
         if(!empty($email)){
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
@@ -43,11 +43,11 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
                 return $usuario;
             }
         }
-        throw new \Exception("E-mail não cadastrado!");
+        echo "E-mail não cadastrado!";
     }
 
     // prourar usuário por token:
-    public function findByToken($token)
+    public function findByToken($token): Usuario
     {
         if(!empty($token)){
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE token = :token");
@@ -62,7 +62,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         }
     }
 
-    public function findById($id)
+    public function findById(int $id): Usuario
     {
         if(!empty($id)){
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE id = :id");
@@ -75,12 +75,12 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
                 return $usuario;
             }
         }else {
-            return false;
+            echo "ID não cadastrado!";
         }
     }
 
     // procurar todos os usuários:
-    public function findAll()
+    public function findAll(): array
     {
         $array = [];
 
@@ -95,7 +95,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // Procurar todos os administradores:
-    public function findAdm()
+    public function findAdm(): array
     {
         $array = [];
 
@@ -110,7 +110,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // Procurar todos os servidores:
-    public function findServidor()
+    public function findServidor(): array
     {
         $array = [];
 
@@ -125,7 +125,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // Procurar todos os médicos:
-    public function findMedico()
+    public function findMedico(): array
     {
         $array = [];
 
@@ -139,7 +139,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         return $array;
     }
     // adicionar novo usuário
-    public function inserirUsuario(Usuario $u)
+    public function inserirUsuario(Usuario $u): Usuario
     {
         $sql = $this->pdo->prepare(
             "INSERT INTO usuarios 
@@ -162,7 +162,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // atualizar usuário:
-    public function atualizarUsuario(Usuario $u)
+    public function atualizarUsuario(Usuario $u): bool
     {
         $sql = $this->pdo->prepare(
             "UPDATE usuarios SET 
@@ -191,7 +191,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
     }
 
     // remover usuário:
-    public function deletarUsuario(Usuario $u)
+    public function deletarUsuario(Usuario $u): bool
     {
         $sql = $this->pdo->prepare("DELETE FROM usuarios WHERE id = :id");
         $sql->bindValue(':id', $u->getId());
@@ -199,7 +199,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         return true;
     }
 
-    public function emailExists($email)
+    public function emailExists($email): bool
     {
         if(!empty($email)){
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");

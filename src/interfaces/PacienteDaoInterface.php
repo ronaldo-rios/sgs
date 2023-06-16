@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace src\interfaces;
 
 use src\models\Paciente;
@@ -8,7 +10,11 @@ use src\models\Paciente;
 // A Model Usuario vai fazer injeção de dependencia diretamente no parâmetro dos métodos.
 // Basicamente a Interface vai fazer o intermédio entre o Model que é a representação
 // da tabela e o DAO que é a implementação do CRUD em si e persistência no banco de dados.
-interface PacienteInterface
+interface PacienteDaoInterface
 {
-    public function inserirPaciente(Paciente $paciente);
+    public function inserirPaciente(Paciente $paciente): Paciente;
+    public function atualizarPaciente(Paciente $paciente): Paciente;
+    public function deletarPaciente(Paciente $paciente): bool;
+    public function findById(int $id): Paciente;
+    public function findAll(): array;
 }

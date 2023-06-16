@@ -172,7 +172,7 @@ use src\models\Auth;
   <a href="aluno.php" class="menu-link">
     <i class="menu-icon tf-icons bx bx-face"></i>
    
-    <div data-i18n="Basic" class="azul" >Alunos</div>
+    <div data-i18n="Basic" class="azul" >Pacientes</div>
   </a>
 
   <a href="medico.php" class="menu-link">

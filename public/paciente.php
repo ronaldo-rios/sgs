@@ -4,6 +4,10 @@ require '../vendor/autoload.php';
 require '../conexao.php';
 use Dotenv\Dotenv;
 use src\models\Auth;
+use src\dao\PacienteDaoMySql;
+
+$paciente = new PacienteDaoMySql($pdo);
+$pacientes = $paciente->findAll();
 
 ?>
 
@@ -170,7 +174,7 @@ use src\models\Auth;
             <a href="aluno.php" class="menu-link">
               <i class="menu-icon tf-icons bx bx-face"></i>
              
-              <div data-i18n="Basic" class="azul" >Alunos</div>
+              <div data-i18n="Basic" class="azul" >Paciente</div>
             </a>
 
             <a href="medico.php" class="menu-link">
@@ -209,7 +213,7 @@ use src\models\Auth;
     <ul class="menu-sub">
       <li class="menu-item">
         <a href="consulta_aluno.php" class="menu-link" target="_blank">
-          <div data-i18n="Basic" class="azul">Aluno</div>
+          <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>
       
@@ -332,11 +336,13 @@ use src\models\Auth;
   <!-- Corpo da Tabela -->
   <tbody class="table-border-bottom-0 gray">
     <tr>
-
+    <?php foreach($pacientes as $p): ?>
 <!--Inicio Conteudo Tabela-->
     <td>
      <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-     <strong>Danilo Escobar</strong>
+     <strong>
+      <?= $p->getNome() ?>
+     </strong>
     </td>
 
    
@@ -506,6 +512,8 @@ use src\models\Auth;
                 </div>
 </td>
   </tr>
+   <!-- FIM DO LOOP DE PACIENTES -->
+   <?php endforeach; ?>
    </tbody>
     </table>
       </div>

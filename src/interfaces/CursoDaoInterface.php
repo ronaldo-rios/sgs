@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace src\interfaces;
 
 use src\models\Curso;
@@ -7,9 +9,9 @@ use src\models\Curso;
 
 interface CursoDaoInterface
 {
-    public function inserirCurso(Curso $curso);
-    public function atualizarCurso(Curso $curso);
-    public function deletarCurso(Curso $curso);
-    public function findById($id);
-    public function findAll();
+    public function inserirCurso(Curso $curso): Curso;
+    public function atualizarCurso(Curso $curso): Curso;
+    public function deletarCurso(Curso $curso): bool;
+    public function findById(int $id): Curso;
+    public function findAll(): array;
 }
