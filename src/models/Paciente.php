@@ -46,6 +46,7 @@ class Paciente {
         $this->nome = ucwords(trim($nome));
     }
 
+
     public function getEmail(): string
     {
         return $this->email;
@@ -95,8 +96,6 @@ class Paciente {
     {
         $this->foto = $foto;
     }
-
-
 
     public function getIdCurso(): int
     {
