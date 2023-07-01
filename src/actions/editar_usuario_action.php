@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 require '../../conexao.php';
 use src\dao\UsuarioDaoMySql;
-
+echo "entour";
 $usuarioDao = new UsuarioDaoMySql($pdo);
 
 $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);

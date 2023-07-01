@@ -14,5 +14,7 @@ interface TurmaDaoInterface
     public function atualizarTurma(Turma $turma);
     public function deletarTurma(Turma $turma);
     public function findById($id);
+    public function findByName($nome);
     public function findAll();
+    public function findTurma($id);
 }

@@ -13,6 +13,17 @@ class Soap{
     private string $data;
     private int $idProntuario;
 
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id =$id;
+    }
+
     public function getSubjetivo(): string
     {
         return $this->subjetivo;

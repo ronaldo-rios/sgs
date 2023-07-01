@@ -12,4 +12,6 @@ interface CursoDaoInterface
     public function deletarCurso(Curso $curso);
     public function findById($id);
     public function findAll();
+    public function findByName($nome);
+    public function findCurso ($id);
 }

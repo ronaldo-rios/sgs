@@ -1,3 +1,7 @@
+.box-search{
+  display: flex;
+}
+
 i{
   color: #ED1C24;
 }
@@ -13,6 +17,8 @@ i{
   color:#2B5AAD;
   font-weight: bold;
 }
+
+
 
 .gray{
   color:#646464;font-weight:bold;

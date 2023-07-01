@@ -28,7 +28,7 @@ class CursoDaoMySql implements CursoDaoInterface
     public function atualizarCurso(Curso $curso)
     {
         $sql = $this->pdo->prepare("UPDATE cursos SET nome = :nome WHERE id = :id");
-        $sql->bindValue(':nome', $curso->getNome());
+        print_r($sql->bindValue(':nome', $curso->getNome()));
         $sql->bindValue(':id', $curso->getId());
         $sql->execute();
         return $curso;
@@ -39,12 +39,13 @@ class CursoDaoMySql implements CursoDaoInterface
     {
         $sql = $this->pdo->prepare("DELETE FROM cursos WHERE id = :id");
         $sql->bindValue(':id', $curso->getId());
+        
         $sql->execute();
         return true;
     }
 
-    // Buscar por ID:
-    public function findById($id)
+    // Buscar por id retonando o nome:
+    public function findCurso($id)
     {
         $sql = $this->pdo->prepare("SELECT * FROM cursos WHERE id = :id");
         $sql->bindValue(':id', $id);
@@ -54,10 +55,47 @@ class CursoDaoMySql implements CursoDaoInterface
             $curso = new Curso();
             $curso->setId($data['id']);
             $curso->setNome($data['nome']);
+            $lista[] = $curso;
+            return $data['nome'];
+        } else {
+          return null;
+        }
+    }
+
+
+    // Buscar por nome:
+    public function findByName($nome)
+    {
+        $sql = $this->pdo->prepare("SELECT * FROM cursos WHERE nome = :nome");
+        $sql->bindValue(':nome', $nome);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch();
+            $curso = new Curso();
+            $curso->setId($data['id']);
+            $curso->setNome($data['nome']);
+            $lista[] = $curso;
+            return $lista;
+        } else {
+          return [];
+        }
+    }
+
+    public function findById($id)
+    {
+        $sql = $this->pdo->prepare("SELECT * FROM cursos WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+            $curso= new Curso();
+            $curso->setId($data['id']);
+            $curso->setNome($data['nome']);
             return $curso;
         } else {
-            return false;
+            return [];
         }
+   
     }
 
     // Buscar todos os cursos:
@@ -79,5 +117,19 @@ class CursoDaoMySql implements CursoDaoInterface
         }
         return $arrayCursos;
     }
+
+ //Curso existe 
+ public function nameExists($nome)
+ {
+     if(!empty($nome)){
+         $sql = $this->pdo->prepare("SELECT * FROM cursos WHERE nome = :nome");
+         $sql->bindValue(':nome', $nome);
+         $sql->execute();
+         if($sql->rowCount() > 0){
+             return true;
+         }
+     }
+     return false;
+ }
 }
 

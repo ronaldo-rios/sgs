@@ -6,20 +6,31 @@ require '../conexao.php';
 use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
-use src\models\Usuario;
-use src\interfaces\UsuarioDaoInterface;
+use src\models\Paciente;
+use src\interfaces\PacienteDaoInterface;
+use src\dao\PacienteDaoMySql;
+use src\dao\CursoDaoMySql;
+use src\dao\TurmaDaoMySql;
 
 //$auth = new Auth($pdo, $baseUrl);
-//$usuarioInfo = $auth->checkToken();
-//if ($usuarioInfo->getPermissao() !== 'admin') {
-  //  header('Location: access_denied.php');
-    //exit();
+//$psuarioInfo = $auth->checkToken();
+//if ($psuarioInfo->getPermissao() !== 'admin') {
+//    header('Location: access_denied.php');
+  //  exit();
 //}
 
-$usuario = new UsuarioDaoMySql($pdo);
-$usuarios = $usuario->findAdm();
 
+$paciente = new PacienteDaoMySql($pdo);
+$pacientes = $paciente->findAll();
+
+$turma = new TurmaDaoMySql($pdo);
+$turmas = $turma->findAll();
+
+
+$curso = new CursoDaoMySql($pdo);
+$cursos = $curso->findAll();
 ?>
+
 
 <!DOCTYPE html>
 
@@ -200,11 +211,12 @@ $usuarios = $usuario->findAdm();
           </ul>
         </aside>
 <!-- Fim Dashbord -->
+
 <!-- Inicio da Página -->
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Administrador Principal</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Prontuários</h4>
     <?php if(!empty($_SESSION['flash'])) : ?>
         <?= $_SESSION['flash']; ?>
         <?= $_SESSION['flash'] = ''; ?> 
@@ -244,48 +256,88 @@ $usuarios = $usuario->findAdm();
 
 <tr>
 <!-- INÍCIO DO LOOP FOREACH DE USUÁRIOS -->
-<?php foreach($usuarios as $u): ?>
+<?php 
+
+foreach($pacientes as $p):
+  ?>
   <td>
     <i class="fab fa-angular fa-lg text-danger me-3"></i> 
 <!-- Busca de todos os usuarios admins: -->
     <strong>
       <?php 
-        echo $u->getNome();
+        echo $p->getNome();
+
+
       ?>
     </strong>
   </td>
 
  
+
+
 <!-- Modal Visualizar-->
 <td>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $u->getId() ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $p->getId() ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
-  
-<div class="modal fade" id="show-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
+ 
+<div class="modal fade" id="show-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-         <h5 class="modal-title" id="modalFullTitle">Cadastro Administrador</h5>
+         <h5 class="modal-title" id="modalFullTitle">Cadastro Paciente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
             </div>
-  
 <!-- Corpo Modal -->
 <div class="modal-body">
 <div class="list-group list-group-flush">
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p>Nome</p>
-      <?= $u->getNome(); ?>
+      <?= $p->getNome(); ?>
         </p>  
-     </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>CPF</p>
-      <?= $u->getCpf(); ?>
+    <p>Matricula</p>
+      <?= $p->getMatricula(); ?>
         </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
   <p> E-mail</p>
-  <?= $u->getEmail(); ?>
+  <?= $p->getEmail(); ?>
+  </p>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Data Nascimento</p>
+  <?= $p->getNascimento(); ?>
+  </p>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Telefone</p>
+  <?= $p->getTelefone(); ?>
+  </p>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Endereço</p>
+  <?= $p->getEndereco(); ?>
+  </p>
+  
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Curso</p>
+  <?php 
+
+$idd = $p->getIdCurso();
+$nomec = $curso->findCurso($idd);
+echo $nomec;
+
+ ?>
+  
+  </p>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Turma</p>
+  
+
+<?php 
+
+$idd = $p->getIdTurma();
+$nomet = $turma->findTurma($idd);
+echo $nomet;
+
+ ?>
   </p>
      </div>
           </div>
@@ -294,66 +346,106 @@ $usuarios = $usuario->findAdm();
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Fechar</button>
     </div>
       </div>
-       </div>
-       </div>
         </div>
-</td>
+          </div>
+           </div>    
+            </td>
 
 
 
 <!--Incio Modal Editar-->
  <td>
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
+
+
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $p->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editar-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
 
 <div class="modal-header">
-  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
+  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
       </div>
 
 <div class="modal-body">
-  <form id="editForm-<?= $u->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" method="POST">
+  <form id="editForm-<?= $p->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_paciente_action.php" method="POST">
 
-  <input type="hidden" name="id" value="<?= $u->getId(); ?>" />
-  <input type="hidden" name="permissao" value="<?= $u->getPermissao(); ?>" />
+  <input type="hidden" name="id" value="<?= $p->getId(); ?>" />
+  
   <div class="row">
     <div class="col mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
+      <input type="text" name="nome" class="form-control" value="<?= $p->getNome(); ?>" /> 
     </div>
+   
+    <div class="col mb-0">
+      <label for="nascimento" class="form-label">Data Nascimento</label>
+      <input type="text" name="nascimento" class="form-control" value="<?= $p->getNascimento(); ?>" />
+        </div>
   </div>
 
 
-  <div class="row g-2">
+  <div class="row ">
     <div class="col mb-0">
       <label for="email" class="form-label">Email</label>
-      <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
+      <input type="text" name="email" class="form-control" value="<?= $p->getEmail(); ?>" />
     </div>
+    <div class="col mb-3">
+      <label for="matricula" class="form-label">Matricula</label>
+      <input type="text" name="matricula" class="form-control" value="<?= $p->getMatricula(); ?>" /> 
+    </div>
+  </div>
 
     <div class="row g-2">
     <div class="col mb-0">
-      <label for="senha" class="form-label">Senha</label>
-      <input type="password" name="senha" class="form-control" value="<?= $u->getSenha(); ?>" />
+      <label for="telefone" class="form-label">Telefone</label>
+      <input type="text" name="telefone" class="form-control" value="<?= $p->getTelefone(); ?>" />
     </div>
 
     <div class="col mb-0">
-      <label for="cpf" class="form-label">CPF</label>
-      <input type="text" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
+      <label for="endereco" class="form-label">Endereço</label>
+      <input type="text" name="endereco" class="form-control" value="<?= $p->getEndereco(); ?>" />
         </div>
+  
         </div>
+
+        <div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Curso</label>
+    <select class="form-select" id="id_curso" name="id_curso" aria-label="Selecione o curso">
+        <?php foreach($cursos as $c): ?>
+            <option value="<?= $c->getId(); ?>" <?php if ($c->getId() == $c->getId()) echo 'selected'; ?>>
+                <?= $c->getNome(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Turma</label>
+    <select class="form-select" id="id_turma" name="id_turma" aria-label="Selecione a turma">
+        <?php foreach($turmas as $t): ?>
+            <option value="<?= $t->getId(); ?>" <?php if ($t->getId() == $t->getId()) echo 'selected'; ?>>
+                <?= $t->getNome(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+        <div class="mb-3">
+        <label for="foto" class="form-label">Anexar Foto</label>
+        <input class="form-control" type="file" id="foto" name="foto" />
+      </div>
       </div>
 
     
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul" form="editForm-<?= $u->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editForm-<?= $p->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
                     </div>
@@ -369,24 +461,24 @@ $usuarios = $usuario->findAdm();
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $p->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
+       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $u->getNome(); ?>?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $p->getNome(); ?>?</div>
    </div>
 
 <div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_usuario_action.php?id=<?=$u->getId();?>">
+<a href="<?=$baseUrl;?>/src/actions/deletar_paciente_action.php?id=<?=$p->getId();?>">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
     Excluir 
   </button>
@@ -407,9 +499,9 @@ $usuarios = $usuario->findAdm();
     <?php endforeach; ?>
        </tbody>
           </table>
-            </div>
               </div>
                 </div>
+</div>
 
 <!-- Inicio Modal Cadastrar -->
 <div class="col-lg-4 col-md-6" style="margin:20px;">
@@ -425,38 +517,78 @@ $usuarios = $usuario->findAdm();
 
      
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
-<form action="<?=$baseUrl;?>/src/actions/inserir_usuario_action.php" id="cad" method="POST">
 
-<input type="hidden" name="permissao" value="admin" />
+<form action="<?=$baseUrl;?>/src/actions/inserir_paciente_action.php" id="cad" method="POST" enctype="multipart/form-data">
 
 <div class="row">
   <div class="col mb-3">
     <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" name ="nome" class="form-control" placeholder="Nome do novo Administrador" required />
+    <input type="text" name ="nome" class="form-control" placeholder="Nome do paciente" required />
       </div>
 
-<div class="col mb-0">
-    <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" name="cpf" class="form-control" placeholder="Informe o CPF" />
+  <div class="col mb-0">
+    <label for="dobBasic" class="form-label">Data Nascimento</label>
+     <input type="date" name="nascimento" class="form-control" placeholder="Informe a data é de nascimento" />
        </div>
+      </div>
+    
+<div class="row">
+<div class="col mb-0">
+    <label for="dobBasic" class="form-label">Matricula</label>
+     <input type="text" name="matricula" class="form-control" placeholder="Informe a matriula" />
+       </div>
+<div class="col mb-0">
+    <label for="emailBasic" class="form-label">Email</label>
+    <input type="text" name="email" class="form-control" placeholder="E-mail" required />
+      </div>
          </div>
 
 <div class ="row g-2">
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="E-mail do novo Administrador" required />
+<div class="col mb-0">
+  <label for="emailBasic" class="form-label">Telefone</label>
+    <input type= "phone" name="telefone" class="form-control" placeholder="Telefone" required />
       </div>
-
+        
   <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Senha</label>
-    <input type="password" name="senha" class="form-control" placeholder="Senha" required />
+    <label for="emailBasic" class="form-label">Endereço</label>
+    <input type="text" name="endereco" class="form-control" placeholder="Endereco" required />
       </div>
         </div>
+
+ 
+   
+        <div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Curso</label>
+    <select class="form-select" id="id_curso" name="id_curso" aria-label="Selecione o curso">
+        <?php foreach($cursos as $c): ?>
+            <option value="<?= $c->getId(); ?>" <?php if ($c->getId() == $c->getId()) echo 'selected'; ?>>
+                <?= $c->getNome(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Turma</label>
+    <select class="form-select" id="id_curso" name="id_turma" aria-label="Selecione a turma">
+        <?php foreach($turmas as $t): ?>
+            <option value="<?= $t->getId(); ?>" <?php if ($t->getId() == $t->getId()) echo 'selected'; ?>>
+                <?= $t->getNome(); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Anexar Foto</label>
+      <input class="form-control" type="file" id="foto" name="foto"  accept="image/"/>
+       </div>
           </div>
 
 <div class="modal-footer">
@@ -470,23 +602,20 @@ $usuarios = $usuario->findAdm();
           </div>
             </div>
               </div>
-            </div>
-          </div>
-          </form>
-<div class="content-backdrop fade">
+                </div>
+                 </div>
+                 </form>
 
-</div>
-
-  </div>
+      </div>
 <!-- Content wrapper -->
-        </div>
-         <!-- / Layout page -->
+    </div>
+     <!-- / Layout page -->
       </div>
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout wrapper -->
+   
 
  
 
@@ -511,5 +640,16 @@ $usuarios = $usuario->findAdm();
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
   </body>
+  
+  <script>
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
+
 </html>

@@ -6,20 +6,26 @@ require '../conexao.php';
 use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
-use src\models\Usuario;
-use src\interfaces\UsuarioDaoInterface;
+use src\dao\PacienteDaoMySql;
+use src\dao\ProntuarioDaoMySql;
+use src\models\Paciente;
+use src\models\Prontuario;  
+
 
 //$auth = new Auth($pdo, $baseUrl);
-//$usuarioInfo = $auth->checkToken();
-//if ($usuarioInfo->getPermissao() !== 'admin') {
-  //  header('Location: access_denied.php');
-    //exit();
+//$psuarioInfo = $auth->checkToken();
+//if ($psuarioInfo->getPermissao() !== 'admin') {
+//    header('Location: access_denied.php');
+  //  exit();
 //}
 
-$usuario = new UsuarioDaoMySql($pdo);
-$usuarios = $usuario->findAdm();
+$paciente = new PacienteDaoMySql($pdo);
+$prontuario = new ProntuarioDaoMySql($pdo);
+
+
 
 ?>
+
 
 <!DOCTYPE html>
 
@@ -200,25 +206,48 @@ $usuarios = $usuario->findAdm();
           </ul>
         </aside>
 <!-- Fim Dashbord -->
+
 <!-- Inicio da Página -->
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Administrador Principal</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Prontuários</h4>
     <?php if(!empty($_SESSION['flash'])) : ?>
         <?= $_SESSION['flash']; ?>
         <?= $_SESSION['flash'] = ''; ?> 
     <?php endif; ?>
 
  <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
+ <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
+  <input type="search" class="form-control " id="search"  placeholder="Informe o nome do aluno que deseja pesquisar" aria-label="Pesquise"  />
+    <button  onclick="searchData()" class="btn btn-primary ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+              </button>
+                 </div>
+<?php
+//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+if(!empty ($_GET['search'])){
+  $data= $_GET['search'];
+//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que encontrou
+if (!empty($prontuario->findByName($data))) {
+ 
+    $prontuarios = $prontuario->findByName($data);
+    $pacientes = $paciente->findByName($data);
+
+}else{
+  echo "<div class='alert alert-danger' role='alert'>
+  Não há prontuário vinculado ao aluno informado, favor cadastrar!";
+  $pacientes = [];
+} 
+
+}else {
+  $pacientes = [];
+  
+  
+}
+?>
  
 
 <!-- Inicio da Tabela -->
@@ -232,9 +261,10 @@ $usuarios = $usuario->findAdm();
       <tr>
 
          <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
+         <th style="color:#2B5AAD;;font-weight:bold;">Matricula</th>
          <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
-        <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
+      
         
       </tr>
     </thead>
@@ -244,172 +274,57 @@ $usuarios = $usuario->findAdm();
 
 <tr>
 <!-- INÍCIO DO LOOP FOREACH DE USUÁRIOS -->
-<?php foreach($usuarios as $u): ?>
+<?php foreach($pacientes as $p):;?>
   <td>
     <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-<!-- Busca de todos os usuarios admins: -->
     <strong>
       <?php 
-        echo $u->getNome();
+        echo $p->getNome();
+      ?>
+    </strong>
+  </td>
+
+  <td>
+    <i class="fab fa-angular fa-lg text-danger me-3"></i> 
+    <strong>
+      <?php 
+        echo $p->getMatricula();
       ?>
     </strong>
   </td>
 
  
-<!-- Modal Visualizar-->
+<!--  Visualizar-->
 <td>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $u->getId() ?>" style="background-color:#cdf3fb;border:none">
+  <a href="<?=$baseUrl;?>/public/prontuario_view.php?id=<?=$p->getId();?>">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"  style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
-  
-<div class="modal fade" id="show-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-         <h5 class="modal-title" id="modalFullTitle">Cadastro Administrador</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
-            </div>
-  
-<!-- Corpo Modal -->
-<div class="modal-body">
-<div class="list-group list-group-flush">
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Nome</p>
-      <?= $u->getNome(); ?>
-        </p>  
-     </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>CPF</p>
-      <?= $u->getCpf(); ?>
-        </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> E-mail</p>
-  <?= $u->getEmail(); ?>
-  </p>
-     </div>
-          </div>
-
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Fechar</button>
-    </div>
-      </div>
-       </div>
-       </div>
-        </div>
+</a>
+ 
 </td>
 
 
 
 <!--Incio Modal Editar-->
  <td>
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
+ <a href="<?=$baseUrl;?>/public/prontuario_edit.php?id=<?=$p->getId();?>">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $p->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
-
- <div class="modal fade" id="editar-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-
-<div class="modal-header">
-  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
-      </div>
-
-<div class="modal-body">
-  <form id="editForm-<?= $u->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_usuario_action.php" method="POST">
-
-  <input type="hidden" name="id" value="<?= $u->getId(); ?>" />
-  <input type="hidden" name="permissao" value="<?= $u->getPermissao(); ?>" />
-  <div class="row">
-    <div class="col mb-3">
-      <label for="nome" class="form-label">Nome</label>
-      <input type="text" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
-    </div>
-  </div>
-
-
-  <div class="row g-2">
-    <div class="col mb-0">
-      <label for="email" class="form-label">Email</label>
-      <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
-    </div>
-
-    <div class="row g-2">
-    <div class="col mb-0">
-      <label for="senha" class="form-label">Senha</label>
-      <input type="password" name="senha" class="form-control" value="<?= $u->getSenha(); ?>" />
-    </div>
-
-    <div class="col mb-0">
-      <label for="cpf" class="form-label">CPF</label>
-      <input type="text" name="cpf" class="form-control" value="<?= $u->getCpf(); ?>" />
-        </div>
-        </div>
-      </div>
-
-    
-      
-<div class="modal-footer">
-
- <button type="submit" class="btn btn-primary azul" form="editForm-<?= $u->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
-
-<button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+ </a>
         </td>
       
                     
-<!-- Inicio Modal Excluir--> 
-<td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $u->getId(); ?>" style="background-color:#cdf3fb;border:none">
-  <i class="bx bx-trash-alt"  ></i>
-</button>
-
-<div class="modal fade" id="excluir-<?= $u->getId(); ?>" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
-          </div>
-
-<div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $u->getNome(); ?>?</div>
-   </div>
-
-<div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_usuario_action.php?id=<?=$u->getId();?>">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
-    Excluir 
-  </button>
-</a>
-
-  <button type="button" class="btn btn-primary"   style="background-color:#2B5AAD">
-    Cancelar
-  </button>
-     </div>
-        </div>
-          </div>
-            </div>
-              </div>
-                </div>
- </td>
     </tr>
     <!-- FIM DO LOOP DE USUARIOS -->
     <?php endforeach; ?>
        </tbody>
           </table>
-            </div>
               </div>
                 </div>
+</div>
 
 <!-- Inicio Modal Cadastrar -->
 <div class="col-lg-4 col-md-6" style="margin:20px;">
@@ -425,40 +340,265 @@ $usuarios = $usuario->findAdm();
 
      
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Administrador</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Prontuario</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
-<div class="modal-body">
-<form action="<?=$baseUrl;?>/src/actions/inserir_usuario_action.php" id="cad" method="POST">
+<?php 
 
-<input type="hidden" name="permissao" value="admin" />
+$alunos=$paciente->findAll();?>
+<div class="modal-body">
+<form action="<?=$baseUrl;?>/src/actions/inserir_prontuario_action.php" id="cad" method="POST">
 
 <div class="row">
-  <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" name ="nome" class="form-control" placeholder="Nome do novo Administrador" required />
-      </div>
+    <div class="mb-3">
+        <label for="exampleFormControlSelect1" class="form-label">Aluno</label>
+        <select class="form-select" id="id_aluno" name="id_paciente" aria-label="Selecione o aluno">
+            <?php foreach($alunos as $a): ?>
+                <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
+                    <?= $a->getNome(); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
 
+<div class="row">
+    <div class="mb-3">
+        <label for="exampleFormControlSelect1" class="form-label">Matricula</label>
+        <select class="form-select" id="id_matricula" name="matricula_paciente" aria-label="Selecione a matrícula">
+            <?php foreach($alunos as $a): ?>
+                <option value="<?= $a->getMatricula(); ?>" data-aluno-id="<?= $a->getId(); ?>">
+                    <?= $a->getMatricula(); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+
+
+
+<input type="hidden" name="id_usuario" value="1">
+
+<div class="row">
 <div class="col mb-0">
-    <label for="dobBasic" class="form-label">CPF</label>
-     <input type="text" name="cpf" class="form-control" placeholder="Informe o CPF" />
+    <label for="dobBasic" class="form-label">ESF</label>
+     <input type="text" name="esf" class="form-control" placeholder="Informe o ESF que o aluno recebe atendimento" />
        </div>
+        </div>
+
+<div class="row">
+<div class="col mb-0">
+    <label for="emailBasic" class="form-label">Plano de Saúde</label>
+    <input type="text" name="plano_saude" class="form-control" placeholder="Informe o plano de saúde do aluno" required />
+      </div>
          </div>
 
-<div class ="row g-2">
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="E-mail do novo Administrador" required />
-      </div>
-
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Senha</label>
-    <input type="password" name="senha" class="form-control" placeholder="Senha" required />
+<div class ="row">
+<div class="col mb-0">
+  <label for="emailBasic" class="form-label">Cartão do SUS</label>
+    <input type= "text" name="numero_cartao_sus" class="form-control" placeholder="Informe o número do cartão do SUS do aluno" required />
       </div>
         </div>
-          </div>
+        
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Alergia Medicamentos</label>
+    <select class="form-select" name="alergia_medicamento" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
 
+<div class ="row">
+<div class="col mb-0">
+  <label for="emailBasic" class="form-label">Nome medicamento que possui alergia</label>
+    <input type= "text" name="nome_medicamento_alergia" class="form-control" placeholder="Informe o nome do medicamento que o aluno possui alergia"  />
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Uso de medicamento controlado</label>
+    <select class="form-select" name="medicamento_controlado" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class ="row">
+<div class="col mb-0">
+  <label for="emailBasic" class="form-label">Nome medicamento controlado</label>
+    <input type= "text" name="nome_medicamento_controlado" class="form-control" placeholder="Informe o nome do medicamento que o aluno faz uso "  />
+      </div>
+        </div>
+
+    
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Diabetes</label>
+    <select class="form-select" name="diabetes" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Pressão Alta</label>
+    <select class="form-select" name="pressao_alta" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Pressão Baixa</label>
+    <select class="form-select" name="pressao_baixa" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Asma</label>
+    <select class="form-select" name="asma" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+ <div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Bronquite</label>
+    <select class="form-select" name="bronquite" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Anemia</label>
+    <select class="form-select" name="anemia" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Ansiedade</label>
+    <select class="form-select" name="ansiedade" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Depressão</label>
+    <select class="form-select" name="depressao" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+ <div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Insonia</label>
+    <select class="form-select" name="insonia" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Hemofilia</label>
+    <select class="form-select" name="hemofilia" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Tuberculose</label>
+    <select class="form-select" name="tuberculose" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Diagnostico de Eplepsia</label>
+    <select class="form-select" name="eplepsia" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Desmaios Recorrentes</label>
+    <select class="form-select" name="desmaios" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class="row">
+<div class="mb-3">
+    <label for="exampleFormControlSelect1" class="form-label">Fumante</label>
+    <select class="form-select" name="fumante" aria-label="Selecione a opção">
+         <option > Selecione </option>
+        <option value="S"> Sim </option>
+        <option value="N"> Não </option>
+    </select>
+      </div>
+        </div>
+
+<div class ="row">
+<div class="col mb-0">
+  <label for="emailBasic" class="form-label">Outro</label>
+    <input type= "text" name="outro" class="form-control" placeholder="Outra Informação que achar relevante"  />
+      </div>
+        </div>
+</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
@@ -470,23 +610,20 @@ $usuarios = $usuario->findAdm();
           </div>
             </div>
               </div>
-            </div>
-          </div>
-          </form>
-<div class="content-backdrop fade">
+                </div>
+                 </div>
+                 </form>
 
-</div>
-
-  </div>
+      </div>
 <!-- Content wrapper -->
-        </div>
-         <!-- / Layout page -->
+    </div>
+     <!-- / Layout page -->
       </div>
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout wrapper -->
+   
 
  
 
@@ -512,4 +649,28 @@ $usuarios = $usuario->findAdm();
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+
+  <script>
+    var search = document.getElementById('search');
+
+    search.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+        searchData();
+      }
+    });
+
+    function searchData(){
+      window.location.href = '<?=$baseUrl;?>/public/prontuario.php?search='+search.value;
+    }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#id_aluno').change(function() {
+            var alunoId = $(this).val();
+            $('#id_matricula').val('');
+            $('#id_matricula option[data-aluno-id="' + alunoId + '"]').prop('selected', true);
+        });
+    });
+</script>
 </html>

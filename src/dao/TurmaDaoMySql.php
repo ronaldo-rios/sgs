@@ -44,8 +44,8 @@ class TurmaDaoMySql implements TurmaDaoInterface
         return true;
     }
 
-    // Buscar por ID:
-    public function findById($id)
+    // Buscar por id:
+    public function findTurma($id)
     {
         $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE id = :id");
         $sql->bindValue(':id', $id);
@@ -55,10 +55,28 @@ class TurmaDaoMySql implements TurmaDaoInterface
             $turma = new Turma();
             $turma->setId($data['id']);
             $turma->setNome($data['nome']);
+            $lista[] = $turma;
+            return $data['nome'];
+        } else {
+          return null;
+        }
+    }
+
+    public function findById($id)
+    {
+        $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+            $turma= new Turma();
+            $turma->setId($data['id']);
+            $turma->setNome($data['nome']);
             return $turma;
         } else {
-            return false;
+            return [];
         }
+   
     }
 
     // Buscar todos:
@@ -79,4 +97,37 @@ class TurmaDaoMySql implements TurmaDaoInterface
             return false;
         }
     }
+
+// Buscar por nome:
+      public function findByName($nome)
+      {
+          $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE nome = :nome");
+          $sql->bindValue(':nome', $nome);
+          $sql->execute();
+          if($sql->rowCount() > 0){
+              $data = $sql->fetch();
+              $turma = new Turma();
+              $turma->setId($data['id']);
+              $turma->setNome($data['nome']);
+              $lista[] = $turma;
+              return $lista;
+          } else {
+            return [];
+          }
+      }
+
+    //Turma existe 
+public function nameExists($nome)
+{
+    if(!empty($nome)){
+        $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE nome = :nome");
+        $sql->bindValue(':nome', $nome);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            return true;
+        }
+    }
+    return false;
 }
+}
+

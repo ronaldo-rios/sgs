@@ -6,12 +6,14 @@ namespace src\models;
 
 class Atestado{
     private int $id;
-    private string $dataCadastro;
+    private string $data_cadastrada;
+    private string $data_inicio;
+    private string $data_final;
     private string $descricao;
-    private string $cid;
     private string $atestadoDoc;
-    private int $idPaciente;
-    private int $idUsuario;
+    private string $motivo;
+    private int $id_paciente;
+    private int $id_usuario;
 
 
     public function getId(): int
@@ -24,14 +26,14 @@ class Atestado{
         $this->id = $id;
     }
 
-    public function getDataCadastro(): string
+    public function getDataCadastrada(): string
     {
-        return $this->dataCadastro;
+        return $this->data_cadastrada;
     }
 
-    public function setDataCadastro(string $dataCadastro): void
+    public function setDataCadastrada(string $data_cadastrada): void
     {
-        $this->dataCadastro = trim($dataCadastro);
+        $this->data_cadastrada = $data_cadastrada;
     }
 
     public function getDescricao(): string
@@ -41,18 +43,9 @@ class Atestado{
 
     public function setDescricao(string $descricao): void
     {
-        $this->descricao = trim($descricao);
+        $this->descricao = $descricao;
     }
 
-    public function getCid(): string
-    {
-        return $this->cid;
-    }
-
-    public function setCid(string $cid): void
-    {
-        $this->cid = trim($cid);
-    }
 
     public function getAtestadoDoc(): string
     {
@@ -66,21 +59,60 @@ class Atestado{
 
     public function getIdPaciente(): int
     {
-        return $this->idPaciente;
+        return $this->id_paciente;
     }
 
-    public function setIdPaciente(int $idPaciente): void
+    public function setIdPaciente(int $id_paciente): void
     {
-        $this->idPaciente = $idPaciente;
+        $this->id_paciente = $id_paciente;
     }
 
     public function getIdUsuario(): int
     {
-        return $this->idUsuario;
+        return $this->id_usuario;
     }
 
-    public function setIdUsuario(int $idUsuario): void
+    public function setIdUsuario(int $id_usuario): void
     {
-        $this->idUsuario = $idUsuario;
+        $this->id_usuario = $id_usuario;
+    }
+
+ 
+    public function getDataInicio(): string
+    {
+        return $this->data_inicio;
+    }
+
+ 
+    public function setDataInicio(string $data_inicio): void
+    {
+        $this->data_inicio = $data_inicio;
+
+    }
+
+    public function getDataFinal(): string
+    {
+        return $this->data_final;
+    }
+
+   
+    public function setDataFinal(string $data_final): void
+    {
+        $this->data_final = $data_final;
+
+    }
+
+
+    public function getMotivo(): string
+    {
+        return $this->motivo;
+    }
+
+    /**
+     * Set the value of motivo
+     */
+    public function setMotivo(string $motivo): void
+    {
+        $this->motivo = $motivo;
     }
 }

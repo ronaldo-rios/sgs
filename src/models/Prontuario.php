@@ -11,26 +11,27 @@ class Prontuario
     private string $esf;
     private string $planoSaude;
     private string $numeroCartaoSus;
-    private bool $alergiaMedicamento;
+    private string $alergiaMedicamento;
     private string $nomeMedicamentoAlergia;
-    private bool $medicamentoControlado;
+    private string $medicamentoControlado;
     private string $nomeMedicamentoControlado;
-    private bool $diabetes;
-    private bool $pressaoAlta;
-    private bool $pressaoBaixa;
-    private bool $asma;
-    private bool $bronquite;
-    private bool $anemia;
-    private bool $ansiedade;
-    private bool $depressao;
-    private bool $insonia;
-    private bool $hemofilia;
-    private bool $tubercoluse;
-    private bool $eplepsia;
-    private bool $desmaios;
-    private bool $fumante;
+    private string $diabetes;
+    private  string $pressaoAlta;
+    private string $pressaoBaixa;
+    private string $asma;
+    private string $bronquite;
+    private string $anemia;
+    private string $ansiedade;
+    private string $depressao;
+    private string $insonia;
+    private string $hemofilia;
+    private string $tuberculose;
+    private string $eplepsia;
+    private string $desmaios;
+    private string $fumante;
     private string $outro;
     private int $idPaciente;
+    private int $idUsuario;
 
     public function getId(): int
     {
@@ -82,12 +83,12 @@ class Prontuario
         $this->numeroCartaoSus = $numeroCartaoSus;
     }
 
-    public function getAlergiaMedicamento(): bool
+    public function getAlergiaMedicamento(): string
     {
         return $this->alergiaMedicamento;
     }
 
-    public function setAlergiaMedicamento(bool $alergiaMedicamento): void
+    public function setAlergiaMedicamento(string $alergiaMedicamento): void
     {
         $this->alergiaMedicamento = $alergiaMedicamento;
     }
@@ -102,12 +103,12 @@ class Prontuario
         $this->nomeMedicamentoAlergia = $nomeMedicamentoAlergia;
     }
 
-    public function getMedicamentoControlado(): bool
+    public function getMedicamentoControlado(): string
     {
         return $this->medicamentoControlado;
     }
 
-    public function setMedicamentoControlado(bool $medicamentoControlado): void
+    public function setMedicamentoControlado(string $medicamentoControlado): void
     {
         $this->medicamentoControlado = $medicamentoControlado;
     }
@@ -121,142 +122,142 @@ class Prontuario
     {
         $this->nomeMedicamentoControlado = $nomeMedicamentoControlado;
     }
-    public function getDiabetes(): bool
+    public function getDiabetes(): string
     {
         return $this->diabetes;
     }
 
-    public function setDiabetes(bool $diabetes): void
+    public function setDiabetes(string $diabetes): void
     {
         $this->diabetes = $diabetes;
     }
 
-    public function getPressaoAlta(): bool
+    public function getPressaoAlta(): string
     {
         return $this->pressaoAlta;
     }
 
-    public function setPressaoAlta(bool $pressaoAlta): void
+    public function setPressaoAlta(string $pressaoAlta): void
     {
         $this->pressaoAlta = $pressaoAlta;
     }
 
-    public function getPressaoBaixa(): bool
+    public function getPressaoBaixa(): string
     {
         return $this->pressaoBaixa;
     }
 
-    public function setPressaoBaixa(bool $pressaoBaixa): void
+    public function setPressaoBaixa(string $pressaoBaixa): void
     {
         $this->pressaoBaixa = $pressaoBaixa;
     }
 
-    public function getAsma(): bool
+    public function getAsma(): string
     {
         return $this->asma;
     }
 
-    public function setAsma(bool $asma): void
+    public function setAsma(string $asma): void
     {
         $this->asma = $asma;
     }
 
-    public function getBronquite(): bool
+    public function getBronquite(): string
     {
         return $this->bronquite;
     }
 
-    public function setBronquite(bool $bronquite): void
+    public function setBronquite(string $bronquite): void
     {
-        $this->$bronquite = $bronquite;
+        $this->bronquite = $bronquite;
     }
 
-    public function getAnemia(): bool
+    public function getAnemia(): string
     {
         return $this->anemia;
     }
 
-    public function setAnemia(bool $anemia): void
+    public function setAnemia(string $anemia): void
     {
         $this->anemia = $anemia;
     }
 
-    public function getAnsiedade(): bool
+    public function getAnsiedade(): string
     {
         return $this->ansiedade;
     }
 
-    public function setAnsiedade(bool $ansiedade): void
+    public function setAnsiedade(string $ansiedade): void
     {
         $this->ansiedade = $ansiedade;
     }
 
-    public function getDepressao(): bool
+    public function getDepressao(): string
     {
         return $this->depressao;
     }
 
-    public function setDepressao(bool $depressao): void
+    public function setDepressao(string $depressao): void
     {
         $this->depressao = $depressao;
     }
 
-    public function getInsonia(): bool
+    public function getInsonia(): string
     {
         return $this->insonia;
     }
 
-    public function setInsonia(bool $insonia): void
+    public function setInsonia(string $insonia): void
     {
         $this->insonia = $insonia;
     }
 
-    public function getHemofilia(): bool
+    public function getHemofilia(): string
     {
         return $this->hemofilia;
     }
 
-    public function setHemofilia(bool $hemofilia): void
+    public function setHemofilia(string $hemofilia): void
     {
         $this->hemofilia = $hemofilia;
     }
 
-    public function getTubercoluse(): bool
+    public function getTuberculose(): string
     {
-        return $this->tubercoluse;
+        return $this->tuberculose;
     }
 
-    public function setTubercoluse(bool $tubercoluse): void
+    public function setTuberculose(string $tuberculose): void
     {
-        $this->tubercoluse = $tubercoluse;
+        $this->tuberculose = $tuberculose;
     }
 
-    public function getEplepsia(): bool
+    public function getEplepsia(): string
     {
         return $this->eplepsia;
     }
 
-    public function setEplepsia(bool $eplepsia): void
+    public function setEplepsia(string $eplepsia): void
     {
         $this->eplepsia = $eplepsia;
     }
 
-    public function getDesmaios(): bool
+    public function getDesmaios(): string
     {
         return $this->desmaios;
     }
 
-    public function setDesmaios(bool $desmaios): void
+    public function setDesmaios(string $desmaios): void
     {
         $this->desmaios = $desmaios;
     }
 
-    public function getFumante(): bool
+    public function getFumante(): string
     {
         return $this->fumante;
     }
 
-    public function setFumante(bool $fumante): void
+    public function setFumante(string $fumante): void
     {
         $this->fumante = $fumante;
     }
@@ -281,4 +282,16 @@ class Prontuario
         $this->idPaciente = $idPaciente;
     }
 
+
+  
+    public function getIdUsuario(): int
+    {
+        return $this->idUsuario;
+    }
+
+  
+    public function setIdUsuario(int $idUsuario): void
+    {
+        $this->idUsuario = $idUsuario;
+    }
 }

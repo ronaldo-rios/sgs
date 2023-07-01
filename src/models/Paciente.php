@@ -11,8 +11,11 @@ class Paciente {
     private string $email;
     private string $nascimento;
     private string $telefone;
-    private int $id_usuario;
-
+    private string $endereco;
+    private string $foto;
+    private int $id_curso;
+    private int $id_turma;
+    
     public function getId(): int
     {
         return $this->id;
@@ -30,7 +33,7 @@ class Paciente {
 
     public function setMatricula(string $matricula): void
     {
-        $this->matricula = trim($matricula);
+        $this->matricula = $matricula;
     }
 
     public function getNome(): string
@@ -40,7 +43,7 @@ class Paciente {
 
     public function setNome(string $nome): void
     {
-        $this->nome = ucwords(trim($nome));
+        $this->nome = $nome;
     }
 
     public function getEmail(): string
@@ -50,7 +53,7 @@ class Paciente {
 
     public function setEmail(string $email): void
     {
-        $this->email = strtolower(trim($email));
+        $this->email = $email;
     }
 
     public function getNascimento(): string
@@ -60,8 +63,7 @@ class Paciente {
 
     public function setNascimento(string $nascimento): void
     {
-        $this->nascimento = trim($nascimento);
-
+        $this->nascimento = $nascimento;
     }
 
     public function getTelefone(): string
@@ -71,18 +73,48 @@ class Paciente {
 
     public function setTelefone(string $telefone): void
     {
-        $this->telefone = trim($telefone);
-
+        $this->telefone = $telefone;
     }
 
-    public function getIdUsuario(): int
+    public function getEndereco(): string
     {
-        return $this->id_usuario;
+        return $this->endereco;
     }
 
-    public function setIdUsuario(int $id_usuario): void
+    public function setEndereco(string $endereco): void
     {
-        $this->id_usuario = $id_usuario;
+        $this->endereco = $endereco;
     }
 
+    public function getFoto(): string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(string $foto): void
+    {
+        $this->foto = $foto;
+    }
+
+
+
+    public function getIdCurso(): int
+    {
+        return $this->id_curso;
+    }
+
+    public function setIdCurso(int $id_curso): void
+    {
+        $this->id_curso = $id_curso;
+    }
+
+    public function getIdTurma(): int
+    {
+        return $this->id_turma;
+    }
+   
+    public function setIdTurma(int $id_turma): void
+    {
+        $this->id_turma = $id_turma;
+    }
 }
