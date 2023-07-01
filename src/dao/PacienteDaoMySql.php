@@ -70,6 +70,7 @@ class PacienteDaoMySql implements PacienteDaoInterface
         $sql->bindValue(':id', $paciente->getId());
         $sql->execute();
         return $paciente;
+          
     }
 
     // Exclusão de paciente:
@@ -199,8 +200,11 @@ class PacienteDaoMySql implements PacienteDaoInterface
 
                 $arrayPacientes[] = $paciente;
             }
+            return $arrayPacientes;
+        }else {
+            echo "Não há pacientes cadastrados!";
         }
-        return $arrayPacientes;
+        
     }
     
 // Buscar por nome:

@@ -14,5 +14,4 @@ interface PacienteDaoInterface
     public function atualizarPaciente(Paciente $paciente);
     public function deletarPaciente(Paciente $paciente);
 
-
 }
