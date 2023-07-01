@@ -3,11 +3,23 @@
 require '../vendor/autoload.php';
 require '../conexao.php';
 use Dotenv\Dotenv;
+use src\dao\CursoDaoMySql;
+use src\dao\TurmaDaoMySql;
+use src\dao\VacinaDaoMySql;
 use src\models\Auth;
 use src\dao\PacienteDaoMySql;
 
-$paciente = new PacienteDaoMySql($pdo);
-$pacientes = $paciente->findAll();
+// $paciente = new PacienteDaoMySql($pdo);
+// $pacientes = $paciente->findAll();
+
+$curso =  new CursoDaoMySql($pdo);
+$cursos = $curso->findAll();
+
+$turma =  new TurmaDaoMySql($pdo);
+$turmas = $turma->findAll();
+
+// $vacina =  new VacinaDaoMySql($pdo);
+// $vacinas = $vacina->findAllVacinas();
 
 ?>
 
@@ -171,7 +183,7 @@ $pacientes = $paciente->findAll();
               <div data-i18n="Basic" class="azul">Servidores</div>
             </a>
             
-            <a href="aluno.php" class="menu-link">
+            <a href="paciente.php" class="menu-link">
               <i class="menu-icon tf-icons bx bx-face"></i>
              
               <div data-i18n="Basic" class="azul" >Paciente</div>
@@ -212,7 +224,7 @@ $pacientes = $paciente->findAll();
 
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="consulta_aluno.php" class="menu-link" target="_blank">
+        <a href="consulta_paciente.php" class="menu-link" target="_blank">
           <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>
@@ -289,7 +301,7 @@ $pacientes = $paciente->findAll();
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento DE Alunos</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento DE Pacientes</h4>
        <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
         <?= $_SESSION['flash']; ?>
@@ -350,11 +362,11 @@ $pacientes = $paciente->findAll();
 <!-- Modal Visualizar-->
 <td>
 
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show" style="background-color:#cdf3fb;border:none">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $p->getId() ?>" style="background-color:#cdf3fb;border:none">
     <i class="bx bx-show-alt"></i>
   </button>
     
-  <div class="modal fade" id="show" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="show-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
@@ -367,15 +379,16 @@ $pacientes = $paciente->findAll();
   <div class="list-group list-group-flush">
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
       <p>Nome</p>
-      Danilo dos Santos
+      <?=$p->getNome();?>
+          </p>
        </p>
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
       <p>Matricula</p>
-      0534563434
+      <?=$p->getMatricula();?>
           </p>
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p>Data nascimento</p>
-    danilo.santos@gmail.com
+    <?=$p->getNascimento();?>
     </p>
     <p href="javascript:void(0);" class="list-group-item list-group-item-action">
       <p>Curso</p>
@@ -387,15 +400,15 @@ $pacientes = $paciente->findAll();
           </p>
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p> E-mail</p>
-    danilo.santos@gmail.com
+    <?=$p->getEmail();?>
     </p>
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
       <p> Telefone</p>
-     555999223
+     <?=$p->getTelefone();?>
+          </p>
       </p>
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p> Endereço</p>
-    Rua Travessa...
+    
   </p>
        </div>
             </div>
@@ -447,16 +460,16 @@ $pacientes = $paciente->findAll();
      <input type="text" id="matricula" class="form-control" value="" />
       </div>
         </div>
-
      
   <div class="row g-2">
         <div class="col mb-0">
           <label for="emailBasic" class="form-label">Curso</label>
             <input type="text" id="curso" class="form-control" value="" />
              </div>
+
       <div class="col mb-0">
         <label for="dobBasic" class="form-label">Turma</label>
-         <input type="text" id="matricula" class="form-control" value="" />
+         <input type="text" id="turma" class="form-control" value="" />
           </div>
             </div>
 
@@ -541,11 +554,11 @@ $pacientes = $paciente->findAll();
     <div class="row g-2">
         <div class="col mb-0">
             <label for="emailBasic" class="form-label">Nome</label>
-             <input type="text" id="nome" class="form-control"  placeholder="Informe o nome completo do aluno"/>
+             <input type="text" id="nome" class="form-control"  placeholder="Informe o nome completo do aluno" required />
             </div>
         <div class="col mb-0">
             <label for="dobBasic" class="form-label">Data Nascimento</label>
-             <input type="date" id="data" class="form-control" placeholder="Informe a data de nascimento do aluno"/>
+             <input type="date" id="data" class="form-control" placeholder="Informe a data de nascimento do aluno" required />
             </div>
                 </div>
 
@@ -556,28 +569,48 @@ $pacientes = $paciente->findAll();
              </div>
       <div class="col mb-0">
         <label for="dobBasic" class="form-label">Matricula</label>
-         <input type="text" id="matricula" class="form-control" placeholder="Informe a matricula do aluno" />
+         <input type="text" id="matricula" class="form-control" placeholder="Informe a matricula do aluno" required />
           </div>
             </div>
     
       <div class="row g-2">
             <div class="col mb-0">
               <label for="emailBasic" class="form-label">Curso</label>
-                <input type="text" id="curso" class="form-control" placeholder="Informe o curso do aluno" />
+              <select class="form-control" name="curso" id="curso" required>
+                <option value=""> -- Selecione -- </option>
+                <?php foreach($cursos as $curso): ?>
+                <option value="<?php echo $curso->getId(); ?>"><?php echo $curso->getNome(); ?></option>
+                <?php endforeach; ?>
+              </select>
                  </div>
+
           <div class="col mb-0">
             <label for="dobBasic" class="form-label">Turma</label>
-             <input type="text" id="turma" class="form-control" placeholder="Informe a turma do aluno" />
+            <select class="form-control" name="turma" id="turma" required>
+                <option value=""> -- Selecione -- </option>
+                <?php foreach($turmas as $turma): ?>
+                <option value="<?php echo $turma->getId(); ?>"><?php echo $turma->getNome(); ?></option>
+                <?php endforeach; ?>
+              </select>
               </div>
+
                 </div>
+
+
 
     <div class="row g-2">
             <div class="col mb-0">
               <label for="emailBasic" class="form-label">Email</label>
-                <input type="text" id="email" class="form-control" placeholder="Informe o e-mail do aluno" >
+                <input type="email" id="email" class="form-control" placeholder="Informe o e-mail do aluno" required >
                  </div>
                 </div>
-              </div>
+
+                <div class="col mb-0">
+              <label for="emailBasic" class="form-label">Endereço</label>
+                <input type="email" id="email" class="form-control" placeholder="Digite o endereço do aluno" required >
+                 </div>
+                </div>
+    
          
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;"> Cancelar  </button>

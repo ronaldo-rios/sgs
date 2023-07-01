@@ -7,11 +7,13 @@ namespace src\models;
 class Paciente {
     private int $id;
     private string $matricula;
+    private ?string $foto;
     private string $nome;
     private string $email;
     private string $nascimento;
-    private string $telefone;
-    private int $id_usuario;
+    private ?string $telefone;
+    private ?string $endereco;
+   
 
     public function getId(): int
     {
@@ -41,6 +43,16 @@ class Paciente {
     public function setNome(string $nome): void
     {
         $this->nome = ucwords(trim($nome));
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(?string $foto): void
+    {
+        $this->foto = $foto;
     }
 
     public function getEmail(): string
@@ -75,14 +87,15 @@ class Paciente {
 
     }
 
-    public function getIdUsuario(): int
+    public function getEndereco(): ?string
     {
-        return $this->id_usuario;
+        return $this->endereco;
     }
 
-    public function setIdUsuario(int $id_usuario): void
+    public function setEndereco(?string $endereco): void
     {
-        $this->id_usuario = $id_usuario;
+        $this->endereco = trim($endereco);
+
     }
 
 }

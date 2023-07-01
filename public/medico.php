@@ -171,7 +171,7 @@ $usuarios = $usuario->findMedico();
       <div data-i18n="Basic" class="azul">Servidores</div>
     </a>
     
-    <a href="aluno.php" class="menu-link">
+    <a href="paciente.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-face"></i>
      
       <div data-i18n="Basic" class="azul" >Paciente</div>
@@ -214,7 +214,7 @@ $usuarios = $usuario->findMedico();
 
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="consulta_aluno.php" class="menu-link" target="_blank">
+        <a href="consulta_paciente.php" class="menu-link" target="_blank">
           <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>

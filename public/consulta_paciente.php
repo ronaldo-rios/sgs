@@ -184,7 +184,7 @@ use src\models\Auth;
 
 
             <li class="menu-item">
-              <a href="aluno.php" class="menu-link">
+              <a href="paciente.php" class="menu-link">
                 <!-- mudar icone: apenas alterar bx-nome icone -->
                 <i class="menu-icon tf-icons bx bx-face red"></i>
                
@@ -312,7 +312,7 @@ use src\models\Auth;
   <div class="col-md-12">
    <ul class="nav nav-pills flex-column flex-md-row mb-3">
        <li class="nav-item">
-          <a class="nav-link active" href="consulta_aluno.php"><i class="bx bx-user me-1"></i> Aluno</a>
+          <a class="nav-link active" href="consulta_paciente.php"><i class="bx bx-user me-1"></i> Aluno</a>
          </li>
       <li class="nav-item">
         <a class="nav-link" href="consulta_anamnese.php">   <i class="menu-icon tf-icons bx bx-capsule red"></i> Anamnese</a>

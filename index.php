@@ -175,10 +175,10 @@ $usuarioInfo = $auth->checkToken();
                 <div data-i18n="Basic" class="azul">Servidores</div>
               </a>
               
-              <a href="public/aluno.php" class="menu-link">
+              <a href="public/paciente.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-face"></i>
                
-                <div data-i18n="Basic" class="azul" >Alunos</div>
+                <div data-i18n="Basic" class="azul" >Pacientes</div>
               </a>
 
               <a href="public/medico.php" class="menu-link">
@@ -215,7 +215,7 @@ $usuarioInfo = $auth->checkToken();
   
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="public/consulta_aluno.php" class="menu-link" target="_blank">
+                    <a href="public/consulta_paciente.php" class="menu-link" target="_blank">
                       <div data-i18n="Basic" class="azul">Paciente</div>
                     </a>
                   </li>

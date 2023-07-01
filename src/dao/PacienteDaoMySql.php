@@ -3,9 +3,9 @@
 namespace src\dao;
 
 use src\models\Paciente;
-use src\interfaces\CursoDaoInterface;
+use src\interfaces\PacienteDaoInterface;
 
-class PacienteDaoMySql
+class PacienteDaoMySql implements PacienteDaoInterface
 {
     private $pdo;
 
@@ -19,16 +19,17 @@ class PacienteDaoMySql
     {
         $sql = $this->pdo->prepare(
             "INSERT INTO 
-            paciente (nome, cpf, data_nascimento, telefone, email, endereco, comorbidade, profissao, foto) 
+            paciente (nome, matricula, foto, email, data_nascimento, telefone, id_usuario) 
             VALUES 
-            (:nome, :cpf, :data_nascimento, :telefone, :email, :endereco, :comorbidade, :profissao, :foto)"
+            (:nome, :matricula, :foto, :email, :data_nascimento, :telefone, :id_usuario)"
             );
         $sql->bindValue(':nome', $paciente->getNome());
-        $sql->bindValue(':cpf', $paciente->getCpf());
+        $sql->bindValue(':matricula', $paciente->getMatricula());
+        $sql->bindValue(':foto', $paciente->getFoto());
+        $sql->bindValue(':email', $paciente->getEmail());
         $sql->bindValue(':data_nascimento', $paciente->getNascimento());
         $sql->bindValue(':telefone', $paciente->getTelefone());
-        $sql->bindValue(':email', $paciente->getEmail());
-        $sql->bindValue(':foto', $paciente->getFoto());
+        $sql->bindValue(':id_usuario', $paciente->getIdUsuario());
         $sql->execute();
         $paciente->setId($this->pdo->lastInsertId());
         return $paciente;
@@ -40,28 +41,25 @@ class PacienteDaoMySql
         $sql = $this->pdo->prepare(
             "UPDATE paciente SET 
             nome = :nome, 
-            cpf = :cpf, 
-            data_nascimento = :data_nascimento, 
-            telefone = :telefone, 
-            email = :email, 
-            endereco = :endereco, 
-            comorbidade = :comorbidade, 
-            profissao = :profissao, 
-            foto = :foto 
+            matricula = :matricula,
+            foto = :foto,
+            email = :email,
+            data_nascimento = :data_nascimento,
+            telefone = :telefone,
+            id_usuario = :id_usuario
             WHERE id = :id"
-            );
+        );
         $sql->bindValue(':nome', $paciente->getNome());
-        $sql->bindValue(':cpf', $paciente->getCpf());
+        $sql->bindValue(':matricula', $paciente->getMatricula());
+        $sql->bindValue(':foto', $paciente->getFoto());
+        $sql->bindValue(':email', $paciente->getEmail());
         $sql->bindValue(':data_nascimento', $paciente->getNascimento());
         $sql->bindValue(':telefone', $paciente->getTelefone());
-        $sql->bindValue(':email', $paciente->getEmail());
-        $sql->bindValue(':endereco', $paciente->getEndereco());
-        $sql->bindValue(':comorbidade', $paciente->getComorbidade());
-        $sql->bindValue(':profissao', $paciente->getProfissao());
-        $sql->bindValue(':foto', $paciente->getFoto());
+        $sql->bindValue(':id_usuario', $paciente->getIdUsuario());
         $sql->bindValue(':id', $paciente->getId());
         $sql->execute();
         return $paciente;
+          
     }
 
     // Exclusão de paciente:
@@ -84,17 +82,16 @@ class PacienteDaoMySql
             $paciente = new Paciente();
             $paciente->setId($dados['id']);
             $paciente->setNome($dados['nome']);
-            $paciente->setCpf($dados['cpf']);
+            $paciente->setMatricula($dados['matricula']);
+            $paciente->setFoto($dados['foto']);
+            $paciente->setEmail($dados['email']);
             $paciente->setNascimento($dados['data_nascimento']);
             $paciente->setTelefone($dados['telefone']);
-            $paciente->setEmail($dados['email']);
-            $paciente->setEndereco($dados['endereco']);
-            $paciente->setComorbidade($dados['comorbidade']);
-            $paciente->setProfissao($dados['profissao']);
-            $paciente->setFoto($dados['foto']);
+            $paciente->setIdUsuario($dados['id_usuario']);
+
             return $paciente;
         } else {
-            throw new \Exception("Paciente não encontrado!");
+            echo "Paciente não encontrado!";
         }
     }
 
@@ -110,17 +107,18 @@ class PacienteDaoMySql
                 $paciente = new Paciente();
                 $paciente->setId($dado['id']);
                 $paciente->setNome($dado['nome']);
-                $paciente->setCpf($dado['cpf']);
+                $paciente->setMatricula($dado['matricula']);
+                $paciente->setFoto($dado['foto']);
+                $paciente->setEmail($dado['email']);
                 $paciente->setNascimento($dado['data_nascimento']);
                 $paciente->setTelefone($dado['telefone']);
-                $paciente->setEmail($dado['email']);
-                $paciente->setEndereco($dado['endereco']);
-                $paciente->setComorbidade($dado['comorbidade']);
-                $paciente->setProfissao($dado['profissao']);
-                $paciente->setFoto($dado['foto']);
+                $paciente->setIdUsuario($dado['id_usuario']);
                 $arrayPacientes[] = $paciente;
             }
+            return $arrayPacientes;
+        }else {
+            echo "Não há pacientes cadastrados!";
         }
-        return $arrayPacientes;
+        
     }
 }

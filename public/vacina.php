@@ -173,7 +173,7 @@ $vacinas = $vacina->findAllVacinas();
       <div data-i18n="Basic" class="azul">Servidores</div>
     </a>
     
-    <a href="aluno.php" class="menu-link">
+    <a href="paciente.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-face"></i>
      
       <div data-i18n="Basic" class="azul" >Paciente</div>
@@ -216,7 +216,7 @@ $vacinas = $vacina->findAllVacinas();
 
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="consulta_aluno.php" class="menu-link" target="_blank">
+        <a href="consulta_paciente.php" class="menu-link" target="_blank">
           <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>
@@ -292,7 +292,7 @@ $vacinas = $vacina->findAllVacinas();
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Turma</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Vacina</h4>
        <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
         <?= $_SESSION['flash']; ?>

@@ -165,7 +165,7 @@ use src\models\Auth;
   </a>
 
 
-  <a href="servidor.php" class="menu-link">
+  <a href="paciente.php" class="menu-link">
     <i class="menu-icon bx bx-group"></i>   
     <div data-i18n="Basic" class="azul">Servidores</div>
   </a>
@@ -220,7 +220,7 @@ use src\models\Auth;
   
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="consulta_aluno.php" class="menu-link" target="_blank">
+                    <a href="consulta_paciente.php" class="menu-link" target="_blank">
                       <div data-i18n="Basic" class="azul">Aluno</div>
                     </a>
                   </li>
