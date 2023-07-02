@@ -51,7 +51,6 @@ class ProntuarioDaoMySql implements ProntuarioInterface
         $sql->bindValue(':outro', $prontuario->getOutro());
         $sql->bindValue(':id_paciente', $prontuario->getIdPaciente());
         $sql->bindValue(':id_usuario', $prontuario->getIdUsuario());
-        $sql->bindValue(':id', $prontuario->getId());
         $sql->execute();
         $prontuario->setId($this->pdo->lastInsertId());
         return $prontuario;
