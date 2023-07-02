@@ -2,10 +2,14 @@
 
 namespace src\actions;
 require '../../conexao.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 use src\models\Soap;
 use src\dao\SoapDaoMySql;
+use src\dao\ProntuarioDaoMySql;
 
 $soapDao = new SoapDaoMySql($pdo);
+$prontuarioDao = new ProntuarioDaoMySql($pdo);
 $data = filter_input(INPUT_POST, 'data', FILTER_SANITIZE_SPECIAL_CHARS);
 $subjetivo = filter_input(INPUT_POST, 'subjetivo', FILTER_SANITIZE_SPECIAL_CHARS);
 $objetivo = filter_input(INPUT_POST, 'objetivo', FILTER_SANITIZE_SPECIAL_CHARS);

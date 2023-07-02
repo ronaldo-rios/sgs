@@ -2,6 +2,8 @@
 
 namespace src\actions;
 require '../../conexao.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 use src\models\Prontuario;
 use src\dao\ProntuarioDaoMySql;
 
@@ -45,8 +47,7 @@ if ($matricula_paciente) {
     $prontuario->setAlergiaMedicamento($alergia_medicamento);
     $prontuario->setNomeMedicamentoAlergia($nome_medicamento_alergia);
     $prontuario->setMedicamentoControlado($medicamento_controlado);
-    $prontuario->setNomeMedicamentoControlado($medicamento_controlado);
-    $prontuario->setMedicamentoControlado($nome_medicamento_controlado);
+    $prontuario->setNomeMedicamentoControlado($nome_medicamento_controlado);
     $prontuario->setDiabetes($diabetes);
     $prontuario->setPressaoAlta($pressao_alta);
     $prontuario->setPressaoBaixa($pressao_baixa);

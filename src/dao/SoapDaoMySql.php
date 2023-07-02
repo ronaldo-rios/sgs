@@ -29,7 +29,6 @@ class SoapDaoMySql implements SoapDaoInterface
         $sql->bindValue(':plano', $soap->getPlano());
         $sql->bindValue(':id_prontuario', $soap->getIdProntuario());
         $sql->execute();
-        $soap->setId($this->pdo->lastInsertId());
         return $soap;
     }
 

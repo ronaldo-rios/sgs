@@ -8,7 +8,7 @@ session_start();
 // $dotenv->load();
 
 $baseUrl = 'http://127.0.0.1/sgs';
-$db_name = 'sgs';
+$db_name = 'sgs2';
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
