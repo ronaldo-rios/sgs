@@ -196,10 +196,21 @@ $usuarios = $usuario->findServidor();
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
        <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Servidor</h4>
-    <?php if(!empty($_SESSION['flash'])) : ?>
+    
+       <?php if(!empty($_SESSION['flash'])) : ?>
+      <div class="flash-message">
         <?= $_SESSION['flash']; ?>
+      </div>
         <?= $_SESSION['flash'] = ''; ?> 
     <?php endif; ?>
+    <script>
+        setTimeout(function() {
+            var flashMessages = document.getElementsByClassName('flash-message');
+            for (var i = 0; i < flashMessages.length; i++) {
+                flashMessages[i].parentNode.removeChild(flashMessages[i]);
+            }
+        }, 3000);
+    </script>
 
  <!-- Inicio Barra Pesquisa-->      
          <div class="navbar-nav align-items-left" >
