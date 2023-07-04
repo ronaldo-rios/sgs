@@ -7,12 +7,14 @@ use Dotenv\Dotenv;
 use src\dao\CursoDaoMySql;
 use src\models\Auth;
 
-//$auth = new Auth($pdo, $baseUrl);
-//$usuarioInfo = $auth->checkToken();
-//if ($usuarioInfo->getPermissao() !== 'admin') {
-  //  header('Location: access_denied.php');
-    //exit();
-//}
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin' 
+&& $usuarioInfo->getPermissao() !== 'servidor' 
+&& $usuarioInfo->getPermissao() !== 'master') {
+   header('Location: access_denied.php');
+    exit();
+}
 
 $curso = new CursoDaoMySql($pdo);
 
@@ -475,4 +477,24 @@ if (!empty($curso->findByName($data))) {
       window.location.href = '<?=$baseUrl;?>/public/curso.php?search='+search.value;
     }
   </script>
+  <script>
+        var baseUrl = '<?=$baseUrl;?>';
+        document.querySelector('.admin-link').addEventListener('click', function(e) {
+        e.preventDefault();
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', baseUrl + '/src/middleware/check_permissao_medico.php', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              if (this.responseText === 'admin') {
+                window.location.href = baseUrl + '/public/atestados.php';
+              } else {
+                alert('Apenas administradores têm acesso a essa área.');
+              }
+            }
+          }
+          xhr.send();
+        });
+</script>
 </html>

@@ -11,6 +11,13 @@ use src\dao\TurmaDaoMySql;
 use src\dao\CursoDaoMySql;
 use src\dao\SoapDaoMySql;
 
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'medico') {
+   header('Location: access_denied.php');
+    exit();
+}
+
 $turma = new TurmaDaoMySql($pdo);
 $curso = new CursoDaoMySql($pdo);
 
@@ -831,4 +838,5 @@ $nometurma = $turma->findTurma($idd); ?>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
 </html>

@@ -13,6 +13,13 @@ use src\dao\TurmaDaoMySql;
 use src\dao\CursoDaoMySql;
 use src\dao\SoapDaoMySql;
 
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'medico') {
+   header('Location: access_denied.php');
+    exit();
+}
+
 $paciente = new PacienteDaoMySql($pdo);
 $pacientes = $paciente->findById($_GET['id']);
 
@@ -24,7 +31,6 @@ $curso = new CursoDaoMySql($pdo);
 $soap = new SoapDaoMySql($pdo);
 $soaps = $soap->findPaciente($_GET['id']);
 ?>
-
 
 
 ?>
@@ -443,12 +449,6 @@ $fumante = $prontuario->verificarFumante($p->getFumante());
                     </div>
                         
 
-
- 
-
-
- 
-
     <!-- Core JS -->
     <!-- build:js assets/js/core.js -->
     <script src="assets/libs/jquery/jquery.js"></script>
@@ -471,4 +471,5 @@ $fumante = $prontuario->verificarFumante($p->getFumante());
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  
 </html>

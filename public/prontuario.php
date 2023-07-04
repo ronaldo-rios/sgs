@@ -12,16 +12,15 @@ use src\models\Paciente;
 use src\models\Prontuario;  
 
 
-//$auth = new Auth($pdo, $baseUrl);
-//$psuarioInfo = $auth->checkToken();
-//if ($psuarioInfo->getPermissao() !== 'admin') {
-//    header('Location: access_denied.php');
-  //  exit();
-//}
+$auth = new Auth($pdo, $baseUrl);
+$psuarioInfo = $auth->checkToken();
+if ($psuarioInfo->getPermissao() !== 'medico') {
+   header('Location: access_denied.php');
+   exit();
+}
 
 $paciente = new PacienteDaoMySql($pdo);
 $prontuario = new ProntuarioDaoMySql($pdo);
-
 
 
 ?>
@@ -146,7 +145,7 @@ $prontuario = new ProntuarioDaoMySql($pdo);
   
     <a href="prontuario.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
-      <div data-i18n="Authentications" class="azul">Consulta</div>
+      <div data-i18n="Authentications" class="admin-link" class="azul">Consulta</div>
     </a>
 
     
@@ -389,7 +388,7 @@ $alunos=$paciente->findAll();?>
 
 
 
-<input type="hidden" name="id_usuario" value="1">
+<input type="hidden" name="id_usuario" value="<?=$psuarioInfo->getId()?>">
 
 <div class="row">
 <div class="col mb-0">

@@ -4,10 +4,12 @@ require '../vendor/autoload.php';
 require '../conexao.php';
 
 use Dotenv\Dotenv;
-use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
 use src\dao\PacienteDaoMySql;
 use src\dao\AtestadoDaoMySql;
+
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
 
 $paciente = new PacienteDaoMySql($pdo);
 $alunos = $paciente->findAll();
@@ -238,8 +240,8 @@ $atestados = $atestado->findAll();
     <thead>
       <tr>
 
-         <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
-         <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
+        <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
+        <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
         
@@ -301,12 +303,18 @@ $atestados = $atestado->findAll();
         </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
   <p> Data Inicio</p>
-    <?= $at->getDataInicio(); ?>
+    <?php 
+      $data_inicio_formatada = date('d/m/Y', strtotime($at->getDataInicio()));
+      echo  $data_inicio_formatada 
+    ?>
   </p>
 
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
   <p> Data Final</p>
-    <?= $at->getDataFinal() ?>
+    <?php
+      $data_final_formatada = date('d/m/Y', strtotime($at->getDataFinal()));
+      echo  $data_final_formatada 
+    ?>
   </p>
      </div>
           </div>
@@ -412,8 +420,8 @@ $atestados = $atestado->findAll();
    </div>
 
 <div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_atestado_action.php?id=<??>">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
+<a href="<?=$baseUrl;?>/src/actions/deletar_atestado_action.php?id=<?= $at->getId(); ?>">
+  <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
     Excluir 
   </button>
 </a>
@@ -458,10 +466,12 @@ $atestados = $atestado->findAll();
 <div class="modal-body">
 <form action="<?=$baseUrl;?>/src/actions/inserir_atestado_action.php" id="cad" method="POST" enctype="multipart/form-data">
 
+<input type="hidden" name="idusuario" value="<?= $usuarioInfo->getId(); ?>" />
+
 <div class="row">
             <div class="col mb-1">
               <label for="nameBasic" class="form-label">Aluno</label>
-              <select class="form-select" id="id_aluno" name="id_paciente" aria-label="Selecione o aluno" required >
+              <select class="form-select" name="idpaciente" aria-label="Selecione o aluno" required >
               <?php foreach($alunos as $a): ?>
                 <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
                     <?= $a->getNome(); ?>
@@ -502,7 +512,7 @@ $atestados = $atestado->findAll();
           <div class="row">
             <div class="col mb-1">
               <label for="nameBasic" class="form-label">Atestado (pdf)</label>
-              <input type="file" name ="atestado" class="form-control" accept=".pdf" required />
+              <input type="file" name ="atestadodoc" class="form-control" accept=".pdf" required />
             </div>
           </div>
 
@@ -559,4 +569,5 @@ $atestados = $atestado->findAll();
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+
 </html>

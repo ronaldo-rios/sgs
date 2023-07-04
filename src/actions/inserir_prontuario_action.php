@@ -2,8 +2,7 @@
 
 namespace src\actions;
 require '../../conexao.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+
 use src\models\Prontuario;
 use src\dao\ProntuarioDaoMySql;
 

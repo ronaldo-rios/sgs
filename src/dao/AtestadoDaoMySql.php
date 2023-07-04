@@ -20,16 +20,19 @@ class AtestadoDaoMySql implements AtestadoDaoInterface
     public function adicionarAtestado(Atestado $atestado)
     {
         $sql = $this->pdo->prepare("INSERT INTO atestados
-    (data_cadastrada,data_inicio,data_final,motivo,descricao,atestado_doc,id_paciente,id_usuario)
-    VALUES (:data_cadastrada,data_inicio,data_final,motivo,descricao,atestado_doc,id_paciente,id_usuario)");
+        (data_cadastrada,data_inicio,data_final,motivo,descricao,atestado_doc,id_paciente,id_usuario)
+        VALUES (:data_cadastrada,
+                :data_inicio,:data_final,:motivo,:descricao,
+                :atestado_doc,:id_paciente,:id_usuario)"
+            );
         $sql->bindValue(':data_cadastrada', $atestado->getDataCadastrada());
         $sql->bindValue(':data_inicio', $atestado->getDataInicio());
         $sql->bindValue(':data_final', $atestado->getDataFinal());
         $sql->bindValue(':motivo', $atestado->getMotivo());
         $sql->bindValue(':descricao', $atestado->getDescricao());
-        $sql->bindValue (':atestado_doc',$atestado->getAtestadoDoc());
-        $sql->bindValue('id_paciente',$atestado->getIdPaciente());
-        $sql->bindValue ('id_usuario',$atestado->getIdUsuario());
+        $sql->bindValue(':atestado_doc',$atestado->getAtestadoDoc());
+        $sql->bindValue(':id_paciente',$atestado->getIdPaciente());
+        $sql->bindValue(':id_usuario',$atestado->getIdUsuario());
         $sql->execute();
         $atestado->setId($this->pdo->lastInsertId());
         return $atestado;
@@ -48,9 +51,9 @@ class AtestadoDaoMySql implements AtestadoDaoInterface
         $sql->bindValue(':data_final', $atestado->getDataFinal());
         $sql->bindValue(':motivo', $atestado->getMotivo());
         $sql->bindValue(':descricao', $atestado->getDescricao());
-        $sql->bindValue (':atestado_doc',$atestado->getAtestadoDoc());
-        $sql->bindValue('id_paciente',$atestado->getIdPaciente());
-        $sql->bindValue ('id_usuario',$atestado->getIdUsuario());
+        $sql->bindValue(':atestado_doc',$atestado->getAtestadoDoc());
+        $sql->bindValue(':id_paciente',$atestado->getIdPaciente());
+        $sql->bindValue(':id_usuario',$atestado->getIdUsuario());
         $sql->execute();
         return $atestado;
     }

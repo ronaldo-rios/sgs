@@ -523,4 +523,24 @@ $usuarios = $usuario->findAdm();
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  <script>
+        var baseUrl = '<?=$baseUrl;?>';
+        document.querySelector('.admin-link').addEventListener('click', function(e) {
+        e.preventDefault();
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', baseUrl + '/src/middleware/check_permissao_medico.php', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              if (this.responseText === 'medico') {
+                window.location.href = baseUrl + '/public/atestados.php';
+              } else {
+                alert('Apenas administradores têm acesso a essa área.');
+              }
+            }
+          }
+          xhr.send();
+        });
+</script>
 </html>

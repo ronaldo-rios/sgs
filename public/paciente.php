@@ -12,14 +12,6 @@ use src\dao\PacienteDaoMySql;
 use src\dao\CursoDaoMySql;
 use src\dao\TurmaDaoMySql;
 
-//$auth = new Auth($pdo, $baseUrl);
-//$psuarioInfo = $auth->checkToken();
-//if ($psuarioInfo->getPermissao() !== 'admin') {
-//    header('Location: access_denied.php');
-  //  exit();
-//}
-
-
 $paciente = new PacienteDaoMySql($pdo);
 $pacientes = $paciente->findAll();
 

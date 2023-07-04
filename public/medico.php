@@ -5,9 +5,17 @@ require '../conexao.php';
 
 use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
+use src\models\Auth;
 
 $usuario = new UsuarioDaoMySql($pdo);
 $usuarios = $usuario->findMedico();
+
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !== 'master') {
+   header('Location: access_denied.php');
+    exit();
+}
 
 ?>
 
@@ -547,4 +555,5 @@ $usuarios = $usuario->findMedico();
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  
 </html>

@@ -7,12 +7,14 @@ use Dotenv\Dotenv;
 use src\dao\TurmaDaoMySql;
 use src\models\Auth;
 
-//$auth = new Auth($pdo, $baseUrl);
-//$usuarioInfo = $auth->checkToken();
-//if ($usuarioInfo->getPermissao() !== 'admin') {
-  //  header('Location: access_denied.php');
-    //exit();
-//}
+$auth = new Auth($pdo, $baseUrl);
+$usuarioInfo = $auth->checkToken();
+if ($usuarioInfo->getPermissao() !== 'admin' 
+&& $usuarioInfo->getPermissao() !== 'servidor' 
+&& $usuarioInfo->getPermissao() !== 'master') {
+   header('Location: access_denied.php');
+    exit();
+}
 
 $turma = new TurmaDaoMySql($pdo);
 $turmas = $turma->findAll();
@@ -95,7 +97,7 @@ $turmas = $turma->findAll();
     <a href="adm_principal.php" class="menu-link" >
       <i class="menu-icon tf-icons bx bxs-user-check"></i>
      
-      <div data-i18n="Basic" class="azul">Administrador</div>
+      <div data-i18n="Basic" class="azul" class="admin-link">Administrador</div>
     </a>
 
 
@@ -475,4 +477,5 @@ if (!empty($turma->findByName($data))) {
       window.location.href = '<?=$baseUrl;?>/public/turma.php?search='+search.value;
     }
   </script>
+
 </html>

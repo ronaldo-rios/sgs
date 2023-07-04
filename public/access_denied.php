@@ -32,8 +32,12 @@
 
 </head>
 
-<body style="background-color:#2B5AAD">
-  <div style="color:white;display:flex; align-items:center; justify-content:center; height: 100vh;">
+<body style="background-color:#3838a8">
+
+  <div style="display:flex; justify-content:center;">
+    <img style="width:50em;" src="forbidden.png" >
+  </div>
+  <div style="color:white;display:flex; align-items:center; justify-content:center;">
     <h1>VOCÊ NÃO TEM PERMISSÃO PARA ACESSAR ESSA ÁREA! - 403 - FORBIDDEN</h1>
   </div>
 </body>
