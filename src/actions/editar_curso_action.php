@@ -14,12 +14,12 @@ print_r($nome);
     $curso->setNome($nome);
     $cursoDao->atualizarcurso($curso);
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
             header('Location:'. $baseUrl . '/public/curso.php');
             exit;
             
         }  else {
-            $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel editar</div>";
+            $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel editar</div>";
                 header('Location:'. $baseUrl . '/public/curso.php');
                 exit;
             }

@@ -11,7 +11,7 @@ if ($id) {
     $curso = $cursoDao->findById($id);
     if ($curso) {
         $cursoDao->deletarcurso($curso);
-        $_SESSION['flash'] = "<div class='alert alert-success'>Deletado com sucesso!</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Deletado com sucesso!</div>";
         
             header('Location:'.$baseUrl.'/public/curso.php');
             exit;

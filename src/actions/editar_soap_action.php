@@ -28,14 +28,14 @@ if ($data) {
     $soapDao->atualizarSoap($soap);
     
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
 
     $id_paciente= $prontuarioDao->findPaciente($id_prontuario);
     header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id_paciente}");
             exit;
             
         }  else {
-            $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel editar</div>";
+            $_SESSION['flash'] = "<div style='text-align:center;'class='alert alert-danger'>Não foi possivel editar</div>";
 
             $id_paciente= $prontuarioDao->findPaciente($id_prontuario);
            header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id_paciente}");

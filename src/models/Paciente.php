@@ -12,7 +12,7 @@ class Paciente {
     private string $nascimento;
     private string $telefone;
     private string $endereco;
-    private string $foto;
+    private ?string $foto;
     private int $id_curso;
     private int $id_turma;
     
@@ -43,7 +43,7 @@ class Paciente {
 
     public function setNome(string $nome): void
     {
-        $this->nome = $nome;
+        $this->nome = ucwords(trim($nome));
     }
 
     public function getEmail(): string
@@ -53,7 +53,7 @@ class Paciente {
 
     public function setEmail(string $email): void
     {
-        $this->email = $email;
+        $this->email = strtolower(trim($email));
     }
 
     public function getNascimento(): string
@@ -91,7 +91,7 @@ class Paciente {
         return $this->foto;
     }
 
-    public function setFoto(string $foto): void
+    public function setFoto(?string $foto): void
     {
         $this->foto = $foto;
     }

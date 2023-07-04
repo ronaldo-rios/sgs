@@ -26,7 +26,7 @@ if ($nome && $cpf && $email) {
 
     $usuarioDao->atualizarUsuario($usuario);
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Atualizado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Atualizado com sucesso!</div>";
     if ($permissao == 'admin') {
         header('Location:'. $baseUrl . '/public/adm_principal.php');
         exit;

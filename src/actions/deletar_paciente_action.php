@@ -11,7 +11,7 @@ if ($id) {
     $paciente = $pacienteDao->findById($id);
     if ($paciente) {
         $pacienteDao->deletarpaciente($paciente);
-        $_SESSION['flash'] = "<div class='alert alert-success'>Deletado com sucesso!</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Deletado com sucesso!</div>";
         
             header('Location:'.$baseUrl.'/public/paciente.php');
             exit;

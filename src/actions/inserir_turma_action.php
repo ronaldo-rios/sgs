@@ -17,18 +17,18 @@ if ($nome){
         $turma = new Turma();
         $turma->setNome($nome);
         $turmaDao->inserirTurma($turma);
-        $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Cadastrado com sucesso!</div>";
             header('Location:'. $baseUrl . '/public/turma.php');
             exit;
             
         }  else {
-            $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel cadastrar</div>";
+            $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel cadastrar</div>";
                 header('Location:'. $baseUrl . '/public/turma.php');
                 exit;
             }
     } 
     else {
-        $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel cadastrar</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel cadastrar</div>";
             header('Location:'. $baseUrl . '/public/turma.php');
             exit;
         }

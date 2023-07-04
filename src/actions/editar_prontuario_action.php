@@ -63,7 +63,7 @@ if ($matricula_paciente) {
     $prontuario->setIdUsuario($id_usuario);
     $prontuarioDao->atualizarProntuario($prontuario);
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
     $id =$id_paciente ;
      header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id}");
     exit;

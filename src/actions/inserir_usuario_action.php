@@ -31,7 +31,7 @@ if ($nome && $permissao && $email && $senha){
         $token = bin2hex(random_bytes(16));
         $usuario->setToken($token);
         $usuarioDao->inserirUsuario($usuario);
-        $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Cadastrado com sucesso!</div>";
 
         if($permissao == 'admin'){
             header('Location:'. $baseUrl . '/public/adm_principal.php');

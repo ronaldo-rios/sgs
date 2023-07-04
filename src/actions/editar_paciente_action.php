@@ -16,6 +16,22 @@ $foto = filter_input(INPUT_POST, 'foto', FILTER_SANITIZE_SPECIAL_CHARS);
 $id_curso = filter_input(INPUT_POST, 'id_curso', FILTER_SANITIZE_SPECIAL_CHARS);
 $id_turma= filter_input(INPUT_POST, 'id_turma', FILTER_SANITIZE_SPECIAL_CHARS);
 
+if (isset($_FILES["foto"]) && !empty($_FILES["foto"]["name"])) {
+    // Define o diretório de destino do upload
+    $diretorioDestino = $_SERVER['DOCUMENT_ROOT'] . '/sgs/public/assets/img/uploads/';
+    
+    // Gera um nome único para o arquivo com a extensao
+    $nomeArquivo = uniqid() . '_' . $_FILES["foto"]["name"];
+
+    // Move o arquivo para o diretório de destino
+    if (move_uploaded_file($_FILES["foto"]["tmp_name"], $diretorioDestino . $nomeArquivo)) {
+        $foto = $nomeArquivo;
+        echo "<div style='text-align:center;' class='alert alert-success'>Upload realizado com sucesso!</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Não foi possivel realizar o upload da foto</div>";
+        exit;
+    }
+}
 
 if ($nome) {
   
@@ -29,7 +45,6 @@ if ($nome) {
     $paciente->setFoto($foto);
     $paciente->setIdTurma($id_turma);
     $paciente->setIdCurso($id_curso);
-
   
     $pacienteDao->atualizarPaciente($paciente);
 

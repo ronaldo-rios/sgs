@@ -6,7 +6,7 @@ use src\models\Atestado;
 use src\dao\AtestadoDaoMySql;
 
 $atestadoDao = new AtestadoDaoMySql($pdo);
-$data_cadastrada = filter_input(INPUT_POST, 'data_cadastrada', FILTER_SANITIZE_SPECIAL_CHARS);
+
 $data_inicio = filter_input(INPUT_POST, 'data_inicio', FILTER_SANITIZE_SPECIAL_CHARS);
 $data_final = filter_input(INPUT_POST, 'data_final', FILTER_SANITIZE_SPECIAL_CHARS);
 $motivo = filter_input(INPUT_POST, 'motivo', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -21,6 +21,7 @@ if ($data){
     
     $atestadoDao = new AtestadoDaoMySql($pdo);
     $atestado = new Atestado();
+    $data_cadastrada = date('Y-m-d H:i:s');
     $atestado->setDataCadastrada($data_cadastrada);
     $atestado->setDataInicio($data_inicio);
     $atestado->setDataFinal($data_final);
@@ -28,7 +29,7 @@ if ($data){
     $atestado->setDescricao ($descricao);
     $atestado->setIdPaciente($id_paciente);
     $atestado->setIdUsuario($id_usuario);
-    $atestadoDao->inserirAtestado($atestado);
+    $atestadoDao->adicionarAtestado($atestado);
     $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
     //header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id_prontuario}");
     //exit;

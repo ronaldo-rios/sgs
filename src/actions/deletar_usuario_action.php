@@ -11,7 +11,7 @@ if ($id) {
     $usuario = $usuarioDao->findById($id);
     if ($usuario) {
         $usuarioDao->deletarUsuario($usuario);
-        $_SESSION['flash'] = "<div class='alert alert-success'>Deletado com sucesso!</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Deletado com sucesso!</div>";
         
         if($usuario->getPermissao() == 'admin'){
             header('Location:'.$baseUrl.'/public/adm_principal.php');

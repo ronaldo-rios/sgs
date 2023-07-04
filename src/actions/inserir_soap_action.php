@@ -29,14 +29,14 @@ if ($data){
     $soap->setPlano($plano);
     $soap->setIdProntuario($id_prontuario);
     $soapDao->inserirSoap($soap);
-    $_SESSION['flash'] = "<div class='alert alert-success'>Cadastrado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Cadastrado com sucesso!</div>";
  
     $id_paciente= $prontuarioDao->findPaciente($id_prontuario);
     header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id_paciente}");
             exit;
     } 
     else {
-        $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel cadastrar</div>";
+        $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel cadastrar</div>";
           
     $id_paciente= $prontuarioDao->findPaciente($id_prontuario);
     header("Location: {$baseUrl}/public/prontuario_edit.php?id={$id_paciente}");

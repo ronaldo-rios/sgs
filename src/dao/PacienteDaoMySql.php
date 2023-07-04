@@ -33,8 +33,6 @@ class PacienteDaoMySql implements PacienteDaoInterface
             $sql->bindValue(':nascimento', $paciente->getNascimento());
             $sql->bindValue(':telefone', $paciente->getTelefone());
             $sql->bindValue(':endereco', $paciente->getEndereco());
-           // $alvo = "img_adm/" .basename($_FILES['foto']['name']);
-            // $foto = $_FILES['foto']['name'];
             $sql->bindValue(':foto', $paciente->getFoto());
             $sql->bindValue(':id_turma', $paciente->getIdTurma());
             $sql->bindValue(':id_curso', $paciente->getIdCurso());
@@ -173,7 +171,7 @@ class PacienteDaoMySql implements PacienteDaoInterface
             $lista[] = $turma;
             return $turma;
         } else {
-            throw new \Exception("Não encontrado");
+            echo "Turma não encontrada";
         }
     }
     // Buscar todos os pacientes:

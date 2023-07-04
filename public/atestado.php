@@ -2,23 +2,20 @@
 
 require '../vendor/autoload.php';
 require '../conexao.php';
+
 use Dotenv\Dotenv;
-use src\config\Conexao;
+use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
-use src\dao\AtestadoDaoMySql;
 use src\dao\PacienteDaoMySql;
+use src\dao\AtestadoDaoMySql;
+
+$paciente = new PacienteDaoMySql($pdo);
+$alunos = $paciente->findAll();
 
 $atestado = new AtestadoDaoMySql($pdo);
-$paciente = new PacienteDaoMySql($pdo);
 $atestados = $atestado->findAll();
 
-
-
-
-print_r($atestados);
-
 ?>
-
 
 <!DOCTYPE html>
 
@@ -199,14 +196,13 @@ print_r($atestados);
           </ul>
         </aside>
 <!-- Fim Dashbord -->
-
 <!-- Inicio da Página -->
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Atestados</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Administrador Principal</h4>
 
-       <?php if(!empty($_SESSION['flash'])) : ?>
+    <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
         <?= $_SESSION['flash']; ?>
       </div>
@@ -220,113 +216,101 @@ print_r($atestados);
             }
         }, 3000);
     </script>
+
+ <!-- Inicio Barra Pesquisa-->      
+         <div class="navbar-nav align-items-left" >
+            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
+              
+              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
+              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
+          
+              </div>
+                </div>
+ 
+
 <!-- Inicio da Tabela -->
+
   <div class="card">
     <div class="table-responsive text-nowrap">
       <table class="table">
+      
 <!-- Cabeçalho da Tabela -->
     <thead>
       <tr>
 
-         <th style="color:#2B5AAD;;font-weight:bold;">Aluno</th>
-         <th style="color:#2B5AAD;;font-weight:bold;">Data Cadastro</th>
+         <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
          <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
-         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
+        <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
         
       </tr>
-        </thead>
+    </thead>
 
 <!-- Corpo da Tabela -->
 <tbody class="table-border-bottom-0 gray">
-  <tr>
 
-  <?php foreach($atestados as $a): ?>
-    <td>
-      <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-      <?php    
-      // $id_paciente = $a->getIdPaciente();
-      // $nome_paciente = $atestado->findPaciente($id_paciente);
-      // print_r($nome_paciente);
-      
-       ?>
-        </td>
-        
-<td>
-  <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-    <strong>  
-    <?php  echo $a->getDataCadastrada(); ?>
+<tr>
+<!-- INÍCIO DO LOOP FOREACH DE ATESTADOS POR PACIENTES -->
+<?php foreach($atestados as $at): ?> 
+  <td>
+    <i class="fab fa-angular fa-lg text-danger me-3"></i> 
+<!-- Busca de todos os usuarios admins: -->
+    <strong>
+      <?php 
+        echo $at->getMotivo();
+      ?>
     </strong>
-      </td>
+  </td>
 
-
+ 
 <!-- Modal Visualizar-->
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $a->getId() ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $at->getId() ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
   
-<div class="modal fade" id="#show-<?= $a->getId() ?>" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="show-<?= $at->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
          <h5 class="modal-title" id="modalFullTitle">Cadastro Atestado</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
             </div>
-
+  
+<!-- Corpo Modal -->
 <div class="modal-body">
-<div class="row">
-  <div class="col-md-12 col-12 mb-md-0 mb-4">
-     <div class="card">
-        <div class="card-body">
+<div class="list-group list-group-flush">
 
-<div class="col mb-3">
-  <label for="name" class="form-label">Nome</label>
-    <input type="text" name="motivo" class="form-control" value="<?= $a->getNome(); ?>" /> 
-      </div>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+    <p>Aluno Paciente</p>
+      <?
+        $paciente = $at->getIdPaciente();
+        echo $paciente->getNome();
+      ?>
+        </p>  
 
-      <div class="mb-3 row">
-        <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Cadastro</label>
-          <div class="col-md-10">
-            <input class="form-control" type="date-time" name="data_cadastrada"  id="html5-datetime-local-input" value="<?=$a->getDataCadastrada() ?>" />
-              </div>
-                </div>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+    <p>Motivo</p>
+      <?= $at->getMotivo(); ?>
+        </p>  
+     
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+    <p>Descrição</p>
+      <?= $at->getDescricao(); ?>
+        </p>
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p> Data Inicio</p>
+    <?= $at->getDataInicio(); ?>
+  </p>
 
-    <div class="col mb-3">
-      <label for="name" class="form-label">Motivo</label>
-        <input type="text" name="motivo" class="form-control" value="<?= $a->getMotivo(); ?>" /> 
-        </div>
-
-      <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Inicio</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_inicio"  id="html5-datetime-local-input" value="<?= $a->getDataInicio(); ?>" />
-                </div>
-                </div>
-
-  <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Final</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_final"  id="html5-datetime-local-input" value="<?= $a->getDataFinal(); ?>" />
-                </div>
-                </div>
-
-   <div class=" mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descricao" value="<?= $a->getDescricao(); ?>"></textarea>
+  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p> Data Final</p>
+    <?= $at->getDataFinal() ?>
+  </p>
+     </div>
           </div>
 
- 
-    <div class="mb-3">
-      <label for="foto" class="form-label">Anexar Foto</label>
-        <input class="form-control" type="text" name="atestdado_doc" />
-          </div>
-            </div>
-              </div>
-                </div>
-                  </div>
-                    </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Fechar</button>
     </div>
@@ -339,79 +323,63 @@ print_r($atestados);
 
 
 <!--Incio Modal Editar-->
-<td>
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $a->getId(); ?>" style="background-color:#cdf3fb;border:none">
+ <td>
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $at->getId();?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar-<?= $a->getId(); ?>" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editar-<?= $at->getId();?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
 
 <div class="modal-header">
-  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro Atestado</h5>
+  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Atestados</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
       </div>
 
 <div class="modal-body">
-<div class="row">
-  <div class="col-md-12 col-12 mb-md-0 mb-4">
-     <div class="card">
-        <div class="card-body">
-          <form id="editForm-<?= $a->getId(); ?>"  action="<?=$baseUrl;?>/src/actions/editar_soap_action.php" method="POST">
+  <form id="editForm-" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST">
 
+  <div class="row">
 
 <div class="col mb-3">
-  <label for="name" class="form-label">Nome</label>
-    <input type="text" name="motivo" class="form-control" value="<?= $a->getNome(); ?>" /> 
-      </div>
-
-      <div class="mb-3 row">
-        <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Cadastro</label>
-          <div class="col-md-10">
-            <input class="form-control" type="date-time" name="data_cadastrada"  id="html5-datetime-local-input" value="<?=$a->getDataCadastrada() ?>" />
-              </div>
-                </div>
+  <label for="nameBasic" class="form-label">Data Início Atestado</label>
+  <input type="date" name ="datainicio" class="form-control" value="<?= $at->getDataInicio(); ?>"/>
+    </div>
 
     <div class="col mb-3">
-      <label for="name" class="form-label">Motivo</label>
-        <input type="text" name="motivo" class="form-control" value="<?= $a->getMotivo(); ?>" /> 
+  <label for="nameBasic" class="form-label">Data Final Atestado</label>
+  <input type="date" name ="datafim" class="form-control" value="<?= $at->getDataFinal(); ?>" />
+    </div>
+
         </div>
 
-      <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Inicio</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_inicio"  id="html5-datetime-local-input" value="<?= $a->getDataInicio(); ?>" />
-                </div>
-                </div>
-
-  <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Final</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_final"  id="html5-datetime-local-input" value="<?= $a->getDataFinal(); ?>" />
-                </div>
-                </div>
-
-   <div class=" mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descricao" value="<?= $a->getDescricao(); ?>"></textarea>
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Motivo</label>
+            <input type="text" name ="motivo" class="form-control" value="<?= $at->getMotivo(); ?>"/>
           </div>
+        </div>
 
- 
-    <div class="mb-3">
-      <label for="foto" class="form-label">Anexar Foto</label>
-        <input class="form-control" type="text" name="atestdado_doc" />
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Descrição</label>
+            <input type="text" name ="descricao" class="form-control" value="<?= $at->getDescricao(); ?>"/>
           </div>
-            </div>
-              </div>
-                </div>
-                  </div>
-                    </div>
+        </div>
+
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Atestado (pdf)</label>
+            <input type="file" name ="atestado" class="form-control" accept=".pdf" value="<?= $at->getAtestadoDoc(); ?>" />
+          </div>
+        </div>
+    
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul"  form="editForm-<?= $a->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editForm-" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
                     </div>
@@ -424,30 +392,31 @@ print_r($atestados);
         </td>
       
                     
-                    
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $a->getId(); ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $at->getId();?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir-<?= $a->getId(); ?>"  tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $at->getId();?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Atestado</h5>
+       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Atestados</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir esse atestado?</div>
    </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
+<a href="<?=$baseUrl;?>/src/actions/deletar_atestado_action.php?id=<??>">
+  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
     Excluir 
   </button>
+</a>
 
   <button type="button" class="btn btn-primary"   style="background-color:#2B5AAD">
     Cancelar
@@ -459,7 +428,8 @@ print_r($atestados);
               </div>
                 </div>
  </td>
-    </tr> 
+    </tr>
+    <!-- FIM DO LOOP DE ATESTADOS -->
     <?php endforeach; ?>
        </tbody>
           </table>
@@ -478,120 +448,115 @@ print_r($atestados);
 <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
+
+     
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro Atestado</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Atestados</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
+<form action="<?=$baseUrl;?>/src/actions/inserir_atestado_action.php" id="cad" method="POST" enctype="multipart/form-data">
+
 <div class="row">
-  <div class="col-md-12 col-12 mb-md-0 mb-4">
-     <div class="card">
-        <div class="card-body">
-          <form id="cad"  action="<?=$baseUrl;?>/src/actions/inserir_atestado_action.php" method="POST">
-
-
-
-
-      <div class="mb-3 row">
-        <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Cadastro</label>
-          <div class="col-md-10">
-            <input class="form-control" type="date-time" name="data_cadastrada"  id="html5-datetime-local-input" />
-              </div>
-                </div>
-
-    <div class="col mb-3">
-      <label for="name" class="form-label">Motivo</label>
-        <input type="text" name="motivo" class="form-control" /> 
-        </div>
-
-      <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Inicio</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_inicio"  id="html5-datetime-local-input"/>
-                </div>
-                </div>
-
-  <div class="mb-3 row">
-          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data Final</label>
-            <div class="col-md-10">
-              <input class="form-control" type="date-time" name="data_final"  id="html5-datetime-local-input" />
-                </div>
-                </div>
-
-   <div class=" mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descricao"></textarea>
-          </div>
-
- 
-    <div class="mb-3">
-      <label for="foto" class="form-label">Anexar Foto</label>
-        <input class="form-control" type="text" name="atestdado_doc" />
-          </div>
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Aluno</label>
+              <select class="form-select" id="id_aluno" name="id_paciente" aria-label="Selecione o aluno" required >
+              <?php foreach($alunos as $a): ?>
+                <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
+                    <?= $a->getNome(); ?>
+                </option>
+              <?php endforeach; ?>
+        </select>
             </div>
-              </div>
-                </div>
-                  </div>
-                    </div>
-      
-<div class="modal-footer">
+          </div>
 
+<div class="row">
+
+  <div class="col mb-3">
+    <label for="nameBasic" class="form-label">Data Início Atestado</label>
+    <input type="date" name ="datainicio" class="form-control" placeholder="Data início" required />
+      </div>
+
+      <div class="col mb-3">
+    <label for="nameBasic" class="form-label">Data Final Atestado</label>
+    <input type="date" name ="datafim" class="form-control" placeholder="Data fim" required />
+      </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Motivo</label>
+              <input type="text" name ="motivo" class="form-control" placeholder="Motivo" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Descrição</label>
+              <input type="text" name ="descricao" class="form-control" placeholder="Descrição" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Atestado (pdf)</label>
+              <input type="file" name ="atestado" class="form-control" accept=".pdf" required />
+            </div>
+          </div>
+
+<div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
-  Cadastrar
-    </button>
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="cad" id="cad">
+  Salvar
+    </button> 
         </div>
           </div>
             </div>
-            </form>
               </div>
-               </div>
-                </div>
-
+            </div>
+          </div>
+          </form>
 <div class="content-backdrop fade">
 
 </div>
-  </div>
-    </div>
-      </div>
-        <div class="layout-overlay layout-menu-toggle">
-         </div>
-          </div>
 
+  </div>
+<!-- Content wrapper -->
+        </div>
+         <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+ 
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
     <script src="assets/libs/jquery/jquery.js"></script>
     <script src="assets/libs/popper/popper.js"></script>
     <script src="assets/js/bootstrap.js"></script>
-    <script src="assetslibs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
     <script src="assets/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
     <script src="assets/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+
+    <!-- Page JS -->
     <script src="assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
-  <script>
-    var search = document.getElementById('search');
-
-    search.addEventListener('keydown', function(event){
-      if(event.key === "Enter"){
-        searchData();
-      }
-    });
-
-    function searchData(){
-      window.location.href = '<?=$baseUrl;?>/public/atestado.php?search='+search.value;
-    }
-  </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-        $('#id_aluno').change(function() {
-            var alunoId = $(this).val();
-            $('#id_matricula').val('');
-            $('#id_matricula option[data-aluno-id="' + alunoId + '"]').prop('selected', true);
-        });
-    });
-</script>
 </html>

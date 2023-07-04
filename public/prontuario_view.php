@@ -224,7 +224,10 @@ $soaps = $soap->findPaciente($_GET['id']);
     <h5 class="card-header">Dados do Aluno</h5>
       <div class="card-body">
          <div class="d-flex align-items-start align-items-sm-center gap-4">
-            <img src="<?= $pacientes->getFoto(); ?>"  class="d-block rounded" height="100" width="100" id="uploadedAvatar"/>
+
+            <img src="../public/assets/img/uploads/<?= $pacientes->getFoto(); ?>" 
+            class="d-block rounded" height="100" width="100" id="uploadedAvatar"/> 
+            
                 </div>
                  </div>
 

@@ -80,7 +80,9 @@ class Atestado{
  
     public function getDataInicio(): string
     {
-        return $this->data_inicio;
+        $data_inicio = $this->data_inicio; 
+        $data_inicio_formatada = date('d/m/Y', strtotime($data_inicio));
+        return $data_inicio_formatada;
     }
 
  
@@ -92,7 +94,9 @@ class Atestado{
 
     public function getDataFinal(): string
     {
-        return $this->data_final;
+        $data_final = $this->data_final;
+        $data_final_formatada = date('d/m/Y', strtotime($data_final));
+        return $data_final_formatada;
     }
 
    

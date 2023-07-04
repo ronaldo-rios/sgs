@@ -14,12 +14,12 @@ if ($nome) {
     $turma->setNome($nome);
     $turmaDao->atualizarTurma($turma);
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
             header('Location:'. $baseUrl . '/public/turma.php');
             exit;
             
         }  else {
-            $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel editar</div>";
+            $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel editar</div>";
                 header('Location:'. $baseUrl . '/public/turma.php');
                 exit;
             }

@@ -598,7 +598,7 @@ echo $nomet;
 
   <div class="mb-3">
     <label for="formFile" class="form-label">Anexar Foto</label>
-      <input class="form-control" type="file" id="foto" name="foto"  accept="image/"/>
+      <input class="form-control" type="file" id="foto" name="foto" accept=".png, .jpg, .jpeg" />
        </div>
           </div>
 

@@ -211,6 +211,7 @@ $prontuario = new ProntuarioDaoMySql($pdo);
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
+
        <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Prontuários</h4>
     
        <?php if(!empty($_SESSION['flash'])) : ?>
@@ -237,28 +238,6 @@ $prontuario = new ProntuarioDaoMySql($pdo);
             </svg>
               </button>
                  </div>
-<?php
-//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
-if(!empty ($_GET['search'])){
-  $data= $_GET['search'];
-//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que encontrou
-if (!empty($prontuario->findByName($data))) {
- 
-    $prontuarios = $prontuario->findByName($data);
-    $pacientes = $paciente->findByName($data);
-
-}else{
-  echo "<div class='alert alert-danger' role='alert'>
-  Não há prontuário vinculado ao aluno informado, favor cadastrar!";
-  $pacientes = [];
-} 
-
-}else {
-  $pacientes = [];
-  
-  
-}
-?>
  
 
 <!-- Inicio da Tabela -->
@@ -280,12 +259,37 @@ if (!empty($prontuario->findByName($data))) {
       </tr>
     </thead>
 
+    <tr>
+
 <!-- Corpo da Tabela -->
 <tbody class="table-border-bottom-0 gray">
+<div style="text-align:center;">
+<?php
+      //Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+      if(!empty ($_GET['search'])){
+        $data= $_GET['search'];
+      //Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que encontrou
+      if (!empty($prontuario->findByName($data))) {
+      
+          $prontuarios = $prontuario->findByName($data);
+          $pacientes = $paciente->findByName($data);
 
-<tr>
+      }else{
+        echo "<div class='alert alert-danger' role='alert'>
+        Não há prontuário vinculado ao aluno informado. Favor cadastrar!";
+        $pacientes = [];
+      } 
+
+      }else {
+        $pacientes = [];
+        
+      }
+      ?>
+</div>
+
 <!-- INÍCIO DO LOOP FOREACH DE USUÁRIOS -->
 <?php foreach($pacientes as $p):;?>
+
   <td>
     <i class="fab fa-angular fa-lg text-danger me-3"></i> 
     <strong>
@@ -303,7 +307,6 @@ if (!empty($prontuario->findByName($data))) {
       ?>
     </strong>
   </td>
-
  
 <!--  Visualizar-->
 <td>
@@ -315,8 +318,6 @@ if (!empty($prontuario->findByName($data))) {
  
 </td>
 
-
-
 <!--Incio Modal Editar-->
  <td>
  <a href="<?=$baseUrl;?>/public/prontuario_edit.php?id=<?=$p->getId();?>">
@@ -327,7 +328,6 @@ if (!empty($prontuario->findByName($data))) {
         </td>
       
                     
-
     </tr>
     <!-- FIM DO LOOP DE USUARIOS -->
     <?php endforeach; ?>
