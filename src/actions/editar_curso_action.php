@@ -9,12 +9,12 @@ $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($nome) {
-print_r($nome);
+
     $curso = $cursoDao->findById($id);
     $curso->setNome($nome);
     $cursoDao->atualizarcurso($curso);
 
-    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='align-items:center;' style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
             header('Location:'. $baseUrl . '/public/curso.php');
             exit;
             

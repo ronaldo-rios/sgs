@@ -54,6 +54,7 @@ class AtestadoDaoMySql implements AtestadoDaoInterface
         $sql->bindValue(':atestado_doc',$atestado->getAtestadoDoc());
         $sql->bindValue(':id_paciente',$atestado->getIdPaciente());
         $sql->bindValue(':id_usuario',$atestado->getIdUsuario());
+        $sql->bindValue(':id', $atestado->getId());
         $sql->execute();
         return $atestado;
     }

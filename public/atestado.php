@@ -202,7 +202,7 @@ $atestados = $atestado->findAll();
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Administrador Principal</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Atestados</h4>
 
     <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
@@ -302,7 +302,7 @@ $atestados = $atestado->findAll();
       <?= $at->getDescricao(); ?>
         </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> Data Inicio</p>
+  <p> Data Inicio do Atestado</p>
     <?php 
       $data_inicio_formatada = date('d/m/Y', strtotime($at->getDataInicio()));
       echo  $data_inicio_formatada 
@@ -310,11 +310,20 @@ $atestados = $atestado->findAll();
   </p>
 
   <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> Data Final</p>
+  <p> Data Final do Atestado</p>
     <?php
       $data_final_formatada = date('d/m/Y', strtotime($at->getDataFinal()));
       echo  $data_final_formatada 
     ?>
+  </p>
+
+  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Atestado</p>
+  <?php 
+    $caminhoDocumento = './assets/pdf/' . $at->getAtestadoDoc();
+  ?>
+  <a href="<?= $caminhoDocumento ?>" target="_blank" >
+    Visualizar Atestado</a>
   </p>
      </div>
           </div>
@@ -347,18 +356,20 @@ $atestados = $atestado->findAll();
       </div>
 
 <div class="modal-body">
-  <form id="editForm-" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST">
-
+  <form id="editForm-<?= $at->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST" enctype="multipart/form-data" >
+  <input type="hidden" name="idatestado" value="<?=$at->getId();?>">
+  <input type="hidden" name="idpaciente" value="<?= $at->getIdPaciente(); ?>">
+  <input type="hidden" name="idusuario" value="<?= $usuarioInfo->getId();?>">
   <div class="row">
 
 <div class="col mb-3">
   <label for="nameBasic" class="form-label">Data Início Atestado</label>
-  <input type="date" name ="datainicio" class="form-control" value="<?= $at->getDataInicio(); ?>"/>
+  <input type="date" name="datainicio" class="form-control" value="<?= $at->getDataInicio(); ?>"/>
     </div>
 
     <div class="col mb-3">
   <label for="nameBasic" class="form-label">Data Final Atestado</label>
-  <input type="date" name ="datafim" class="form-control" value="<?= $at->getDataFinal(); ?>" />
+  <input type="date" name="datafim" class="form-control" value="<?= $at->getDataFinal(); ?>" />
     </div>
 
         </div>
@@ -366,7 +377,7 @@ $atestados = $atestado->findAll();
         <div class="row">
           <div class="col mb-1">
             <label for="nameBasic" class="form-label">Motivo</label>
-            <input type="text" name ="motivo" class="form-control" value="<?= $at->getMotivo(); ?>"/>
+            <input type="text" name="motivo" class="form-control" value="<?= $at->getMotivo(); ?>"/>
           </div>
         </div>
 
@@ -380,14 +391,14 @@ $atestados = $atestado->findAll();
         <div class="row">
           <div class="col mb-1">
             <label for="nameBasic" class="form-label">Atestado (pdf)</label>
-            <input type="file" name ="atestado" class="form-control" accept=".pdf" value="<?= $at->getAtestadoDoc(); ?>" />
+            <input type="file" name ="atestado_doc" class="form-control" accept=".pdf" value="<?= $at->getAtestadoDoc(); ?>" />
           </div>
         </div>
     
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul" form="editForm-" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editForm-<?=$at->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
                     </div>
