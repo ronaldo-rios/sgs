@@ -126,7 +126,8 @@ public function findPaciente($id){
     a.id AS 'id', a.data_cadastrada AS 'data_cadastrada', a.data_inicio AS 'data_inicio',
     a.data_final AS 'data_final', a.motivo AS 'motivo', a.descricao AS 'descricao',
     a.atestado_doc AS 'atestado_doc', a.id_paciente AS 'id_paciente', a.id_usuario AS 'id_usuario'
-    FROM pacientes AS p INNER JOIN atestados AS a ON a.id_paciente = p.id
+    FROM pacientes AS p 
+    INNER JOIN atestados AS a ON a.id_paciente = p.id
     WHERE p.id = :id");
     $sql->bindValue(':id', $id);
     $sql->execute();
@@ -149,8 +150,7 @@ public function findPaciente($id){
     } else {
         return null;
     }
-}
-   
+}  
 
 }
 

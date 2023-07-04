@@ -197,6 +197,13 @@ $usuarios = $usuario->findAdm();
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>
   </li>
+  
+  <li class="menu-item">
+  <a href="<?=$baseUrl?>/src/actions/logout_action.php" style="background-color:#d6d2fc;" class="menu-link">
+    <i class="menu-icon tf-icon bx "></i>
+    <div data-i18n="User interface" class="azul" >Sair</div>
+  </a>
+</li>
           </ul>
         </aside>
 <!-- Fim Dashbord -->

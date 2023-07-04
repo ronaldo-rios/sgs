@@ -195,6 +195,13 @@ $atestados = $atestado->findAll();
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>
   </li>
+
+  <li class="menu-item">
+  <a href="<?=$baseUrl?>/src/actions/logout_action.php" style="background-color:#d6d2fc;" class="menu-link">
+    <i class="menu-icon tf-icon bx "></i>
+    <div data-i18n="User interface" class="azul" >Sair</div>
+  </a>
+</li>
           </ul>
         </aside>
 <!-- Fim Dashbord -->
@@ -259,7 +266,11 @@ $atestados = $atestado->findAll();
 <!-- Busca de todos os usuarios admins: -->
     <strong>
       <?php 
-        echo $at->getMotivo();
+        foreach($alunos as $aluno){
+          if($aluno->getId() == $at->getIdPaciente()){
+            echo $aluno->getNome();
+          }
+        }
       ?>
     </strong>
   </td>
@@ -286,9 +297,12 @@ $atestados = $atestado->findAll();
 
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
     <p>Aluno Paciente</p>
-      <?
-        $paciente = $at->getIdPaciente();
-        echo $paciente->getNome();
+      <?php
+        foreach($alunos as $aluno){
+          if($aluno->getId() == $at->getIdPaciente()){
+            echo $aluno->getNome();
+          }
+        }
       ?>
         </p>  
 

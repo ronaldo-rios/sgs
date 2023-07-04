@@ -22,4 +22,4 @@ if ($nome) {
             $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel editar</div>";
                 header('Location:'. $baseUrl . '/public/curso.php');
                 exit;
-            }
+}
