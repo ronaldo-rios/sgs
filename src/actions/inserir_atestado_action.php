@@ -10,11 +10,11 @@ error_reporting(E_ALL);
 $atestadoDao = new AtestadoDaoMySql($pdo);
 
 $data_inicio = filter_input(INPUT_POST, 'datainicio', FILTER_SANITIZE_SPECIAL_CHARS);
-$data_final = filter_input(INPUT_POST, 'datafim', FILTER_SANITIZE_SPECIAL_CHARS);
-$motivo = filter_input(INPUT_POST, 'motivo', FILTER_SANITIZE_SPECIAL_CHARS);
-$descricao = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_SPECIAL_CHARS);
+$data_final  = filter_input(INPUT_POST, 'datafim',    FILTER_SANITIZE_SPECIAL_CHARS);
+$motivo      = filter_input(INPUT_POST, 'motivo',     FILTER_SANITIZE_SPECIAL_CHARS);
+$descricao   = filter_input(INPUT_POST, 'descricao',  FILTER_SANITIZE_SPECIAL_CHARS);
 $id_paciente = filter_input(INPUT_POST, 'idpaciente', FILTER_SANITIZE_SPECIAL_CHARS);
-$id_usuario = filter_input(INPUT_POST, 'idusuario', FILTER_SANITIZE_SPECIAL_CHARS);
+$id_usuario  = filter_input(INPUT_POST, 'idusuario',  FILTER_SANITIZE_SPECIAL_CHARS);
 
 
 if ($data_inicio && $data_final && $motivo && $descricao && $id_paciente && $id_usuario) {

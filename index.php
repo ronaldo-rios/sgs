@@ -5,8 +5,9 @@ require 'conexao.php';
 use src\models\Auth;
 use Dotenv\Dotenv;
 
-// $dotenv = Dotenv::createImmutable(__DIR__);
-// $dotenv->load
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $auth = new Auth($pdo, $baseUrl);
 $usuarioInfo = $auth->checkToken();
 

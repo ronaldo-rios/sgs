@@ -14,7 +14,7 @@ if ($nome){
 
     if ($cursoDao->nameExists($nome) === false)
     {
-        $curso = new curso();
+        $curso = new Curso();
         $curso->setNome($nome);
         $cursoDao->inserircurso($curso);
         $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Cadastrado com sucesso!</div>";

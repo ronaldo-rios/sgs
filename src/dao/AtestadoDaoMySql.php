@@ -5,7 +5,6 @@ namespace src\dao;
 use src\models\Atestado;
 use src\models\Paciente;
 use src\interfaces\AtestadoDaoInterface;
-use src\interfaces\PacienteDaoInterface;
 
 class AtestadoDaoMySql implements AtestadoDaoInterface
 {

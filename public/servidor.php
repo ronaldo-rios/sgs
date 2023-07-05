@@ -130,12 +130,11 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
     <div data-i18n="User interface"  class="azul" >Atestados</div>
   </a>
 
-  <a href="vacina.php" class="menu-link ">
+  <a href="paciente_vacinas.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bxs-virus red"></i>
-    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+    <div data-i18n="User interface"  class="azul" >Vacinas dos Pacientes</div>
   </a>
 
-  
     <a href="prontuario.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
       <div data-i18n="Authentications" class="azul">Consulta</div>
@@ -161,9 +160,13 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
       <i class="menu-icon tf-icons bx bxs-group red"></i>
       <div data-i18n="User interface"  class="azul" >Turma</div>
     </a>
+
+    <a href="vacina.php" class="menu-link ">
+    <i class="menu-icon tf-icons bx bxs-virus red"></i>
+    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+  </a>
+  
   </li>
-
-
 
 
 <!-- Relatórios -->

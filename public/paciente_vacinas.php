@@ -3,26 +3,16 @@
 require '../vendor/autoload.php';
 require '../conexao.php';
 
-use Dotenv\Dotenv;
-use src\dao\UsuarioDaoMySql;
-use src\models\Auth;
-use src\models\Paciente;
-use src\interfaces\PacienteDaoInterface;
 use src\dao\PacienteDaoMySql;
-use src\dao\CursoDaoMySql;
-use src\dao\TurmaDaoMySql;
+use src\dao\VacinaDaoMySql;
 
 $paciente = new PacienteDaoMySql($pdo);
-$pacientes = $paciente->findAll();
+$alunos = $paciente->findAll();
 
-$turma = new TurmaDaoMySql($pdo);
-$turmas = $turma->findAll();
+$vacina = new VacinaDaoMySql($pdo);
+$vacinas = $vacina->findAllVacinas();
 
-
-$curso = new CursoDaoMySql($pdo);
-$cursos = $curso->findAll();
 ?>
-
 
 <!DOCTYPE html>
 
@@ -215,13 +205,12 @@ $cursos = $curso->findAll();
           </ul>
         </aside>
 <!-- Fim Dashbord -->
-
 <!-- Inicio da Página -->
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Prontuários</h4>
-    
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Atestados</h4>
+
     <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
         <?= $_SESSION['flash']; ?>
@@ -258,8 +247,8 @@ $cursos = $curso->findAll();
     <thead>
       <tr>
 
-         <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
-         <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
+        <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
+        <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
         
@@ -270,89 +259,75 @@ $cursos = $curso->findAll();
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-<!-- INÍCIO DO LOOP FOREACH DE USUÁRIOS -->
-<?php 
-
-foreach($pacientes as $p):
-  ?>
+<!-- INÍCIO DO LOOP FOREACH DE ATESTADOS POR PACIENTES -->
+<?php foreach($atestados as $at): ?> 
   <td>
     <i class="fab fa-angular fa-lg text-danger me-3"></i> 
 <!-- Busca de todos os usuarios admins: -->
     <strong>
-      <?php 
-        echo $p->getNome();
-
-
-      ?>
+      <!-- <?php 
+        foreach($alunos as $aluno){
+          if($aluno->getId() == $at->getIdPaciente()){
+            echo $aluno->getNome();
+          }
+        }
+      ?> -->
     </strong>
   </td>
 
  
-
-
 <!-- Modal Visualizar-->
 <td>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $p->getId() ?>" style="background-color:#cdf3fb;border:none">
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $at->getId() ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
- 
-<div class="modal fade" id="show-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
+  
+<div class="modal fade" id="show-<?= $at->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-         <h5 class="modal-title" id="modalFullTitle">Cadastro Paciente</h5>
+         <h5 class="modal-title" id="modalFullTitle">Cadastro Atestado</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
             </div>
+  
 <!-- Corpo Modal -->
 <div class="modal-body">
 <div class="list-group list-group-flush">
+
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Nome</p>
-      <?= $p->getNome(); ?>
+    <p>Aluno Paciente</p>
+      <!-- <?php
+        foreach($alunos as $aluno){
+          if($aluno->getId() == $at->getIdPaciente()){
+            echo $aluno->getNome();
+          }
+        }
+      ?> -->
         </p>  
+
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Matricula</p>
-      <?= $p->getMatricula(); ?>
+    <p>Motivo</p>
+      
+        </p>  
+     
+<p href="javascript:void(0);" class="list-group-item list-group-item-action">
+    <p>Descrição</p>
+      <?= $at->getDescricao(); ?>
         </p>
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> E-mail</p>
-  <?= $p->getEmail(); ?>
+  <p> Data Inicio do Atestado</p>
+    
   </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Data Nascimento</p>
-  <?= $p->getNascimento(); ?>
+
+  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p> Data Final do Atestado</p>
+    
   </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Telefone</p>
-  <?= $p->getTelefone(); ?>
-  </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Endereço</p>
-  <?= $p->getEndereco(); ?>
-  </p>
+
+  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
+  <p>Atestado</p>
   
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Curso</p>
-  <?php 
-
-$idd = $p->getIdCurso();
-$nomec = $curso->findCurso($idd);
-echo $nomec;
-
- ?>
-  
-  </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Turma</p>
-  
-
-<?php 
-
-$idd = $p->getIdTurma();
-$nomet = $turma->findTurma($idd);
-echo $nomet;
-
- ?>
   </p>
      </div>
           </div>
@@ -361,106 +336,71 @@ echo $nomet;
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Fechar</button>
     </div>
       </div>
+       </div>
+       </div>
         </div>
-          </div>
-           </div>    
-            </td>
+</td>
 
 
 
 <!--Incio Modal Editar-->
  <td>
-
-
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?= $p->getId(); ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<??>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editar-<??>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
 
 <div class="modal-header">
-  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
+  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacinas em Pacientes</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
       </div>
 
 <div class="modal-body">
-  <form id="editForm-<?= $p->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_paciente_action.php" method="POST">
-
-  <input type="hidden" name="id" value="<?= $p->getId(); ?>" />
-  
+  <form id="editForm-<??>" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST" enctype="multipart/form-data" >
+ 
   <div class="row">
+
+<div class="col mb-3">
+  <label for="nameBasic" class="form-label">Data Início Atestado</label>
+  <input type="date" name="datainicio" class="form-control" value="<??>"/>
+    </div>
+
     <div class="col mb-3">
-      <label for="nome" class="form-label">Nome</label>
-      <input type="text" name="nome" class="form-control" value="<?= $p->getNome(); ?>" /> 
-    </div>
-   
-    <div class="col mb-0">
-      <label for="nascimento" class="form-label">Data Nascimento</label>
-      <input type="text" name="nascimento" class="form-control" value="<?= $p->getNascimento(); ?>" />
-        </div>
-  </div>
-
-
-  <div class="row ">
-    <div class="col mb-0">
-      <label for="email" class="form-label">Email</label>
-      <input type="text" name="email" class="form-control" value="<?= $p->getEmail(); ?>" />
-    </div>
-    <div class="col mb-3">
-      <label for="matricula" class="form-label">Matricula</label>
-      <input type="text" name="matricula" class="form-control" value="<?= $p->getMatricula(); ?>" /> 
-    </div>
-  </div>
-
-    <div class="row g-2">
-    <div class="col mb-0">
-      <label for="telefone" class="form-label">Telefone</label>
-      <input type="text" name="telefone" class="form-control" value="<?= $p->getTelefone(); ?>" />
+  <label for="nameBasic" class="form-label">Data Final Atestado</label>
+  <input type="date" name="datafim" class="form-control" value="<??>" />
     </div>
 
-    <div class="col mb-0">
-      <label for="endereco" class="form-label">Endereço</label>
-      <input type="text" name="endereco" class="form-control" value="<?= $p->getEndereco(); ?>" />
-        </div>
-  
         </div>
 
-        <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Curso</label>
-    <select class="form-select" id="id_curso" name="id_curso" aria-label="Selecione o curso">
-        <?php foreach($cursos as $c): ?>
-            <option value="<?= $c->getId(); ?>" <?php if ($c->getId() == $c->getId()) echo 'selected'; ?>>
-                <?= $c->getNome(); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Motivo</label>
+            <input type="text" name="motivo" class="form-control" value="<??>"/>
+          </div>
+        </div>
 
-<div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Turma</label>
-    <select class="form-select" id="id_turma" name="id_turma" aria-label="Selecione a turma">
-        <?php foreach($turmas as $t): ?>
-            <option value="<?= $t->getId(); ?>" <?php if ($t->getId() == $t->getId()) echo 'selected'; ?>>
-                <?= $t->getNome(); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Descrição</label>
+            <input type="text" name ="descricao" class="form-control" value="<??>"/>
+          </div>
+        </div>
 
-        <div class="mb-3">
-        <label for="foto" class="form-label">Anexar Foto</label>
-        <input class="form-control" type="file" id="foto" name="foto" />
-      </div>
-      </div>
-
+        <div class="row">
+          <div class="col mb-1">
+            <label for="nameBasic" class="form-label">Atestado (pdf)</label>
+            <input type="file" name ="atestado_doc" class="form-control" accept=".pdf" value="<??>" />
+          </div>
+        </div>
     
       
 <div class="modal-footer">
 
- <button type="submit" class="btn btn-primary azul" form="editForm-<?= $p->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editForm-<??>" style="background-color:#2B5AAD">Editar</button>
 
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
                     </div>
@@ -476,25 +416,25 @@ echo $nomet;
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $p->getId(); ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<??>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir-<?= $p->getId(); ?>" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<??>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
+       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacinas em Pacientes</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $p->getNome(); ?>?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir esse item cadastrado?</div>
    </div>
 
 <div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_paciente_action.php?id=<?=$p->getId();?>">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
+<a href="<?=$baseUrl;?>/src/actions/deletar_atestado_action.php?id=<??>">
+  <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
     Excluir 
   </button>
 </a>
@@ -510,13 +450,13 @@ echo $nomet;
                 </div>
  </td>
     </tr>
-    <!-- FIM DO LOOP DE USUARIOS -->
+    <!-- FIM DO LOOP DE ATESTADOS -->
     <?php endforeach; ?>
        </tbody>
           </table>
+            </div>
               </div>
                 </div>
-</div>
 
 <!-- Inicio Modal Cadastrar -->
 <div class="col-lg-4 col-md-6" style="margin:20px;">
@@ -532,79 +472,85 @@ echo $nomet;
 
      
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Paciente</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacinas em Pacientes</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
-
-<form action="<?=$baseUrl;?>/src/actions/inserir_paciente_action.php" id="cad" method="POST" enctype="multipart/form-data">
+<form action="<?=$baseUrl;?>/src/actions/inserir_paciente_vacinas_action.php" id="cad" method="POST" >
 
 <div class="row">
-  <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" name ="nome" class="form-control" placeholder="Nome do paciente" required />
-      </div>
-
-  <div class="col mb-0">
-    <label for="dobBasic" class="form-label">Data Nascimento</label>
-     <input type="date" name="nascimento" class="form-control" placeholder="Informe a data é de nascimento" />
-       </div>
-      </div>
-    
-<div class="row">
-<div class="col mb-0">
-    <label for="dobBasic" class="form-label">Matricula</label>
-     <input type="text" name="matricula" class="form-control" placeholder="Informe a matriula" />
-       </div>
-<div class="col mb-0">
-    <label for="emailBasic" class="form-label">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="E-mail" required />
-      </div>
-         </div>
-
-<div class ="row g-2">
-<div class="col mb-0">
-  <label for="emailBasic" class="form-label">Telefone</label>
-    <input type= "phone" name="telefone" class="form-control" placeholder="Telefone" required />
-      </div>
-        
-  <div class="col mb-0">
-    <label for="emailBasic" class="form-label">Endereço</label>
-    <input type="text" name="endereco" class="form-control" placeholder="Endereco" required />
-      </div>
-        </div>
-
- 
-   
-        <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Curso</label>
-    <select class="form-select" id="id_curso" name="id_curso" aria-label="Selecione o curso">
-        <?php foreach($cursos as $c): ?>
-            <option value="<?= $c->getId(); ?>" <?php if ($c->getId() == $c->getId()) echo 'selected'; ?>>
-                <?= $c->getNome(); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Turma</label>
-    <select class="form-select" id="id_curso" name="id_turma" aria-label="Selecione a turma">
-        <?php foreach($turmas as $t): ?>
-            <option value="<?= $t->getId(); ?>" <?php if ($t->getId() == $t->getId()) echo 'selected'; ?>>
-                <?= $t->getNome(); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
-
-
-  <div class="mb-3">
-    <label for="formFile" class="form-label">Anexar Foto</label>
-      <input class="form-control" type="file" id="foto" name="foto" accept=".png, .jpg, .jpeg" />
-       </div>
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label"><b>Aluno</b></label>
+              <select class="form-select" name="idpaciente" aria-label="Selecione o aluno" required >
+              <?php foreach($alunos as $a): ?>
+                <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
+                    <?= $a->getNome(); ?>
+                </option>
+              <?php endforeach; ?>
+        </select>
+            </div>
           </div>
+    
+          <br>
+
+<div class="row">
+    <div class="col mb-1">
+      <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
+      <?php foreach($vacinas as $v): ?>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="vacinas[]" value="<?= $v->getId(); ?>" id="vacina<?= $v->getId(); ?>">
+          <label class="form-check-label" for="vacina<?= $v->getId(); ?>">
+            <?= $v->getNome(); ?>
+          </label>
+        </div>
+        <div class="mt-2">
+          <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
+          <input type="date" class="form-control" name="datas[]" >
+        </div>
+        <div class="mt-2">
+          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label>
+          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>">
+            <option value="">Selecione a dose</option>
+            <option value="1">Primeira</option>
+            <option value="2">Segunda</option>
+            <option value="3">Terceira</option>
+            <option value="4">Quarta</option>
+          </select>
+          <br>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+<!-- <div class="row">
+
+  <div class="col mb-3">
+    <label for="nameBasic" class="form-label">Data Início Atestado</label>
+    <input type="date" name ="datainicio" class="form-control" placeholder="Data início" required />
+      </div>
+
+      <div class="col mb-3">
+    <label for="nameBasic" class="form-label">Data Final Atestado</label>
+    <input type="date" name ="datafim" class="form-control" placeholder="Data fim" required />
+      </div>
+
+          </div> -->
+
+          <!-- <div class="row">
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Motivo</label>
+              <input type="text" name ="motivo" class="form-control" placeholder="Motivo" required />
+            </div>
+          </div> -->
+
+          <!-- <div class="row">
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label">Descrição</label>
+              <input type="text" name ="descricao" class="form-control" placeholder="Descrição" required />
+            </div>
+          </div> -->
+
 
 <div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
@@ -617,20 +563,23 @@ echo $nomet;
           </div>
             </div>
               </div>
-                </div>
-                 </div>
-                 </form>
+            </div>
+          </div>
+          </form>
+<div class="content-backdrop fade">
 
-      </div>
+</div>
+
+  </div>
 <!-- Content wrapper -->
-    </div>
-     <!-- / Layout page -->
+        </div>
+         <!-- / Layout page -->
       </div>
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-   
+    <!-- / Layout wrapper -->
 
  
 
@@ -655,16 +604,6 @@ echo $nomet;
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
   </body>
-  
-  <script>
-$(document).ready(function() {
-    $('.select2').select2();
-});
-</script>
 
 </html>

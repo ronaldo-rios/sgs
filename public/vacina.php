@@ -193,23 +193,19 @@ $vacinas = $vacina->findAllVacinas();
 
         
 <li class="menu-item">
-  <a href="anamnese.php" class="menu-link ">
-    <i class="menu-icon tf-icons bx bx-capsule red"></i>
-    <div data-i18n="Layouts" class="azul">Anamnese</div>
-  </a>
 
   <a href="atestado.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bx-cabinet red"></i>
     <div data-i18n="User interface"  class="azul" >Atestados</div>
   </a>
 
-  <a href="vacina.php" class="menu-link ">
+  <a href="paciente_vacinas.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bxs-virus red"></i>
-    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+    <div data-i18n="User interface"  class="azul" >Vacinas dos Pacientes</div>
   </a>
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
+  <a href="prontuario.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
       <div data-i18n="Authentications" class="azul">Consulta</div>
     </a>
@@ -251,9 +247,13 @@ $vacinas = $vacina->findAllVacinas();
       <i class="menu-icon tf-icons bx bxs-group red"></i>
       <div data-i18n="User interface"  class="azul" >Turma</div>
     </a>
+
+    <a href="vacina.php" class="menu-link ">
+    <i class="menu-icon tf-icons bx bxs-virus red"></i>
+    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+  </a>
+  
   </li>
-
-
 
 <!-- Relatórios -->
 <li class="menu-header small text-uppercase "><span class="menu-header-text azul-marinho">Relatórios</span></li>
