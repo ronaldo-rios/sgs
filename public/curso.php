@@ -3,7 +3,6 @@
 require '../vendor/autoload.php';
 require '../conexao.php';
 
-use Dotenv\Dotenv;
 use src\dao\CursoDaoMySql;
 use src\models\Auth;
 

@@ -82,6 +82,33 @@ class VacinaDaoMySql implements VacinaDaoInterface
         return $vacina;
     }
 
+    public function findVacinaByIdPaciente($idPaciente)
+    {
+
+        $sql = $this->pdo->prepare(
+            "SELECT vacinas.* FROM vacinas 
+                INNER JOIN pacientes_vacinas 
+                ON vacinas.id = pacientes_vacinas.id_vacina 
+                WHERE pacientes_vacinas.id_paciente = :id_paciente"
+            );
+        $sql->bindValue(':id_paciente', $idPaciente);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $data = $sql->fetchAll();
+
+            foreach ($data as $item) {
+                $vacina = new Vacina();
+                $vacina->setId($item['id']);
+                $vacina->setNome($item['nome_vacina']);
+                $array[] = $vacina;
+            }
+            return $array;
+        } else {
+           
+        }
+    }
+
     // Remover vacina:
     public function removerVacina(Vacina $vacina)
     {

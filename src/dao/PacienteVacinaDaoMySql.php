@@ -63,7 +63,13 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
     {
         $array = [];
 
-        $sql = $this->pdo->query("SELECT * FROM paciente_vacinas");
+        $sql = $this->pdo->query(
+            "SELECT * FROM pacientes_vacinas AS pv
+                INNER JOIN pacientes AS p 
+                    ON pv.id_paciente = p.id 
+                INNER JOIN vacinas AS v 
+                    ON pv.id_vacina = v.id;"
+            );
         if ($sql->rowCount() > 0) {
             $data = $sql->fetchAll();
 
@@ -71,7 +77,7 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
                 $pacienteVacina = new PacienteVacina();
                 $pacienteVacina->setIdPaciente($item['id_paciente']);
                 $pacienteVacina->setIdVacina($item['id_vacina']);
-                $pacienteVacina->setData($item['data']);
+                $pacienteVacina->setData($item['data_vacina']);
                 $pacienteVacina->setDose($item['dose']);
                 $array[] = $pacienteVacina;
             }
@@ -80,27 +86,56 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
     }
 
     // Buscar uma vacinação pelo id do paciente:
-    public function buscarPacienteVacinaPorIdPaciente(int $idPaciente)
+    public function buscarVacinaPorIdPaciente($idPaciente)
     {
-        $array = [];
 
-        $sql = $this->pdo->prepare("SELECT * FROM paciente_vacinas WHERE id_paciente = :id_paciente");
+        $sql = $this->pdo->prepare(
+            "SELECT v.nome_vacina AS 'nome_vacina'
+                    FROM vacinas AS v
+            INNER JOIN pacientes_vacinas AS pv
+                ON v.id = pv.id_vacina
+            INNER JOIN pacientes AS p
+                ON p.id = pv.id_paciente
+                WHERE pv.id_paciente = :id_paciente");
         $sql->bindValue(':id_paciente', $idPaciente);
         $sql->execute();
-
-        if ($sql->rowCount() > 0) {
-            $data = $sql->fetchAll();
-
-            foreach ($data as $item) {
-                $pacienteVacina = new PacienteVacina();
-                $pacienteVacina->setIdPaciente($item['id_paciente']);
-                $pacienteVacina->setIdVacina($item['id_vacina']);
-                $pacienteVacina->setData($item['data']);
-                $pacienteVacina->setDose($item['dose']);
-                $array[] = $pacienteVacina;
-            }
+        $array = [];
+        $data = $sql->fetchAll();
+        $vacina = new Vacina();
+        foreach ($data as $item) {
+            $vacina->setNome($item['nome_vacina']);
+            $array[] = $vacina;
         }
         return $array;
+        
+    }
+
+    public function findVacinasPorPaciente($id)
+    {
+        $sql = $this->pdo->prepare(
+            "SELECT * FROM pacientes_vacinas
+            INNER JOIN vacinas ON pacientes_vacinas.id_vacina = vacinas.id
+            INNER JOIN pacientes ON pacientes_vacinas.id_paciente = pacientes.id
+            WHERE pacientes.id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetchAll();
+            $vacina = new Vacina();
+            $vacina->setId($data['id']);
+            $vacina->setNome($data['nome']);
+            return $vacina;
+
+            // foreach ($data as $item) {
+            //     $vacina = new Vacina();
+            //     $vacina->setId($item['id']);
+            //     $vacina->setNome($item['nome_vacina']);
+            //     $array[] = $vacina;
+            // }
+            // return $array;
+        } else {
+            echo"Vacina não encontrada!";
+        }
     }
 
     // Buscar uma vacinação pelo id da vacina:
@@ -108,7 +143,12 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
     {
         $array = [];
 
-        $sql = $this->pdo->prepare("SELECT * FROM paciente_vacinas WHERE id_vacina = :id_vacina");
+        $sql = $this->pdo->prepare("SELECT p.nome FROM pacientes AS p 
+            INNER JOIN pacientes_vacinas AS pv
+                ON p.id = pv.id_paciente
+            INNER JOIN vacinas AS v
+                ON v.id = pv.id_vacina
+                    WHERE id_vacina = :id_vacina");
         $sql->bindValue(':id_vacina', $idVacina);
         $sql->execute();
 
@@ -116,11 +156,8 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
             $data = $sql->fetchAll();
 
             foreach ($data as $item) {
-                $pacienteVacina = new PacienteVacina();
-                $pacienteVacina->setIdPaciente($item['id_paciente']);
-                $pacienteVacina->setIdVacina($item['id_vacina']);
-                $pacienteVacina->setData($item['data']);
-                $pacienteVacina->setDose($item['dose']);
+                $pacienteVacina = new Paciente();
+                $pacienteVacina->setNome($item['nome']);
                 $array[] = $pacienteVacina;
             }
         }

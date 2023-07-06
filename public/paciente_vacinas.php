@@ -2,15 +2,22 @@
 
 require '../vendor/autoload.php';
 require '../conexao.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 use src\dao\PacienteDaoMySql;
 use src\dao\VacinaDaoMySql;
+use src\dao\PacienteVacinaDaoMySql;
 
 $paciente = new PacienteDaoMySql($pdo);
 $alunos = $paciente->findAll();
 
 $vacina = new VacinaDaoMySql($pdo);
 $vacinas = $vacina->findAllVacinas();
+
+$pacienteVacina = new PacienteVacinaDaoMySql($pdo);
+$vacinasPaciente = $pacienteVacina->findAll();
 
 ?>
 
@@ -160,7 +167,7 @@ $vacinas = $vacina->findAllVacinas();
     <i class="menu-icon tf-icons bx bxs-virus red"></i>
     <div data-i18n="User interface"  class="azul" >Vacinas</div>
   </a>
-  
+
   </li>
 
 
@@ -209,7 +216,7 @@ $vacinas = $vacina->findAllVacinas();
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Atestados</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Vacinas dos Pacientes</h4>
 
     <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
@@ -259,19 +266,17 @@ $vacinas = $vacina->findAllVacinas();
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-<!-- INÍCIO DO LOOP FOREACH DE ATESTADOS POR PACIENTES -->
-<?php foreach($atestados as $at): ?> 
+<!-- INÍCIO DO LOOP FOREACH DE VACINAS POR PACIENTES -->
+<?php foreach($alunos as $al): ?> 
+
   <td>
     <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-<!-- Busca de todos os usuarios admins: -->
+<!-- Busca de todos os alunos -->
     <strong>
-      <!-- <?php 
-        foreach($alunos as $aluno){
-          if($aluno->getId() == $at->getIdPaciente()){
-            echo $aluno->getNome();
-          }
-        }
-      ?> -->
+      <?php 
+            echo $al->getNome(); 
+    
+      ?>
     </strong>
   </td>
 
@@ -279,15 +284,15 @@ $vacinas = $vacina->findAllVacinas();
 <!-- Modal Visualizar-->
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?= $at->getId() ?>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-<?=$al->getId();?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-show-alt"></i>
 </button>
   
-<div class="modal fade" id="show-<?= $at->getId(); ?>" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="show-<?=$al->getId();?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-         <h5 class="modal-title" id="modalFullTitle">Cadastro Atestado</h5>
+         <h5 class="modal-title" id="modalFullTitle">Cadastro Vacinas do Paciente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
             </div>
   
@@ -296,39 +301,36 @@ $vacinas = $vacina->findAllVacinas();
 <div class="list-group list-group-flush">
 
 <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Aluno Paciente</p>
-      <!-- <?php
-        foreach($alunos as $aluno){
-          if($aluno->getId() == $at->getIdPaciente()){
-            echo $aluno->getNome();
-          }
-        }
-      ?> -->
-        </p>  
+    <p>Vacinas do Paciente</p>
 
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Motivo</p>
-      
-        </p>  
-     
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-    <p>Descrição</p>
-      <?= $at->getDescricao(); ?>
-        </p>
-<p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> Data Inicio do Atestado</p>
+    <?php
+      $pacienteEncontrado = false;
+      // foreach de $vacinasPaciente
+      foreach($vacinasPaciente as $pacienteVacina):
+        $pacienteVacina->getIdPaciente();
+        // Se o idPaciente for igual ao id do aluno então:
+        if($pacienteVacina->getIdPaciente() == $al->getId()):
+          $pacienteEncontrado = true;
+          // Faça um foreach de $vacinas
+          foreach($vacinas as $vacina):
+            // Se o id da vacina for igual ao idVacina então exiba finalmente as vacinas:
+            if($vacina->getId() == $pacienteVacina->getIdVacina()):
+              echo "<br> Vacina: " . $vacina->getNome() . 
+                   "<br> Data da Vacinação: " . $pacienteVacina->getData() . 
+                   "<br> Dose: " . $pacienteVacina->getDose() . "ª <br>"."<br>"; 
+            endif;
+          endforeach;
+        endif;
+      endforeach;
+
+      if(!$pacienteEncontrado):
+            echo "<p style='color:#346bc9;'>Nenhuma Vacina cadastrada para esse paciente até o momento.</p>";
+      endif;
     
-  </p>
+    ?>
 
-  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p> Data Final do Atestado</p>
-    
-  </p>
-
-  <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-  <p>Atestado</p>
+        </p>  
   
-  </p>
      </div>
           </div>
 
@@ -345,11 +347,11 @@ $vacinas = $vacina->findAllVacinas();
 
 <!--Incio Modal Editar-->
  <td>
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<??>" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar-<?=$al->getId();?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar-<??>" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editar-<?=$al->getId();?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -363,40 +365,48 @@ $vacinas = $vacina->findAllVacinas();
   <form id="editForm-<??>" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST" enctype="multipart/form-data" >
  
   <div class="row">
-
-<div class="col mb-3">
-  <label for="nameBasic" class="form-label">Data Início Atestado</label>
-  <input type="date" name="datainicio" class="form-control" value="<??>"/>
-    </div>
-
-    <div class="col mb-3">
-  <label for="nameBasic" class="form-label">Data Final Atestado</label>
-  <input type="date" name="datafim" class="form-control" value="<??>" />
-    </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col mb-1">
-            <label for="nameBasic" class="form-label">Motivo</label>
-            <input type="text" name="motivo" class="form-control" value="<??>"/>
+            <div class="col mb-1">
+              <label for="nameBasic" class="form-label"><b>Aluno</b></label>
+              <select class="form-select" name="idpaciente" aria-label="Selecione o aluno" required >
+              <?php foreach($alunos as $a): ?>
+                <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
+                    <?= $a->getNome(); ?>
+                </option>
+              <?php endforeach; ?>
+        </select>
+            </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col mb-1">
-            <label for="nameBasic" class="form-label">Descrição</label>
-            <input type="text" name ="descricao" class="form-control" value="<??>"/>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col mb-1">
-            <label for="nameBasic" class="form-label">Atestado (pdf)</label>
-            <input type="file" name ="atestado_doc" class="form-control" accept=".pdf" value="<??>" />
-          </div>
-        </div>
     
+          <br>
+
+<div class="row">
+    <div class="col mb-1">
+      <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
+      <?php foreach($vacinas as $v): ?>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="vacinas[]" value="<?= $v->getId(); ?>" id="vacina<?= $v->getId(); ?>">
+          <label class="form-check-label" for="vacina<?= $v->getId(); ?>">
+            <?= $v->getNome(); ?>
+          </label>
+        </div>
+        <div class="mt-2">
+          <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
+          <input type="date" class="form-control" name="datas[]" >
+        </div>
+        <div class="mt-2">
+          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label>
+          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>">
+            <option value="">Selecione a dose</option>
+            <option value="1">Primeira</option>
+            <option value="2">Segunda</option>
+            <option value="3">Terceira</option>
+            <option value="4">Quarta</option>
+          </select>
+          <br>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
       
 <div class="modal-footer">
 
