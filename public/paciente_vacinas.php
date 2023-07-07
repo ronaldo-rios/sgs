@@ -316,8 +316,9 @@ $vacinasPaciente = $pacienteVacina->findAll();
           foreach($vacinas as $vacina):
             // Se o id da vacina for igual ao idVacina então exiba finalmente as vacinas:
             if($vacina->getId() == $pacienteVacina->getIdVacina()):
+              $dataVacinaFormatada = date('d/m/Y', strtotime($pacienteVacina->getData()));
               echo "<br> Vacina: " . $vacina->getNome() . 
-                   "<br> Data da Vacinação: " . $pacienteVacina->getData() . 
+                   "<br> Data da Vacinação: " . $dataVacinaFormatada . 
                    "<br> Dose: " . $pacienteVacina->getDose() . "ª <br>"."<br>"; 
             endif;
           endforeach;
