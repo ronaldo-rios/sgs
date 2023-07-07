@@ -82,7 +82,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
           <ul class="menu-inner py-1">
       
             <li class="menu-item active">
-              <a href="index.php" class="menu-link">
+              <a href="<?=$baseUrl;?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle red"></i>
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
@@ -205,7 +205,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
 
   <li class="menu-item">
   <a href="<?=$baseUrl?>/src/actions/logout_action.php" style="background-color:#d6d2fc;" class="menu-link">
-    <i class="menu-icon tf-icon bx "></i>
+    <i class="menu-icon tf-icon bx bx-exit"></i>
     <div data-i18n="User interface" class="azul" >Sair</div>
   </a>
 </li>
@@ -304,6 +304,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
     <p>Vacinas do Paciente</p>
 
     <?php
+
       $pacienteEncontrado = false;
       // foreach de $vacinasPaciente
       foreach($vacinasPaciente as $pacienteVacina):
@@ -385,7 +386,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
       <?php foreach($vacinas as $v): ?>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" name="vacinas[]" value="<?= $v->getId(); ?>" id="vacina<?= $v->getId(); ?>">
-          <label class="form-check-label" for="vacina<?= $v->getId(); ?>">
+          <label class="form-check-label" for="vacina<?= $v->getId(); ?>" value="<?= $pacienteVacina->getIdVacina();?>">
             <?= $v->getNome(); ?>
           </label>
         </div>
@@ -394,8 +395,8 @@ $vacinasPaciente = $pacienteVacina->findAll();
           <input type="date" class="form-control" name="datas[]" >
         </div>
         <div class="mt-2">
-          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label>
-          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>">
+          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label >
+          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>" >
             <option value="">Selecione a dose</option>
             <option value="1">Primeira</option>
             <option value="2">Segunda</option>

@@ -164,22 +164,21 @@ $usuarioInfo = $auth->checkToken();
             </li>
             <li class="menu-item">
 
-              <a href="<?=$baseUrl;?>/public/adm_principal.php" class="menu-link" id="admin-link">
+              <a href="<?=$baseUrl;?>/public/adm_principal.php" class="menu-link" >
                 <i class="menu-icon tf-icons bx bxs-user-check"></i>
                
                 <div data-i18n="Basic" class="azul">Administrador</div>
               </a>
-
 
               <a href="public/servidor.php" class="menu-link">
                 <i class="menu-icon bx bx-group"></i>   
                 <div data-i18n="Basic" class="azul">Servidores</div>
               </a>
               
-              <a href="public/aluno.php" class="menu-link">
+              <a href="public/paciente.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-face"></i>
                
-                <div data-i18n="Basic" class="azul" >Alunos</div>
+                <div data-i18n="Basic" class="azul" >Pacientes</div>
               </a>
 
               <a href="public/medico.php" class="menu-link">
@@ -192,48 +191,26 @@ $usuarioInfo = $auth->checkToken();
 <li class="menu-header small text-uppercase"><span class="menu-header-text azul-marinho">Prontuário</span></li>
 
         
-            <li class="menu-item">
-              <a href="public/anamnese.php" class="menu-link ">
-                <i class="menu-icon tf-icons bx bx-capsule red"></i>
-                <div data-i18n="Layouts" class="azul">Anamnese</div>
-              </a>
+<li class="menu-item">
 
-              <a href="public/atestado.php" class="menu-link ">
-                <i class="menu-icon tf-icons bx bx-cabinet red"></i>
-                <div data-i18n="User interface"  class="azul" >Atestados</div>
-              </a>
+<a href="<?=$baseUrl;?>/public/atestado.php" class="menu-link ">
+  <i class="menu-icon tf-icons bx bx-cabinet red"></i>
+  <div data-i18n="User interface"  class="azul" >Atestados</div>
+</a>
 
-              <a href="public/vacina.php" class="menu-link ">
-                <i class="menu-icon tf-icons bx bxs-virus red"></i>
-                <div data-i18n="User interface"  class="azul" >Vacinas</div>
-              </a>
+<a href="<?=$baseUrl;?>/public/paciente_vacinas.php" class="menu-link ">
+  <i class="menu-icon tf-icons bx bxs-virus red"></i>
+  <div data-i18n="User interface"  class="azul" >Vacinas dos Pacientes</div>
+</a>
 
-              <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                  <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
-                  <div data-i18n="Authentications" class="azul">Consulta</div>
-                </a>
+  <a href="<?=$baseUrl;?>/public/prontuario.php" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
+    <div data-i18n="Authentications" class="azul">Consulta</div>
+  </a>
+
   
-                <ul class="menu-sub">
-                  <li class="menu-item">
-                    <a href="public/consulta_aluno.php" class="menu-link" target="_blank">
-                      <div data-i18n="Basic" class="azul">Aluno</div>
-                    </a>
-                  </li>
-                  
-                  <li class="menu-item">
-                    <a href="public/consulta_anamnese.php" class="menu-link" target="_blank">
-                      <div data-i18n="Basic" class="azul">Anamnese</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="public/consulta_soap.php" class="menu-link" target="_blank" style="color:#017EC3;">
-                      <div data-i18n="Basic" class="azul">SOAP</div>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </li>
+   
+</li>
 
            
             
@@ -253,6 +230,12 @@ $usuarioInfo = $auth->checkToken();
       <i class="menu-icon tf-icons bx bxs-group red"></i>
       <div data-i18n="User interface"  class="azul" >Turma</div>
     </a>
+
+    <a href="public/vacina.php" class="menu-link ">
+                <i class="menu-icon tf-icons bx bxs-virus red"></i>
+                <div data-i18n="User interface"  class="azul" >Vacinas</div>
+              </a>
+
   </li>
 
 
@@ -313,27 +296,6 @@ $usuarioInfo = $auth->checkToken();
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-    <script>
-        var baseUrl = '<?=$baseUrl;?>';
-        document.getElementById('admin-link').addEventListener('click', function(e) {
-        e.preventDefault();
-
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', baseUrl + '/src/middleware/check_permissao_admin.php', true);
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.onreadystatechange = function() {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-              if (this.responseText === 'admin') {
-                window.location.href = baseUrl + '/public/adm_principal.php';
-              } else {
-                alert('Apenas administradores têm acesso a essa área.');
-              }
-            }
-          }
-          xhr.send();
-        });
-    </script>
 
   </body>
 </html>

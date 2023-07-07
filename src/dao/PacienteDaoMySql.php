@@ -206,8 +206,8 @@ class PacienteDaoMySql implements PacienteDaoInterface
 // Buscar por nome:
     public function findByName($nome)
     {
-        $sql = $this->pdo->prepare("SELECT * FROM pacientes WHERE nome = :nome");
-        $sql->bindValue(':nome', $nome);
+        $sql = $this->pdo->prepare("SELECT * FROM pacientes WHERE nome LIKE :nome");
+        $sql->bindValue(':nome', '%' . $nome . '%');
         $sql->execute();
         if($sql->rowCount() > 0){
             $item = $sql->fetch();

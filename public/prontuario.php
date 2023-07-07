@@ -3,13 +3,9 @@
 require '../vendor/autoload.php';
 require '../conexao.php';
 
-use Dotenv\Dotenv;
-use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
 use src\dao\PacienteDaoMySql;
 use src\dao\ProntuarioDaoMySql;
-use src\models\Paciente;
-use src\models\Prontuario;  
 
 
 $auth = new Auth($pdo, $baseUrl);
@@ -87,7 +83,7 @@ $prontuario = new ProntuarioDaoMySql($pdo);
           <ul class="menu-inner py-1">
       
             <li class="menu-item active">
-              <a href="index.php" class="menu-link">
+              <a href="<?=$baseUrl;?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle red"></i>
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
@@ -208,7 +204,7 @@ $prontuario = new ProntuarioDaoMySql($pdo);
 
   <li class="menu-item">
   <a href="<?=$baseUrl?>/src/actions/logout_action.php" style="background-color:#d6d2fc;" class="menu-link">
-    <i class="menu-icon tf-icon bx "></i>
+    <i class="menu-icon tf-icon bx bx-exit"></i>
     <div data-i18n="User interface" class="azul" >Sair</div>
   </a>
 </li>

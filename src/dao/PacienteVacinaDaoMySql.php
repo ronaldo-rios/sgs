@@ -110,7 +110,7 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
         
     }
 
-    public function findVacinasPorPaciente($id)
+    public function findVacinaPorPaciente($id)
     {
         $sql = $this->pdo->prepare(
             "SELECT * FROM pacientes_vacinas
@@ -126,13 +126,13 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
             $vacina->setNome($data['nome']);
             return $vacina;
 
-            // foreach ($data as $item) {
-            //     $vacina = new Vacina();
-            //     $vacina->setId($item['id']);
-            //     $vacina->setNome($item['nome_vacina']);
-            //     $array[] = $vacina;
-            // }
-            // return $array;
+            foreach ($data as $item) {
+                $vacina = new Vacina();
+                $vacina->setId($item['id']);
+                $vacina->setNome($item['nome_vacina']);
+                $array[] = $vacina;
+            }
+            return $array;
         } else {
             echo"Vacina não encontrada!";
         }

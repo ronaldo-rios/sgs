@@ -21,6 +21,13 @@ Dar o comando composer install para baixar as dependências do projeto
 
 Criar um arquivo .env baseando-se pelo exemplo das informações do arquivo .env.example de acordo com nome do seu banco, porta do SGBD, nome do user e senha do mesmo.
 
+DB_NAME=database_name
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=database_password
+PORT=3306
+BASE_URL=http://localhost/sgs
+
 Criar um banco no MySQL que seja de mesmo nome do DB_NAME setado no .env (essas informações do .env não são fornecidas pelo fato de proteção de segurança dos dados do banco em caso de estar em produção
 e também pelo fato que as variáveis de ambiente podem mudar de usuário para usuário)
 

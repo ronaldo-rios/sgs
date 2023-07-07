@@ -101,8 +101,8 @@ class TurmaDaoMySql implements TurmaDaoInterface
 // Buscar por nome:
       public function findByName($nome)
       {
-          $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE nome = :nome");
-          $sql->bindValue(':nome', $nome);
+          $sql = $this->pdo->prepare("SELECT * FROM turmas WHERE nome LIKE :nome");
+          $sql->bindValue(':nome', '%' . $nome . '%');
           $sql->execute();
           if($sql->rowCount() > 0){
               $data = $sql->fetch();

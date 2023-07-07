@@ -221,8 +221,8 @@ public function findByName(string $nome): array
     pr.id_paciente AS 'id_paciente'
     FROM prontuarios AS pr
     INNER JOIN pacientes ON pr.id_paciente = pacientes.id
-     WHERE pacientes.nome = :nome");
-    $sql->bindValue(':nome', $nome);
+     WHERE pacientes.nome LIKE :nome");
+    $sql->bindValue(':nome','%' . $nome . '%');
     $sql->execute();
     if($sql->rowCount() > 0) {
         $lista = [];
