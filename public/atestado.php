@@ -178,10 +178,6 @@ $atestados = $atestado->findAll();
 <li class="menu-item">
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link ">
-      <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
-      <div data-i18n="Layouts"  class="azul" >Consulta</div>
-    </a>
 
 
 <li class="menu-item">
@@ -191,7 +187,7 @@ $atestados = $atestado->findAll();
   </a>
 </li>
   <li class="menu-item">
-    <a href="javascript:void(0)" class="menu-link ">
+    <a href="relatorio_vacinas.php" class="menu-link ">
       <i class="menu-icon tf-icon bx bxs-virus"></i>
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>

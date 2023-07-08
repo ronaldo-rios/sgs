@@ -10,6 +10,5 @@ Interface RelatoriosDaoInterface
     public function gerarRelatorioAtestados(
         $idCurso, $idTurma, $dataCadastrada, $dataCadastradaLimite
     );
-    public function gerarRelatorioVacinas();
-    public function gerarRelatorioConsultas();
+    public function gerarRelatorioVacinas($idCurso, $idTurma);
 }

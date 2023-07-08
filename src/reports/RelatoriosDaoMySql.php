@@ -57,13 +57,42 @@ class RelatoriosDaoMySql implements RelatoriosDaoInterface
 
     }
 
-    public function gerarRelatorioVacinas()
+    public function gerarRelatorioVacinas($idCurso, $idTurma)
     {
-        echo "Gerando relatório de vacinas no MySQL";
+        $queryVacina = "SELECT 
+        v.nome_vacina AS 'VACINA',
+        pv.dose AS 'DOSE', 
+        pv.data_vacina 'DATA VACINACAO',
+        p.nome AS 'PACIENTE',
+        p.matricula AS 'MATRICULA',
+        c.nome AS 'CURSO',
+        t.nome AS 'TURMA'
+        FROM pacientes_vacinas AS pv
+            INNER JOIN vacinas AS v
+                ON pv.id_vacina = v.id
+            INNER JOIN pacientes AS p
+                ON pv.id_paciente = p.id
+            INNER JOIN cursos AS c
+                ON p.id_curso = c.id
+            INNER JOIN turmas AS t
+                ON p.id_turma = t.id
+            WHERE p.id_curso = :id_curso
+                AND p.id_turma = :id_turma
+                ORDER BY p.nome ASC";
+        $sql = $this->pdo->prepare($queryVacina);
+        $sql->bindValue(':id_curso', $idCurso);
+        $sql->bindValue(':id_turma', $idTurma);
+        $sql->execute();
+
+        if($sql->rowCount() > 0){
+            $relatorioVacinas = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            return $relatorioVacinas;
+        } else {
+            $_SESSION['flash'] = '<div class="alert alert-danger" role="alert">
+                                    Nenhum registro com as condições solicitadas foi encontrado.
+                                  </div>';
+            return [];
+        }
     }
 
-    public function gerarRelatorioConsultas()
-    {
-        echo "Gerando relatório de consultas no MySQL";
-    }
 }

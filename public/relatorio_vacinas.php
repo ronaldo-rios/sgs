@@ -264,12 +264,7 @@ $listaTurmas = $turmaDao->findAll();
 <li class="menu-item">
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link ">
-      <i class="menu-icon tf-icons bx bxs-band-aid"></i>
-      <div data-i18n="Layouts"  class="azul" >Consulta</div>
-    </a>
-
-
+    
 <li class="menu-item">
   <a href="relatorio_atestados.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bx-cabinet"></i>
@@ -277,7 +272,7 @@ $listaTurmas = $turmaDao->findAll();
   </a>
 </li>
   <li class="menu-item">
-    <a href="javascript:void(0)" class="menu-link ">
+    <a href="relatorio_vacinas.php" class="menu-link ">
       <i class="menu-icon tf-icon bx bxs-virus"></i>
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>
@@ -319,7 +314,7 @@ $listaTurmas = $turmaDao->findAll();
      <div class="modal-content" style="padding:1em;">
 
 
-<form action="<?=$baseUrl;?>/src/actions/gerar_relatorio_atestados_action.php" method="POST" id="relatorio" style="padding:1em;" >
+<form action="<?=$baseUrl;?>/src/actions/gerar_relatorio_vacinas_action.php" method="POST" id="relatorio" style="padding:1em;" >
 <div class="mb-3">
 
     <div style="display:flex;justify-content:center;">

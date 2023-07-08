@@ -262,11 +262,6 @@ $vacinas = $vacina->findAllVacinas();
 <li class="menu-item">
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link ">
-      <i class="menu-icon tf-icons bx bxs-band-aid"></i>
-      <div data-i18n="Layouts"  class="azul" >Consulta</div>
-    </a>
-
 
 <li class="menu-item">
   <a href="relatorio_atestados.php" class="menu-link ">
@@ -275,7 +270,7 @@ $vacinas = $vacina->findAllVacinas();
   </a>
 </li>
   <li class="menu-item">
-    <a href="javascript:void(0)" class="menu-link ">
+    <a href="relatorio_vacinas.php" class="menu-link ">
       <i class="menu-icon tf-icon bx bxs-virus"></i>
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>
