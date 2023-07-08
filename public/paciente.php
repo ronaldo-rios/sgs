@@ -181,10 +181,6 @@ $cursos = $curso->findAll();
            
            
 <li class="menu-item">
-  <a href="javascript:void(0);" class="menu-link ">
-    <i class="menu-icon tf-icons bx bx-capsule red"></i>
-    <div data-i18n="Layouts"  class="azul" >Anamnese</div>
-  </a>
 
   <li class="menu-item">
     <a href="javascript:void(0);" class="menu-link ">
@@ -194,7 +190,7 @@ $cursos = $curso->findAll();
 
 
 <li class="menu-item">
-  <a href="javascript:void(0)" class="menu-link ">
+  <a href="relatorio_atestados.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bx-cabinet"></i>
     <div data-i18n="User interface"  class="azul" >Atestados</div>
   </a>

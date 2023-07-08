@@ -52,7 +52,9 @@ class Auth
                 return true;
             }
         }
+        $_SESSION['flash'] = '<div class="alert alert-danger">E-mail e/ou senha incorretos!</div>';
         return false;
+        die;
     }
 
 }

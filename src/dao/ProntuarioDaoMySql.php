@@ -271,7 +271,7 @@ public function findPaciente($id)
     $sql->execute();
     if($sql->rowCount() > 0) {
         $data = $sql->fetch();
-        $prontuario = new  Paciente();
+        $prontuario = new Paciente();
         $prontuario->setId($data['id']);
         return $data['id'];
 
