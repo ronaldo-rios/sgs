@@ -25,17 +25,17 @@ class PacienteVacina{
         return $this->idVacina;
     }
 
-    public function setIdVacina(int $idVacina): void
+    public function setIdVacina(?int $idVacina): void
     {
         $this->idVacina = $idVacina;
     }
 
-    public function getData(): string
+    public function getData(): ?string
     {
-        return $this->data;
+        return $this->data ?? null;
     }
 
-    public function setData(string $data): void
+    public function setData(?string $data): void
     {
         $this->data = trim($data);
     }

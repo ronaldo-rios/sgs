@@ -62,7 +62,7 @@ class RelatoriosDaoMySql implements RelatoriosDaoInterface
         $queryVacina = "SELECT 
         v.nome_vacina AS 'VACINA',
         pv.dose AS 'DOSE', 
-        pv.data_vacina 'DATA VACINACAO',
+        pv.data_vacina 'DATA_VACINACAO',
         p.nome AS 'PACIENTE',
         p.matricula AS 'MATRICULA',
         c.nome AS 'CURSO',

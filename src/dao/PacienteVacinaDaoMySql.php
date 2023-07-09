@@ -20,6 +20,7 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
     // Inserção de nova vacinação:
     public function adicionarPacienteVacina(PacienteVacina $pacienteVacina)
     {
+        
         $sql = $this->pdo->prepare(
             "INSERT INTO pacientes_vacinas (id_paciente, id_vacina, data_vacina, dose) 
                 VALUES (:id_paciente, :id_vacina, :data_vacina, :dose)"
@@ -27,8 +28,12 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
         $sql->bindValue(':id_paciente', $pacienteVacina->getIdPaciente());
         $sql->bindValue(':id_vacina',   $pacienteVacina->getIdVacina());
         $sql->bindValue(':data_vacina', $pacienteVacina->getData());
-        $sql->bindValue(':dose',        $pacienteVacina->getDose() ?? null);
-        $sql->execute();
+        $sql->bindValue(':dose',        $pacienteVacina->getDose()) ?? null;
+        try {
+            $sql->execute();
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     // Editar uma vacinação:
@@ -163,4 +168,5 @@ class PacienteVacinaDaoMySql implements PacienteVacinaDaoInterface
         }
         return $array;
     }
+
 }

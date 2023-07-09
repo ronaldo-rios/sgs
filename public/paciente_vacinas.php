@@ -248,7 +248,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
         <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
-        <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
+
         
       </tr>
     </thead>
@@ -419,38 +419,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<??>" style="background-color:#cdf3fb;border:none">
-  <i class="bx bx-trash-alt"  ></i>
-</button>
 
-<div class="modal fade" id="excluir-<??>" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacinas em Pacientes</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
-          </div>
-
-<div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir esse item cadastrado?</div>
-   </div>
-
-<div class="modal-footer">
-<a href="<?=$baseUrl;?>/src/actions/deletar_atestado_action.php?id=<??>">
-  <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
-    Excluir 
-  </button>
-</a>
-
-  <button type="button" class="btn btn-primary"   style="background-color:#2B5AAD">
-    Cancelar
-  </button>
-     </div>
-        </div>
-          </div>
-            </div>
-              </div>
-                </div>
  </td>
     </tr>
     <!-- FIM DO LOOP DE ATESTADOS -->
@@ -497,23 +466,25 @@ $vacinasPaciente = $pacienteVacina->findAll();
     
           <br>
 
-<div class="row">
+<div id="vacinaContainer" class="row">
     <div class="col mb-1">
-      <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
-      <?php foreach($vacinas as $v): ?>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="vacinas[]" value="<?= $v->getId(); ?>" id="vacina<?= $v->getId(); ?>">
-          <label class="form-check-label" for="vacina<?= $v->getId(); ?>">
-            <?= $v->getNome(); ?>
-          </label>
-        </div>
+    
+    <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
+              <select class="form-select" name="vacinas[]" aria-label="Selecione a Vacina" required >
+              <?php foreach($vacinas as $v): ?>
+                <option value="<?= $v->getId(); ?>" <?php if ($v->getId() == $v->getId()) echo 'selected'; ?> >
+                    <?= $v->getNome(); ?>
+                </option>
+              <?php endforeach; ?>
+        </select>
+
         <div class="mt-2">
           <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
           <input type="date" class="form-control" name="datas[]" >
         </div>
         <div class="mt-2">
-          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label>
-          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>">
+          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label >
+          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>" >
             <option value="">Selecione a dose</option>
             <option value="1">Primeira</option>
             <option value="2">Segunda</option>
@@ -522,37 +493,61 @@ $vacinasPaciente = $pacienteVacina->findAll();
           </select>
           <br>
         </div>
-      <?php endforeach; ?>
+
+  
     </div>
   </div>
 
-<!-- <div class="row">
 
-  <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Data Início Atestado</label>
-    <input type="date" name ="datainicio" class="form-control" placeholder="Data início" required />
-      </div>
+<button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInput">
+Adicionar outra vacina
+</button>
 
-      <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Data Final Atestado</label>
-    <input type="date" name ="datafim" class="form-control" placeholder="Data fim" required />
-      </div>
 
-          </div> -->
+<button id="btnRemoverGlobal" class="btn btn-danger" type="button">
+Remover vacina
+</button>
 
-          <!-- <div class="row">
-            <div class="col mb-1">
-              <label for="nameBasic" class="form-label">Motivo</label>
-              <input type="text" name ="motivo" class="form-control" placeholder="Motivo" required />
-            </div>
-          </div> -->
 
-          <!-- <div class="row">
-            <div class="col mb-1">
-              <label for="nameBasic" class="form-label">Descrição</label>
-              <input type="text" name ="descricao" class="form-control" placeholder="Descrição" required />
-            </div>
-          </div> -->
+<script>
+function adicionarVacina() {
+  // Obtém o elemento pai dos campos de vacina
+  const vacinaContainer = document.getElementById('vacinaContainer');
+
+  // Clona o último conjunto de campos de vacina
+  const ultimoVacina = vacinaContainer.lastElementChild.cloneNode(true);
+
+  // Limpa os valores dos campos clonados
+  const camposClonados = ultimoVacina.querySelectorAll('select, input');
+  camposClonados.forEach((campo) => {
+    campo.value = '';
+
+  });
+
+  // Adiciona o conjunto de campos clonados ao elemento pai
+  vacinaContainer.appendChild(ultimoVacina);
+
+}
+
+function removerVacina() {
+  const vacinaContainer = document.getElementById('vacinaContainer');
+
+  // Certifica-se que há mais de um campo de vacina, para que sempre permaneça ao menos um
+  if (vacinaContainer.childElementCount > 1) {
+    // Remove o último conjunto de campos de vacina
+    vacinaContainer.removeChild(vacinaContainer.lastElementChild);
+  }
+}
+
+// Obtém o botão "Adicionar outra vacina"
+const btnAdicionarVacina = document.getElementById('addVacinaInput');
+btnAdicionarVacina.addEventListener('click', adicionarVacina);
+
+// Obtém o botão "Remover vacina"
+const btnRemoverVacina = document.getElementById('btnRemoverGlobal');
+btnRemoverVacina.addEventListener('click', removerVacina);
+
+  </script>
 
 
 <div class="modal-footer">
