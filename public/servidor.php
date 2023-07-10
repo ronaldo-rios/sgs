@@ -221,16 +221,6 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
             }
         }, 3000);
     </script>
-
- <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
  
 
 <!-- Inicio da Tabela -->
@@ -346,14 +336,14 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
   <div class="row">
     <div class="col mb-3">
       <label for="name" class="form-label">Nome</label>
-      <input type="text" name="nome" class="form-control" value="<?= $u->getNome(); ?>" /> 
+      <input type="text" name="nome" class="form-control" value="<?= $u->getNome(); ?>" required /> 
     </div>
   </div>
 
 <div class="row">
   <div class="col mb-3">
       <label for="name" class="form-label">SIAPE</label>
-      <input type="text" name="siap" class="form-control" value="<?= $u->getSiap(); ?>" /> 
+      <input type="text" name="siap" class="form-control" value="<?= $u->getSiap(); ?>" required /> 
     </div>
 
     <div class="col mb-3">
@@ -364,13 +354,13 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
   <div class="row g-2">
     <div class="col mb-0">
       <label for="email" class="form-label">Email</label>
-      <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" />
+      <input type="text" name="email" class="form-control" value="<?= $u->getEmail(); ?>" required />
     </div>
 
     <div class="row g-2">
     <div class="col mb-0">
       <label for="senha" class="form-label">Senha</label>
-      <input type="password" name="senha" class="form-control" value="<?= $u->getSenha(); ?>" />
+      <input type="password" name="senha" class="form-control" value="<?= $u->getSenha(); ?>" required />
     </div>
 
     <div class="col mb-0">

@@ -223,16 +223,6 @@ if ($usuarioInfo->getPermissao() !== 'admin' && $usuarioInfo->getPermissao() !==
             }
         }, 3000);
     </script>
-
- <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
  
 
 <!-- Inicio da Tabela -->

@@ -33,7 +33,7 @@ class PacienteDaoMySql implements PacienteDaoInterface
             $sql->bindValue(':nascimento', $paciente->getNascimento());
             $sql->bindValue(':telefone', $paciente->getTelefone());
             $sql->bindValue(':endereco', $paciente->getEndereco());
-            $sql->bindValue(':foto', $paciente->getFoto());
+            $sql->bindValue(':foto', $paciente->getFoto() ?? null);
             $sql->bindValue(':id_turma', $paciente->getIdTurma());
             $sql->bindValue(':id_curso', $paciente->getIdCurso());
             $sql->execute();
@@ -64,7 +64,7 @@ class PacienteDaoMySql implements PacienteDaoInterface
         $sql->bindValue(':nascimento', $paciente->getNascimento());
         $sql->bindValue(':telefone', $paciente->getTelefone());
         $sql->bindValue(':endereco', $paciente->getEndereco());
-        $sql->bindValue(':foto', $paciente->getFoto());
+        $sql->bindValue(':foto', $paciente->getFoto() ?? null);
         $sql->bindValue(':id_turma', $paciente->getIdTurma());
         $sql->bindValue(':id_curso', $paciente->getIdCurso());
         $sql->bindValue(':id', $paciente->getId());

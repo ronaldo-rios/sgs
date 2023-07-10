@@ -251,7 +251,7 @@ if (!empty($turma->findByName($data))) {
 }
 
 ?>
- 
+  <!-- Final Barra Pesquisa-->  
 
 <!-- Inicio da Tabela -->
 
@@ -465,6 +465,7 @@ if (!empty($turma->findByName($data))) {
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  <!--- Script para pesquisar na tabela--->
   <script>
     var search = document.getElementById('search');
 

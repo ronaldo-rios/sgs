@@ -86,7 +86,7 @@ class Paciente {
         $this->endereco = $endereco;
     }
 
-    public function getFoto(): string
+    public function getFoto(): ?string
     {
         return $this->foto;
     }

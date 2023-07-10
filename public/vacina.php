@@ -306,15 +306,34 @@ $vacinas = $vacina->findAllVacinas();
         }, 3000);
     </script>
 
- <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
+  <!-- Inicio Barra Pesquisa-->      
+  <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
+  <input type="search" class="form-control " id="search"  placeholder="Informe o nome da vacina que deseja pesquisar" aria-label="Pesquise"  />
+    <button  onclick="searchData()" class="btn btn-primary ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+              </button>
+                 </div>
+<?php
+//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+if(!empty ($_GET['search'])){
+  $data = $_GET['search'];
+//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que aencontrou
+if (!empty($vacina->findByName($data))) {
+    $vacinas = $vacina->findByName($data);
+
+}else{
+  echo "<div class='alert alert-danger' role='alert'>
+  Nenhuma vacina encontrada!";
+  $vacinas = [];
+} 
+
+}else {
+  $vacinas = $vacina->findAllVacinas();
+}
+
+?>
  
 
 <!-- Inicio da Tabela -->
@@ -516,6 +535,21 @@ $vacinas = $vacina->findAllVacinas();
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+
+  <script>
+    var search = document.getElementById('search');
+
+    search.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+        searchData();
+      }
+    });
+
+    function searchData(){
+      window.location.href = '<?=$baseUrl;?>/public/vacina.php?search='+search.value;
+    }
+  </script>
+
 </html>
 
 

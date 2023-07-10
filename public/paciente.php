@@ -212,7 +212,7 @@ $cursos = $curso->findAll();
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Prontuários</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Pacientes</h4>
     
     <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
@@ -230,14 +230,33 @@ $cursos = $curso->findAll();
     </script>
 
  <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
+ <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
+  <input type="search" class="form-control " id="search"  placeholder="Informe o nome do paciente que deseja pesquisar" aria-label="Pesquise"  />
+    <button  onclick="searchData()" class="btn btn-primary ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+              </button>
+                 </div>
+<?php
+//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+if(!empty ($_GET['search'])){
+  $data = $_GET['search'];
+//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que aencontrou
+if (!empty($paciente->findByName($data))) {
+    $pacientes = $paciente->findByName($data);
+
+}else{
+  echo "<div class='alert alert-danger' role='alert'>
+  Nenhum paciente encontrado!";
+  $pacientes = [];
+} 
+
+}else {
+  $pacientes = $paciente->findAll();
+}
+
+?>
  
 
 <!-- Inicio da Tabela -->
@@ -444,7 +463,7 @@ echo $nomet;
 
         <div class="mb-3">
         <label for="foto" class="form-label">Anexar Foto</label>
-        <input class="form-control" type="file" id="foto" name="foto" required />
+        <input class="form-control" type="file" id="foto" name="foto" />
       </div>
       </div>
 
@@ -658,5 +677,18 @@ $(document).ready(function() {
     $('.select2').select2();
 });
 </script>
+<script>
+    var search = document.getElementById('search');
+
+    search.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+        searchData();
+      }
+    });
+
+    function searchData(){
+      window.location.href = '<?=$baseUrl;?>/public/paciente.php?search='+search.value;
+    }
+  </script>
 
 </html>

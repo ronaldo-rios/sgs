@@ -116,4 +116,23 @@ class VacinaDaoMySql implements VacinaDaoInterface
         $sql->bindValue(':id', $vacina->getId());
         $sql->execute();
     }
+
+    public function findByName($nome)
+    {
+        $sql = $this->pdo->prepare("SELECT * FROM vacinas WHERE nome_vacina LIKE :nome");
+        $sql->bindValue(':nome', '%'. $nome . '%');
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+
+            $vacina = new Vacina();
+            $vacina->setId($data['id']);
+            $vacina->setNome($data['nome_vacina']);
+            $arrayVacina[] = $vacina;
+            return $arrayVacina;
+        } else {
+            echo "Vacina não encontrada!";
+        }
+    }
 }

@@ -42,19 +42,19 @@ if ($nome) {
     $paciente->setNascimento($nascimento);
     $paciente->setTelefone($telefone);
     $paciente->setEndereco($endereco);
-    $paciente->setFoto($foto);
+    $paciente->setFoto($foto) ?? null;
     $paciente->setIdTurma($id_turma);
     $paciente->setIdCurso($id_curso);
   
     $pacienteDao->atualizarPaciente($paciente);
 
 
-    $_SESSION['flash'] = "<div class='alert alert-success'>Alterado com sucesso!</div>";
+    $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-success'>Alterado com sucesso!</div>";
             header('Location:'. $baseUrl . '/public/paciente.php');
             exit;
             
         }  else {
-            $_SESSION['flash'] = "<div class='alert alert-danger'>Não foi possivel editar</div>";
+            $_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Não foi possivel editar</div>";
                 header('Location:'. $baseUrl . '/public/paciente.php');
                 exit;
             }

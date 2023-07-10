@@ -225,14 +225,33 @@ $vacinasPaciente = $pacienteVacina->findAll();
     </script>
 
  <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
+ <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
+  <input type="search" class="form-control " id="search"  placeholder="Informe o nome do paciente que deseja pesquisar" aria-label="Pesquise"  />
+    <button  onclick="searchData()" class="btn btn-primary ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+              </button>
+                 </div>
+<?php
+//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+if(!empty ($_GET['search'])){
+  $data = $_GET['search'];
+//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que aencontrou
+if (!empty($paciente->findByName($data))) {
+    $alunos = $paciente->findByName($data);
+
+}else{
+  echo "<div class='alert alert-danger' role='alert'>
+  Nenhum paciente encontrado!";
+  $alunos = [];
+} 
+
+}else {
+  $alunos = $paciente->findAll();
+}
+
+?>
  
 
 <!-- Inicio da Tabela -->
@@ -355,68 +374,104 @@ $vacinasPaciente = $pacienteVacina->findAll();
       </div>
 
 <div class="modal-body">
-  <form id="editForm-<??>" action="<?=$baseUrl;?>/src/actions/editar_atestado_action.php" method="POST" enctype="multipart/form-data" >
- 
-  <div class="row">
-            <div class="col mb-1">
-              <label for="nameBasic" class="form-label"><b>Aluno</b></label>
-              <select class="form-select" name="idpaciente" aria-label="Selecione o aluno" required >
-              <?php foreach($alunos as $a): ?>
-                <option value="<?= $a->getId(); ?>" <?php if ($a->getId() == $a->getId()) echo 'selected'; ?>>
-                    <?= $a->getNome(); ?>
-                </option>
-              <?php endforeach; ?>
-        </select>
-            </div>
-          </div>
-    
-          <br>
+<form action="<?=$baseUrl;?>/src/actions/editar_paciente_vacinas_action.php" id="edit" method="POST" >
 
-<div class="row">
-    <div class="col mb-1">
-      <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
-      <?php foreach($vacinas as $v): ?>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="vacinas[]" value="<?= $v->getId(); ?>" id="vacina<?= $v->getId(); ?>">
-          <label class="form-check-label" for="vacina<?= $v->getId(); ?>" value="<?= $pacienteVacina->getIdVacina();?>">
-            <?= $v->getNome(); ?>
-          </label>
-        </div>
-        <div class="mt-2">
-          <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
-          <input type="date" class="form-control" name="datas[]" >
-        </div>
-        <div class="mt-2">
-          <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label >
-          <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>" >
-            <option value="">Selecione a dose</option>
-            <option value="1">Primeira</option>
-            <option value="2">Segunda</option>
-            <option value="3">Terceira</option>
-            <option value="4">Quarta</option>
-          </select>
-          <br>
-        </div>
+
+      <?php foreach($alunos as $a): ?>
+        <input type="hidden" name="id" value="<?= $a->getId(); ?>">    
       <?php endforeach; ?>
+
+<br>
+
+<div id="vacinaContainer" class="row">
+  <div class="col mb-1">
+    <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
+    <select class="form-select" name="vacinas[]" aria-label="Selecione a Vacina" required >
+      <?php foreach($vacinas as $v): ?>
+        <option value="<?= $v->getId(); ?>" <?php if ($v->getId() == $v->getId()) echo 'selected'; ?> >
+          <?= $v->getNome(); ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+
+    <div class="mt-2">
+      <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
+      <input type="date" class="form-control" name="datas[]" required >
+    </div>
+    <div class="mt-2">
+      <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label >
+      <select class="form-select" name="doses[]" id="doseVacina<?= $v->getId(); ?>" >
+        <option value="">Selecione a dose</option>
+        <option value="1">Primeira</option>
+        <option value="2">Segunda</option>
+        <option value="3">Terceira</option>
+        <option value="4">Quarta</option>
+      </select>
+      <br>
     </div>
   </div>
-      
-<div class="modal-footer">
+</div>
 
- <button type="submit" class="btn btn-primary azul" form="editForm-<??>" style="background-color:#2B5AAD">Editar</button>
+<div style="display:flex; justify-content:center;">
+  <button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInput">
+    Adicionar outra vacina
+  </button>
+  <button class="btn btn-outline-secondary btnRemoverGlobal" style="background-color:#F14349;color: white;" type="button">
+    Remover vacina
+  </button>
+</div>
 
-<button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+<script>
+function adicionarVacina() {
+  // Obtém o elemento pai dos campos de vacina
+  const vacinaContainer = document.getElementsByClassName('vacinaContainer');
+
+  // Clona o último conjunto de campos de vacina
+  const ultimoVacina = vacinaContainer.lastElementChild.cloneNode(true);
+
+  // Limpa os valores dos campos clonados
+  const camposClonados = ultimoVacina.querySelectorAll('select, input');
+  camposClonados.forEach((campo) => {
+    campo.value = '';
+  });
+
+  // Adiciona o conjunto de campos clonados ao elemento pai
+  vacinaContainer.appendChild(ultimoVacina);
+}
+
+function removerVacina() {
+  const vacinaContainer = document.getElementsByClassName('vacinaContainer');
+
+  // Certifica-se que há mais de um campo de vacina, para que sempre permaneça ao menos um
+  if (vacinaContainer.childElementCount > 1) {
+    // Remove o último conjunto de campos de vacina
+    vacinaContainer.removeChild(vacinaContainer.lastElementChild);
+  }
+}
+
+// Obtém o botão "Adicionar outra vacina"
+const btnAdicionarVacinaEdit = document.getElementsByClassName('addVacinaInput');
+btnAdicionarVacinaEdit.addEventListener('click', adicionarVacina);
+
+// Obtém o botão "Remover vacina"
+const btnRemoverVacinaEdit = document.getElementsByClassName('btnRemoverGlobal');
+btnRemoverVacinaEDit.addEventListener('click', removerVacina);
+</script>
+
+<div style="display:flex; justify-content:center;" class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">
+    Cancelar 
+  </button>
+  <button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD" form="edit" id="edit">
+    Salvar
+  </button> 
+</div>
+
+</form>
         </td>
       
                     
-<!-- Inicio Modal Excluir--> 
+
 <td>
 
 
@@ -480,7 +535,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
 
         <div class="mt-2">
           <label for="dataVacina<?= $v->getId(); ?>" class="form-label">Data da realização da vacina</label>
-          <input type="date" class="form-control" name="datas[]" >
+          <input type="date" class="form-control" name="datas[]" required >
         </div>
         <div class="mt-2">
           <label for="doseVacina<?= $v->getId(); ?>" class="form-label">Dose</label >
@@ -498,16 +553,16 @@ $vacinasPaciente = $pacienteVacina->findAll();
     </div>
   </div>
 
+<div style="display:flex; justify-content:center;" >
+  <button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInput">
+  Adicionar outra vacina
+  </button>
 
-<button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInput">
-Adicionar outra vacina
-</button>
 
-
-<button id="btnRemoverGlobal" class="btn btn-danger" type="button">
-Remover vacina
-</button>
-
+  <button id="btnRemoverGlobal" class="btn btn-outline-secondary botao-red" style="background-color:#F14349;color: white;" type="button">
+  Remover vacina
+  </button>
+</div>
 
 <script>
 function adicionarVacina() {
@@ -550,7 +605,7 @@ btnRemoverVacina.addEventListener('click', removerVacina);
   </script>
 
 
-<div class="modal-footer">
+<div style="display:flex; justify-content:center;" class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
@@ -603,5 +658,18 @@ btnRemoverVacina.addEventListener('click', removerVacina);
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+  <script>
+    var search = document.getElementById('search');
+
+    search.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+        searchData();
+      }
+    });
+
+    function searchData(){
+      window.location.href = '<?=$baseUrl;?>/public/paciente_vacinas.php?search='+search.value;
+    }
+  </script>
 
 </html>

@@ -6,8 +6,8 @@ require '../conexao.php';
 use Dotenv\Dotenv;
 use src\dao\UsuarioDaoMySql;
 use src\models\Auth;
-use src\models\Usuario;
-use src\interfaces\UsuarioDaoInterface;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 $auth = new Auth($pdo, $baseUrl);
 $usuarioInfo = $auth->checkToken();
@@ -223,16 +223,6 @@ $usuarios = $usuario->findAdm();
             }
         }, 3000);
     </script>
-
- <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
  
 
 <!-- Inicio da Tabela -->
@@ -546,4 +536,5 @@ $usuarios = $usuario->findAdm();
           xhr.send();
         });
 </script>
+
 </html>
