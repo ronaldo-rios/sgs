@@ -41,7 +41,7 @@ class Usuario
 
     public function setCpf(?string $cpf):void
     {
-        $this->cpf = $cpf;
+        $this->cpf = trim($cpf);
     }
 
     public function getSiap():?string
@@ -51,7 +51,7 @@ class Usuario
 
     public function setSiap(?string $siap):void
     {
-        $this->siap = $siap;
+        $this->siap = trim($siap);
     }
 
     public function getCrm():?string
@@ -61,7 +61,7 @@ class Usuario
 
     public function setCrm(?string $crm):void
     {
-        $this->crm = $crm;
+        $this->crm = trim($crm);
     }
 
     public function getEmail():string
@@ -102,7 +102,7 @@ class Usuario
         return $this->token;
     }
 
-    public function setToken(string $token):void
+    public function setToken(?string $token):void
     {
         $this->token = $token;
     }

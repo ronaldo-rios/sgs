@@ -1,4 +1,6 @@
-
+<?php
+require '../conexao.php';
+?>
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -127,17 +129,16 @@
                  <img src="logo.png" style="width:150px ;height: 90px;">
                 </a>
               </div>
-             
 
-              <form id="formAuthentication" class="mb-3" action="<?=$baseUrl;?>../src/actions/login_action.php" method="POST">
-              <?php if(!empty($_SESSION['flash'])) : ?>
-                <?php 
-                   echo $_SESSION['flash']
-                ?>
-                <?php
-                    $_SESSION['flash'] = '' 
-                ?>
-               <?php endif; ?>
+              <form id="formAuthentication" class="mb-3" action="<?=$baseUrl;?>/src/actions/login_action.php" method="POST">
+              <div class="flash-message">
+                <?php if(!empty($_SESSION['flash'])) : ?>
+                  <?= $_SESSION['flash']; ?>
+              </div>
+                  <?= $_SESSION['flash'] = ''; ?> 
+                <?php endif; ?>
+
+
                 <div class="mb-3">
                   <label for="email" class="form-label">Usuário</label>
                   <input
@@ -146,14 +147,14 @@
                     id="email"
                     name="email"
                     placeholder="Informe seu usuário ou e-mail"
-                    autofocus
+                    autofocus required
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Senha</label>
                     <a href="auth-forgot-password-basic.html">
-                      <small>Esqueceu sua senha?</small>
+                      
                     </a>
                   </div>
                   <div class="input-group input-group-merge">
@@ -164,6 +165,7 @@
                       name="senha"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
+                      required
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
@@ -182,7 +184,7 @@
             
             </div>
           </div>
-          <!-- /Register -->
+          
         </div>
       </div>
     </div>

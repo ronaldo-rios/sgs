@@ -37,14 +37,13 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
             $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
             $sql->bindValue(':email', $email);
             $sql->execute();
-
             if($sql->rowCount() > 0){
                 $dados = $sql->fetch(\PDO::FETCH_ASSOC);
                 $usuario = $this->gerarUsuario($dados);
                 return $usuario;
             }
         }
-        return false;
+        throw new \Exception("E-mail não cadastrado!");
     }
 
     // prourar usuário por token:
@@ -75,6 +74,8 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
                 $usuario = $this->gerarUsuario($dados);
                 return $usuario;
             }
+        }else {
+            return false;
         }
     }
 
@@ -93,6 +94,50 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         return $array;
     }
 
+    // Procurar todos os administradores:
+    public function findAdm()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'admin'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
+
+    // Procurar todos os servidores:
+    public function findServidor()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'servidor'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
+
+    // Procurar todos os médicos:
+    public function findMedico()
+    {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE permissao = 'medico'");
+        if($sql->rowCount() > 0){
+            $dados = $sql->fetchAll(\PDO::FETCH_ASSOC);
+            foreach($dados as $item){
+                $array[] = $this->gerarUsuario($item);
+            }
+        }
+        return $array;
+    }
     // adicionar novo usuário
     public function inserirUsuario(Usuario $u)
     {
@@ -131,7 +176,7 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
             token = :token 
             WHERE id = :id"
             );
-
+        
         $sql->bindValue(':nome', $u->getNome());
         $sql->bindValue(':cpf', $u->getCpf());
         $sql->bindValue(':siap', $u->getSiap());
@@ -153,4 +198,18 @@ class UsuarioDaoMySql implements UsuarioDaoInterface
         $sql->execute();
         return true;
     }
+
+    public function emailExists($email)
+    {
+        if(!empty($email)){
+            $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
+            $sql->bindValue(':email', $email);
+            $sql->execute();
+            if($sql->rowCount() > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

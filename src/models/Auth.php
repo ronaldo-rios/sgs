@@ -52,7 +52,18 @@ class Auth
                 return true;
             }
         }
+        $_SESSION['flash'] = '<div class="alert alert-danger">E-mail e/ou senha incorretos!</div>';
         return false;
+        die;
+    }
+
+    public function atualizarSenha(Usuario $u)
+    {
+        $sql = $this->pdo->prepare("UPDATE usuarios SET senha = :senha WHERE id = :id");
+        $sql->bindValue(':senha', password_hash($u->getSenha(), PASSWORD_BCRYPT));
+        $sql->bindValue(':id', $u->getId());
+        $sql->execute();
+        return true;
     }
 
 }

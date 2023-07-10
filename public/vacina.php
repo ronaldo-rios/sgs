@@ -1,14 +1,14 @@
 <?php
 
 require '../vendor/autoload.php';
-
+require '../conexao.php';
 use Dotenv\Dotenv;
 use src\config\Conexao;
 use src\models\Auth;
+use src\dao\VacinaDaoMySql;
 
-
-
-
+$vacina = new VacinaDaoMySql($pdo);
+$vacinas = $vacina->findAllVacinas();
 
 ?>
 
@@ -148,12 +148,17 @@ use src\models\Auth;
           <ul class="menu-inner py-1">
       
             <li class="menu-item active">
-              <a href="index.php" class="menu-link">
+              <a href="<?=$baseUrl;?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle red"></i>
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
             </li>
-
+            <li class="menu-item">
+                <a href="<?=$baseUrl;?>/public/alterar_senha.php" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-cog red"></i>
+                <div data-i18n="Basic" class="azul">Configurações</div>
+              </a>
+            </li>
            
   <!-- Menu Usuários -->
   <li class="menu-header small text-uppercase">
@@ -161,7 +166,7 @@ use src\models\Auth;
   </li>
   <li class="menu-item">
 
-    <a href="adm_principal.php" class="menu-link">
+    <a href="adm_principal.php" class="menu-link" id="admin-link" >
       <i class="menu-icon tf-icons bx bxs-user-check"></i>
      
       <div data-i18n="Basic" class="azul">Administrador</div>
@@ -173,10 +178,10 @@ use src\models\Auth;
       <div data-i18n="Basic" class="azul">Servidores</div>
     </a>
     
-    <a href="aluno.php" class="menu-link">
+    <a href="paciente.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-face"></i>
      
-      <div data-i18n="Basic" class="azul" >Alunos</div>
+      <div data-i18n="Basic" class="azul" >Paciente</div>
     </a>
 
     <a href="medico.php" class="menu-link">
@@ -193,31 +198,27 @@ use src\models\Auth;
 
         
 <li class="menu-item">
-  <a href="anamnese.php" class="menu-link ">
-    <i class="menu-icon tf-icons bx bx-capsule red"></i>
-    <div data-i18n="Layouts" class="azul">Anamnese</div>
-  </a>
 
   <a href="atestado.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bx-cabinet red"></i>
     <div data-i18n="User interface"  class="azul" >Atestados</div>
   </a>
 
-  <a href="vacina.php" class="menu-link ">
+  <a href="paciente_vacinas.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bxs-virus red"></i>
-    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+    <div data-i18n="User interface"  class="azul" >Vacinas dos Pacientes</div>
   </a>
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
+  <a href="prontuario.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
       <div data-i18n="Authentications" class="azul">Consulta</div>
     </a>
 
     <ul class="menu-sub">
       <li class="menu-item">
-        <a href="consulta_aluno.php" class="menu-link" target="_blank">
-          <div data-i18n="Basic" class="azul">Aluno</div>
+        <a href="consulta_paciente.php" class="menu-link" target="_blank">
+          <div data-i18n="Basic" class="azul">Paciente</div>
         </a>
       </li>
       
@@ -251,8 +252,13 @@ use src\models\Auth;
       <i class="menu-icon tf-icons bx bxs-group red"></i>
       <div data-i18n="User interface"  class="azul" >Turma</div>
     </a>
-  </li>
 
+    <a href="vacina.php" class="menu-link ">
+    <i class="menu-icon tf-icons bx bxs-virus red"></i>
+    <div data-i18n="User interface"  class="azul" >Vacinas</div>
+  </a>
+  
+  </li>
   
 
 <!-- Relatórios -->
@@ -260,30 +266,28 @@ use src\models\Auth;
            
            
 <li class="menu-item">
-  <a href="javascript:void(0);" class="menu-link ">
-    <i class="menu-icon tf-icons bx bx-capsule red"></i>
-    <div data-i18n="Layouts"  class="azul" >Anamnese</div>
-  </a>
 
   <li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link ">
-      <i class="menu-icon tf-icons bx bxs-band-aid"></i>
-      <div data-i18n="Layouts"  class="azul" >Consulta</div>
-    </a>
-
 
 <li class="menu-item">
-  <a href="javascript:void(0)" class="menu-link ">
+  <a href="relatorio_atestados.php" class="menu-link ">
     <i class="menu-icon tf-icons bx bx-cabinet"></i>
     <div data-i18n="User interface"  class="azul" >Atestados</div>
   </a>
 </li>
   <li class="menu-item">
-    <a href="javascript:void(0)" class="menu-link ">
+    <a href="relatorio_vacinas.php" class="menu-link ">
       <i class="menu-icon tf-icon bx bxs-virus"></i>
       <div data-i18n="User interface"  class="azul" >Vacinas</div>
     </a>
   </li>
+
+  <li class="menu-item">
+  <a href="<?=$baseUrl?>/src/actions/logout_action.php" style="background-color:#d6d2fc;" class="menu-link">
+    <i class="menu-icon tf-icon bx bx-exit"></i>
+    <div data-i18n="User interface" class="azul" >Sair</div>
+  </a>
+</li>
           </ul>
         </aside>
 <!-- Fim Dashbord -->
@@ -292,17 +296,50 @@ use src\models\Auth;
   <div class="layout-page">
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Vacinas</h4>
+       <h4 class="fw-bold py-3 mb-4 azul-marinho">Gerenciamento Vacina</h4>
+       <?php if(!empty($_SESSION['flash'])) : ?>
+      <div class="flash-message">
+        <?= $_SESSION['flash']; ?>
+      </div>
+        <?= $_SESSION['flash'] = ''; ?> 
+    <?php endif; ?>
+    <script>
+        setTimeout(function() {
+            var flashMessages = document.getElementsByClassName('flash-message');
+            for (var i = 0; i < flashMessages.length; i++) {
+                flashMessages[i].parentNode.removeChild(flashMessages[i]);
+            }
+        }, 3000);
+    </script>
 
- <!-- Inicio Barra Pesquisa-->      
-         <div class="navbar-nav align-items-left" >
-            <div class="nav-item d-flex align-items-left pesquisa" style="margin:20px;width:300px;">
-              
-              <i class="bx bx-search fs-3 lh-0 pesquisa " style="margin: 3px;"></i>
-              <input type="text" class="form-control border-0 shadow-none"  placeholder="Pesquise" aria-label="Pesquise"  />
-          
-              </div>
-                </div>
+  <!-- Inicio Barra Pesquisa-->      
+  <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
+  <input type="search" class="form-control " id="search"  placeholder="Informe o nome da vacina que deseja pesquisar" aria-label="Pesquise"  />
+    <button  onclick="searchData()" class="btn btn-primary ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+              </button>
+                 </div>
+<?php
+//Se campo de pesquisa for diferente de vazio, ele faz a pesquisa
+if(!empty ($_GET['search'])){
+  $data = $_GET['search'];
+//Se o retorno da função findByName for diferente de vazio, ele mostra os cursos que aencontrou
+if (!empty($vacina->findByName($data))) {
+    $vacinas = $vacina->findByName($data);
+
+}else{
+  echo "<div class='alert alert-danger' role='alert'>
+  Nenhuma vacina encontrada!";
+  $vacinas = [];
+} 
+
+}else {
+  $vacinas = $vacina->findAllVacinas();
+}
+
+?>
  
 
 <!-- Inicio da Tabela -->
@@ -314,7 +351,6 @@ use src\models\Auth;
       <tr>
 
          <th style="color:#2B5AAD;;font-weight:bold;">Nome</th>
-         <th style="color:#2B5AAD;;font-weight:bold;">Visualizar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Editar</th>
         <th style="color:#2B5AAD;;font-weight:bold;">Excluir</th>
         
@@ -325,153 +361,82 @@ use src\models\Auth;
 <tbody class="table-border-bottom-0 gray">
 
 <tr>
-
+<!-- INÍCIO DO LOOP FOREACH DE VACINAS -->
+<?php foreach($vacinas as $v): ?>
 <td>
   <i class="fab fa-angular fa-lg text-danger me-3"></i> 
-  <strong>Danilo Escobar</strong>
-</td>
-
-    
-<!-- Modal Visualizar-->
-<td>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show" style="background-color:#cdf3fb;border:none">
-  <i class="bx bx-show-alt"></i>
-</button>
   
-<div class="modal fade" id="show" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-         <h5 class="modal-title" id="modalFullTitle">Cadastro Vacina</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"aria-label="Close" style="background-color:#F14349;"></button>
-            </div>
-  
-<!-- Corpo Modal -->
-<div class="modal-body">
-<div class="list-group list-group-flush">
-    <p href="javascript:void(0);" class="list-group-item list-group-item-action">
-         <p>Danilo Santos</p>
-
-<div class="table-responsive text-nowrap">
-   <table class="table">
-            <thread>
-                <tr>
-                <th>Tipo</th>
-                <th>Dose</th>
-                <th>Data</th>
-            </tr>
-            </thread>
-    <tbody>
-        <tr>
-            <td> Hepatite B</td>
-            <td> Segunda </td>
-            <td> 12/02/23 </td>
-        </tr>
-    </tbody>
-    </table></div>
-
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Fechar</button>
-    </div>
-      </div>
-       </div>
-       </div>
-        </div>
+  <strong>
+       <?php 
+        echo $v->getNome();
+      ?>
+  </strong>
 </td>
-
 
 
 <!--Incio Modal Editar-->
  <td>
 
-<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editar" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editarv-<?= $v->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-edit-alt" ></i>
  </button>
 
- <div class="modal fade" id="editar" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="editarv-<?= $v->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
 
 <div class="modal-header">
-  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacina</h5>
+  <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro Turma</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
       </div>
 
-
-      <div class="modal-body">
-
-        <div class="row">
-          <div class="col mb-3">
-            <label for="nameBasic" class="form-label">Nome</label>
-            <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
-              </div>
-                </div>
-        
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Selecione o tipo da vacina</label>
-                <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                      <option selected>Selecione</option>
-                      <option value="1">Hepatite</option>
-                      <option value="2">COVID</option>
-                      <option value="3">Gripe</option>
-                    </select>
-                  </div>
-        
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Selecione a dose</label>
-                <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                      <option selected>Selecione</option>
-                      <option value="1">Primeira</option>
-                      <option value="2">Segunda</option>
-                      <option value="3">Terceira</option>
-                    </select>
-                  </div>
-        
-        <div class="mb-3 row">
-            <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data</label>
-                <div class="col-md-10">
-                    <input class="form-control" type="datetime-local" value="2021-06-18T12:30:00"  id="html5-datetime-local-input" />
-                    </div>
-                  </div>
-                  
-                      </div>
+<div class="modal-body">
+<form id="editFormv-<?= $v->getId(); ?>" action="<?=$baseUrl;?>/src/actions/editar_vacina_action.php" method="POST">
+<input type="hidden" name="id" value="<?= $v->getId(); ?>" />
+<div class="row">
+  <div class="col mb-3">
+   <label for="nameBasic" class="form-label">Nome</label>
+    <input type="text" name="nomevacina" id="nameBasic" class="form-control" value="<?= $v->getNome(); ?>" /> 
+    </div>
+      </div>
+          </div>
       
 <div class="modal-footer">
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;">Cancelar </button>
 
- <button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">Editar</button>
+ <button type="submit" class="btn btn-primary azul" form="editFormv-<?= $v->getId(); ?>" style="background-color:#2B5AAD">Editar</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+        </form>
         </td>
 
                     
 <!-- Inicio Modal Excluir--> 
 <td>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir" style="background-color:#cdf3fb;border:none">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#excluir-<?= $v->getId(); ?>" style="background-color:#cdf3fb;border:none">
   <i class="bx bx-trash-alt"  ></i>
 </button>
 
-<div class="modal fade" id="excluir" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="excluir-<?= $v->getId(); ?>" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacina</h5>
+       <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Turma</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color:#F14349;" ></button>
           </div>
 
 <div class="modal-body">
-  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir?</div>
+  <div class="alert alert-danger" role="alert">Tem certeza que deseja excluir <?= $v->getNome(); ?>?</div>
    </div>
 
 <div class="modal-footer">
+<a href="<?=$baseUrl;?>/src/actions/deletar_vacina_action.php?id=<?=$v->getId();?>">
   <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"   style="background-color:#F14349;color: white;">
     Excluir 
   </button>
@@ -487,6 +452,8 @@ use src\models\Auth;
                 </div>
  </td>
     </tr>
+    <!-- FIM DO LOOP DE VACINAS -->
+    <?php endforeach; ?>
        </tbody>
           </table>
             </div>
@@ -505,46 +472,19 @@ use src\models\Auth;
   <div class="modal-dialog" role="document">
      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Vacina</h5>
+           <h5 class="modal-title azul-marinho" id="exampleModalLabel1">Cadastro de Turma</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="background-color:#F14349;"></button>
                     </div>
 
 <div class="modal-body">
-
+<form action="<?=$baseUrl;?>/src/actions/inserir_vacina_action.php" id="cadvacina" method="POST">
 <div class="row">
   <div class="col mb-3">
-    <label for="nameBasic" class="form-label">Nome</label>
-    <input type="text" id="nameBasic" class="form-control" placeholder="Informe o nome completo do adiministrador" />
+    <label for="nameBasic" class="form-label">Nome da Vacina</label>
+    <input type="text" name="nome" id="nameBasic" class="form-control" placeholder="Informe o nome da Vacina" required />
       </div>
         </div>
 
-<div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Selecione o tipo da vacina</label>
-        <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-              <option selected>Selecione</option>
-              <option value="1">Hepatite</option>
-              <option value="2">COVID</option>
-              <option value="3">Gripe</option>
-            </select>
-          </div>
-
-<div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">Selecione a dose</label>
-        <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-              <option selected>Selecione</option>
-              <option value="1">Primeira</option>
-              <option value="2">Segunda</option>
-              <option value="3">Terceira</option>
-            </select>
-          </div>
-
-<div class="mb-3 row">
-    <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Data</label>
-        <div class="col-md-10">
-            <input class="form-control" type="datetime-local" value="2021-06-18T12:30:00"  id="html5-datetime-local-input" />
-            </div>
-          </div>
-          
               </div>
 
 <div class="modal-footer">
@@ -552,7 +492,7 @@ use src\models\Auth;
 <button type="button" class="btn btn-outline-secondary botao-red" data-bs-dismiss="modal" style="background-color:#F14349;color: white;" >
   Cancelar 
     </button>
-<button type="button" class="btn btn-primary azul" style="background-color:#2B5AAD">
+<button type="submit" class="btn btn-primary azul" style="background-color:#2B5AAD">
   Salvar
     </button>
         </div>
@@ -561,7 +501,7 @@ use src\models\Auth;
               </div>
             </div>
           </div>
-
+          </form>
 <div class="content-backdrop fade">
 
 </div>
@@ -601,4 +541,21 @@ use src\models\Auth;
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
+
+  <script>
+    var search = document.getElementById('search');
+
+    search.addEventListener('keydown', function(event){
+      if(event.key === "Enter"){
+        searchData();
+      }
+    });
+
+    function searchData(){
+      window.location.href = '<?=$baseUrl;?>/public/vacina.php?search='+search.value;
+    }
+  </script>
+
 </html>
+
+
