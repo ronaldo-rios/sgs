@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+
 require '../../conexao.php';
 use src\models\Vacina;
 use src\dao\VacinaDaoMySql;
@@ -20,7 +19,7 @@ if ($nomeVacina) {
     exit;
 
 }
-else {
-    header('Location:'. $baseUrl);
-    exit;
-}
+
+$_SESSION['flash'] = "<div style='text-align:center;' class='alert alert-danger'>Preencha o campo corretamente.</div>";
+header('Location:'. $baseUrl . '/public/vacina.php');
+exit;

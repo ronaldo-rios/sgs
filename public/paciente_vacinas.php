@@ -93,6 +93,7 @@ $vacinasPaciente = $pacienteVacina->findAll();
                 <div data-i18n="Basic" class="azul">Configurações</div>
               </a>
             </li>
+            
            
   <!-- Menu Usuários -->
   <li class="menu-header small text-uppercase">
@@ -389,7 +390,7 @@ if (!empty($paciente->findByName($data))) {
 
 <br>
 
-<div id="vacinaContainer" class="row">
+<div id="vacinaContainerEdit" class="row">
   <div class="col mb-1">
     <label for="nameBasic" class="form-label"><b>Vacinas</b></label>
     <select class="form-select" name="vacinas[]" aria-label="Selecione a Vacina" required >
@@ -419,10 +420,10 @@ if (!empty($paciente->findByName($data))) {
 </div>
 
 <div style="display:flex; justify-content:center;">
-  <button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInput">
+  <button class="btn btn-primary azul" style="background-color:#2B5AAD" type="button" id="addVacinaInputEdit">
     Adicionar outra vacina
   </button>
-  <button class="btn btn-outline-secondary btnRemoverGlobal" style="background-color:#F14349;color: white;" type="button">
+  <button id="btnRemoverGlobalEdit" class="btn btn-outline-secondary" style="background-color:#F14349;color: white;" type="button">
     Remover vacina
   </button>
 </div>
@@ -430,7 +431,7 @@ if (!empty($paciente->findByName($data))) {
 <script>
 function adicionarVacina() {
   // Obtém o elemento pai dos campos de vacina
-  const vacinaContainer = document.getElementsByClassName('vacinaContainer');
+  const vacinaContainer = document.getElementById('vacinaContainerEdit');
 
   // Clona o último conjunto de campos de vacina
   const ultimoVacina = vacinaContainer.lastElementChild.cloneNode(true);
@@ -446,7 +447,7 @@ function adicionarVacina() {
 }
 
 function removerVacina() {
-  const vacinaContainer = document.getElementsByClassName('vacinaContainer');
+  const vacinaContainer = document.getElementById('vacinaContainer');
 
   // Certifica-se que há mais de um campo de vacina, para que sempre permaneça ao menos um
   if (vacinaContainer.childElementCount > 1) {
@@ -456,11 +457,11 @@ function removerVacina() {
 }
 
 // Obtém o botão "Adicionar outra vacina"
-const btnAdicionarVacinaEdit = document.getElementsByClassName('addVacinaInput');
+const btnAdicionarVacinaEdit = document.getElementById('addVacinaInputEdit');
 btnAdicionarVacinaEdit.addEventListener('click', adicionarVacina);
 
 // Obtém o botão "Remover vacina"
-const btnRemoverVacinaEdit = document.getElementsByClassName('btnRemoverGlobal');
+const btnRemoverVacinaEdit = document.getElementById('btnRemoverGlobalEdit');
 btnRemoverVacinaEDit.addEventListener('click', removerVacina);
 </script>
 
@@ -473,8 +474,8 @@ btnRemoverVacinaEDit.addEventListener('click', removerVacina);
   </button> 
 </div>
 
-</form>
-        </td>
+<!-- </form>
+        </td> -->
       
                     
 
