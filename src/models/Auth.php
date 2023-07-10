@@ -57,4 +57,13 @@ class Auth
         die;
     }
 
+    public function atualizarSenha(Usuario $u)
+    {
+        $sql = $this->pdo->prepare("UPDATE usuarios SET senha = :senha WHERE id = :id");
+        $sql->bindValue(':senha', password_hash($u->getSenha(), PASSWORD_BCRYPT));
+        $sql->bindValue(':id', $u->getId());
+        $sql->execute();
+        return true;
+    }
+
 }

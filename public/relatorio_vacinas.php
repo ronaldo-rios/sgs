@@ -155,7 +155,12 @@ $listaTurmas = $turmaDao->findAll();
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
             </li>
-
+            <li class="menu-item">
+                <a href="<?=$baseUrl;?>/public/alterar_senha.php" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-cog red"></i>
+                <div data-i18n="Basic" class="azul">Configurações</div>
+              </a>
+            </li>
            
   <!-- Menu Usuários -->
   <li class="menu-header small text-uppercase">

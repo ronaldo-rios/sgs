@@ -154,7 +154,7 @@ require '../conexao.php';
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Senha</label>
                     <a href="auth-forgot-password-basic.html">
-                      <small>Esqueceu sua senha?</small>
+                      
                     </a>
                   </div>
                   <div class="input-group input-group-merge">

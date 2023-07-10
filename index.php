@@ -90,6 +90,12 @@ $usuarioInfo = $auth->checkToken();
                 <div data-i18n="Analytics" class="azul">Inicio</div>
               </a>
             </li>
+            <li class="menu-item">
+                <a href="<?=$baseUrl;?>/public/alterar_senha.php" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-cog red"></i>
+                <div data-i18n="Basic" class="azul">Configurações</div>
+              </a>
+            </li>
            
   <!-- Menu Usuários -->
   <li class="menu-header small text-uppercase">
@@ -209,7 +215,7 @@ $usuarioInfo = $auth->checkToken();
     <div class="content-wrapper">
       <div class="container-xxl flex-grow-1 container-p-y">
        <h4 class="fw-bold py-3 mb-4 azul-marinho">HOME</h4>
-    
+
        <?php if(!empty($_SESSION['flash'])) : ?>
       <div class="flash-message">
         <?= $_SESSION['flash']; ?>
@@ -225,13 +231,13 @@ $usuarioInfo = $auth->checkToken();
         }, 3000);
     </script>
 
- <!-- Inicio Barra Pesquisa-->      
+    
 <div class="box-search" style=" display: flex;justify-content:center;margin-bottom:30px">    
          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
               </button>
                  </div>
- 
+
 <div style="display:flex; justify-content:center;">
     <img src="public/boasvindas.png" class="img-fluid" alt="imagem-boas-vindas" 
         style="width:70%;height:60%;margin-bottom:30px;border-radius: 10%;">
@@ -242,10 +248,8 @@ $usuarioInfo = $auth->checkToken();
     </h2>
     <img src="public/saude.png" class="img-fluid" alt="equipe-medica" >
 </div>
-    
                 </div>
 
-   
             </div>
               </div>
                 </div>
