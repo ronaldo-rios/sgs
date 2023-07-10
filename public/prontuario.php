@@ -146,7 +146,7 @@ $prontuario = new ProntuarioDaoMySql($pdo);
   
     <a href="prontuario.php" class="menu-link">
       <i class="menu-icon tf-icons bx bx-plus-medical red"></i>
-      <div data-i18n="Authentications" class="admin-link" class="azul">Consulta</div>
+      <div data-i18n="Authentications" class="azul">Consulta</div>
     </a>
 
     
@@ -396,7 +396,7 @@ $alunos=$paciente->findAll();?>
 <div class="row">
 <div class="col mb-0">
     <label for="dobBasic" class="form-label">ESF</label>
-     <input type="text" name="esf" class="form-control" placeholder="Informe o ESF que o aluno recebe atendimento" />
+     <input type="number" name="esf" class="form-control" maxlength="3" placeholder="Informe o ESF que o aluno recebe atendimento" />
        </div>
         </div>
 

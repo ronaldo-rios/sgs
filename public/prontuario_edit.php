@@ -244,8 +244,8 @@ $prontuarioTeste = $prontuario->findAll();
       <div class="card-body">
 
          <div class="d-flex align-items-start align-items-sm-center gap-4">
-            <img src="<?= $pacientes->getFoto(); ?>"  class="d-block rounded" height="100" width="100" id="uploadedAvatar"/>
-                     </div>
+         <img src="../public/assets/img/uploads/<?= $pacientes->getFoto(); ?>" 
+            class="d-block rounded" height="100" width="100" id="uploadedAvatar"/>                      </div>
                       </div>
  <?php foreach($prontuarios as $p): ?>
   <form  action="<?=$baseUrl;?>/src/actions/editar_prontuario_action.php" method="POST">

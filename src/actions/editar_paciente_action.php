@@ -12,19 +12,19 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
 $nascimento = filter_input(INPUT_POST, 'nascimento', FILTER_SANITIZE_SPECIAL_CHARS);
 $telefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_SPECIAL_CHARS);
 $endereco = filter_input(INPUT_POST, 'endereco', FILTER_SANITIZE_SPECIAL_CHARS);
-$foto = filter_input(INPUT_POST, 'foto', FILTER_SANITIZE_SPECIAL_CHARS);
+$fotoedit = filter_input(INPUT_POST, 'fotoedit', FILTER_SANITIZE_SPECIAL_CHARS);
 $id_curso = filter_input(INPUT_POST, 'id_curso', FILTER_SANITIZE_SPECIAL_CHARS);
 $id_turma= filter_input(INPUT_POST, 'id_turma', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if (isset($_FILES["foto"]) && !empty($_FILES["foto"]["name"])) {
+if (isset($_FILES["fotoedit"]) && !empty($_FILES["fotoedit"]["name"])) {
     // Define o diretório de destino do upload
-    $diretorioDestino = $_SERVER['DOCUMENT_ROOT'] . '/sgs/public/assets/img/uploads/';
+    $diretorioDestino = $_SERVER['DOCUMENT_ROOT'] . '/public/assets/img/uploads/';
     
     // Gera um nome único para o arquivo com a extensao
-    $nomeArquivo = uniqid() . '_' . $_FILES["foto"]["name"];
+    $nomeArquivo = uniqid() . '_' . $_FILES["fotoedit"]["name"];
 
     // Move o arquivo para o diretório de destino
-    if (move_uploaded_file($_FILES["foto"]["tmp_name"], $diretorioDestino . $nomeArquivo)) {
+    if (move_uploaded_file($_FILES["fotoedit"]["tmp_name"], $diretorioDestino . $nomeArquivo)) {
         $foto = $nomeArquivo;
         echo "<div style='text-align:center;' class='alert alert-success'>Upload realizado com sucesso!</div>";
     } else {
@@ -42,7 +42,7 @@ if ($nome) {
     $paciente->setNascimento($nascimento);
     $paciente->setTelefone($telefone);
     $paciente->setEndereco($endereco);
-    $paciente->setFoto($foto) ?? null;
+    $paciente->setFoto($fotoedit) ?? null;
     $paciente->setIdTurma($id_turma);
     $paciente->setIdCurso($id_curso);
   

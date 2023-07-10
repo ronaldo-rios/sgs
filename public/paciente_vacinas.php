@@ -474,8 +474,8 @@ btnRemoverVacinaEDit.addEventListener('click', removerVacina);
   </button> 
 </div>
 
-<!-- </form>
-        </td> -->
+</form>
+        </td>
       
                     
 
