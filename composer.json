@@ -1,0 +1,23 @@
+{
+    "name": "sgs/sistema-gestao-saude",
+    "description": "Sistema de Gestão de Saúde",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ronaldo Rios Espíndola",
+            "role": "Founder Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app",
+            "Core\\": "core"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
+    }
+}
