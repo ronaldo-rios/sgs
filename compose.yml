@@ -5,8 +5,10 @@ services:
     ports: 
       - "80:80"
     volumes:
-      # - .:/var/www/html
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./app:/var/www/html/app
+      - ./core:/var/www/html/core
+      - ./index.php:/var/www/html/index.php
     depends_on:
       - app
 
@@ -15,8 +17,12 @@ services:
       context: .
       dockerfile: ./php/Dockerfile
     container_name: sgs-php-application
-    # volumes:
-    #   - .:/var/www/html
+    volumes:
+      - ./app:/var/www/html/app
+      - ./core:/var/www/html/core
+      - ./index.php:/var/www/html/index.php
+    env_file:
+      - .env
     depends_on:
       - db
 
@@ -27,14 +33,18 @@ services:
     container_name: sgs-mysql-db
     command: [
       '--default-authentication-plugin=mysql_native_password', 
-      '--character-set-server=utf8', 
-      '--collation-server=utf8_general_ci'
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci'
     ]
     restart: always
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - mysqldata:/var/lib/mysql
 

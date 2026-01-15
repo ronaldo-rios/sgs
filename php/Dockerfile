@@ -33,7 +33,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
-COPY ./composer.json /var/www/html/composer.json
+COPY ./composer.* ./
 
 RUN composer install \
     --prefer-dist \
@@ -43,8 +43,8 @@ RUN composer install \
     --no-progress \
     --no-scripts
 
-COPY app ./var/www/html/app
-COPY core ./var/www/html/core
-COPY index.php ./var/www/html/index.php
-COPY .env ./var/www/html/.env
+# COPY ./app ./var/www/html/app
+# COPY ./core ./var/www/html/core
+# COPY index.php ./var/www/html/index.php
+# COPY .env ./var/www/html/.env
 

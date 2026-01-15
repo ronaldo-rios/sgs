@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:8.0
 
 # Copy the database schema to the container
 ADD ./sql/mysql/init.sql  /docker-entrypoint-initdb.d/
