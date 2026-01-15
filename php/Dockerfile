@@ -43,8 +43,4 @@ RUN composer install \
     --no-progress \
     --no-scripts
 
-# COPY ./app ./var/www/html/app
-# COPY ./core ./var/www/html/core
-# COPY index.php ./var/www/html/index.php
-# COPY .env ./var/www/html/.env
 

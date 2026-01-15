@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: ./php/Dockerfile
-    container_name: sgs-php-application
+    container_name: sgs-php-app
     volumes:
       - ./app:/var/www/html/app
       - ./core:/var/www/html/core
@@ -41,12 +41,19 @@ services:
       - 3306:3306
     environment:
       MYSQL_HOST: db
+      MYSQL_PORT: ${MYSQL_PORT}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      REDIS_HOST: cache
+      REDIS_PORT: ${REDIS_PORT}
     volumes:
       - mysqldata:/var/lib/mysql
+
+  cache:
+    image: redis:latest
+    container_name: sgs-redis-cache
 
 volumes:
   mysqldata:
