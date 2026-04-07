@@ -1,6 +1,6 @@
 <?php
 
-namespace App\adms\Models\helpers;
+namespace Core;
 
 class SlugControllerOrMethod
 {

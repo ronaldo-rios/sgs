@@ -24,4 +24,9 @@ final class Config
             'port'     => (int) $_ENV['MYSQL_PORT'],
         ];
     }
+
+    public static function admEmail(): string
+    {
+        return $_ENV['ADM_EMAIL'];
+    }
 }

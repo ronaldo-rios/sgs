@@ -2,8 +2,8 @@
 
 namespace Core;
 
-use App\adms\Enum\Permission;
-use App\adms\Models\helpers\Connection;
+use App\Adms\Enum\Permission;
+use App\Adms\helpers\Connection;
 use Core\SlugControllerOrMethod;
 
 class LoadPageLevels

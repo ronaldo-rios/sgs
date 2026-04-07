@@ -4,12 +4,10 @@ ob_start(); // Inicia o buffer de saída para manipular a saída antes de enviá
 session_start(); 
 ini_set('display_errors', 1);
 
-echo "Bem vindo! SGS";
-
-// require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 // $dotenv->load();
 
-// $home = new Core\ConfigController();
-// $home->loadPage();
+$home = new Core\ConfigController();
+$home->loadPage();
