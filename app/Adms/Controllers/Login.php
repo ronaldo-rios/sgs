@@ -11,8 +11,8 @@ class Login
     public function index(): void
     {
         $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-        if (! empty($this->formData['sendLogin'])) {
+       
+        if (! empty($formData['sendLogin'])) {
             $validateLogin = new AdmsLogin();
             $validateLogin->login($formData);
             
@@ -21,7 +21,7 @@ class Login
             }  
         } 
 
-        $view = new ConfigView("Adms/Views/login/login", null);
+        $view = new ConfigView("Adms/Views/login/login");
         $view->loadViewLogin();
     }
 }
