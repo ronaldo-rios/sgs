@@ -29,6 +29,9 @@ class LoadPageLevels
         self::$urlParameter = $urlParameter;
         // var_dump(self::$urlController, self::$urlMethod, self::$urlParameter);die;
         // self::searchPages();
+
+        self::$classLoad = "App\\Adms\\Controllers\\" . self::$urlController;
+        self::loadMethod();
     }
 
     // private static function searchPages()

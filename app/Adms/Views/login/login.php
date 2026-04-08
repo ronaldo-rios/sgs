@@ -1,5 +1,3 @@
-<?php echo "eeee"; ?>
-
 <h1>Área Restrita</h1>
 
 <?php
