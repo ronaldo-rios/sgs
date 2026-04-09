@@ -1,0 +1,29 @@
+/* Base alert styles */
+.alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    width: 70%;
+    text-align: center;
+    margin: 12px auto;
+    border: 1px solid transparent;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.alert-danger {
+    color: #c00313;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+.alert-info {
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+}

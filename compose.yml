@@ -8,6 +8,7 @@ services:
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./app:/var/www/html/app
       - ./core:/var/www/html/core
+      - ./public:/var/www/html/public
       - ./index.php:/var/www/html/index.php
     depends_on:
       - app
