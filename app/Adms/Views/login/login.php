@@ -1,11 +1,8 @@
+<link rel="stylesheet" href="/assets/css/main.css">
+
 <h1>Área Restrita</h1>
 
-<?php
-    if(isset($_SESSION['msg'])){
-        echo $_SESSION['msg'];
-        unset($_SESSION['msg']);
-    }
-?>
+<?php \App\Helpers\Flash::display(); ?>
 <span id="msg"></span>
 
 <form action="" method="POST" id="form-login">
