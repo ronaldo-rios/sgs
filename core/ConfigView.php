@@ -16,16 +16,10 @@ class ConfigView
     public function loadView(): void
     {
         if(file_exists("app/{$this->nameView}.php")) {
-            if (file_exists("app/Adms/Views/include/head.php")) {
-                include "app/Adms/Views/include/head.php";
-            }
-            if (file_exists("app/Adms/Views/include/main.php")) {
-                include "app/Adms/Views/include/main.php";
-            }
-                include "app/{$this->nameView}.php";
-            if (file_exists("app/Adms/Views/include/footer.php")) {
-                include "app/Adms/Views/include/footer.php";
-            }
+            include "app/Adms/Views/include/head.php";
+            include "app/Adms/Views/include/main.php";
+            include "app/{$this->nameView}.php";
+            include "app/Adms/Views/include/footer.php";
         } else {
             die("Erro ao carregar a view: {$this->nameView}. 
                 Tente novamente ou entre em contato com o administrador: " . Config::admEmail()
@@ -40,13 +34,9 @@ class ConfigView
     public function loadViewLogin(): void
     {
         if(file_exists("app/{$this->nameView}.php")) {
-            if (file_exists("app/Adms/Views/include/head.php")) {
-                include "app/Adms/Views/include/head.php";
-            }
+            include "app/Adms/Views/include/head.php";
             include "app/{$this->nameView}.php";
-            if (file_exists("app/Adms/Views/include/footer.php")) {
-                include "app/Adms/Views/include/footer.php";
-            }
+            include "app/Adms/Views/include/footer.php";
         } else {
             die("Erro ao carregar a view: {$this->nameView}. 
                 Tente novamente ou entre em contato com o administrador: " . Config::admEmail()

@@ -1,6 +1,8 @@
 <?php
 
-namespace Core;
+namespace App\Helpers;
+
+use Core\Config;
 
 final class Redirect
 {

@@ -4,7 +4,7 @@ namespace App\Adms\Controllers;
 
 use App\Adms\Models\AdmsLogin;
 use Core\ConfigView;
-use Core\Redirect;
+use App\Helpers\Redirect;
 
 class Login
 {
