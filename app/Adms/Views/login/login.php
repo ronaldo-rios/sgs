@@ -16,7 +16,7 @@
     <button type="submit" name="sendLogin" value="Acessar">Acessar</button>
 </form>
 
-<p><a href="<?= \Core\Config::url() . 'new-user/index'; ?>">Cadastrar</a></p>
-<p><a href="<?= \Core\Config::url() . 'recover-password/index'; ?>">Esqueci minha senha</a></p>
+<p><a href="<?= \Core\Config::url() . '/new-user/index'; ?>">Cadastrar</a></p>
+<p><a href="<?= \Core\Config::url() . '/recover-password/index'; ?>">Esqueci minha senha</a></p>
 
-<script src="<?= \Core\Config::url() . 'app/Adms/assets/js/toUpper.js'?>"></script>
+<script src="<?= \Core\Config::url() . '/assets/js/toUpper.js'?>"></script>
