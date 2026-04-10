@@ -57,15 +57,16 @@ class AdmsLogin
 
     private function validatePassword(?array $resultUser): void
     {
-        if (password_verify($this->data['password'], $resultUser['password'])) {
-            $_SESSION['user_id']            = $resultUser['id'];
-            $_SESSION['user_name']          = $resultUser['name'];
-            $_SESSION['user_nickname']      = $resultUser['nickname'];
-            $_SESSION['user_email']         = $resultUser['email'];
-            $_SESSION['user_image']         = $resultUser['image'];
-            $_SESSION['user_situation_id']  = $resultUser['user_situation_id'];
-            $_SESSION['access_level']       = $resultUser['access_level_id'];
-            $_SESSION['order_level']        = $resultUser['order_level'];
+        $hash = trim((string) ($resultUser['password']));
+        if (password_verify($this->data['password'], $hash)) {
+            $_SESSION['user_id']           = $resultUser['id'];
+            $_SESSION['user_name']         = $resultUser['name'];
+            $_SESSION['user_nickname']     = $resultUser['nickname'];
+            $_SESSION['user_email']        = $resultUser['email'];
+            $_SESSION['user_image']        = $resultUser['image'];
+            $_SESSION['user_situation_id'] = $resultUser['user_situation_id'];
+            $_SESSION['access_level']      = $resultUser['access_level_id'];
+            $_SESSION['order_level']       = $resultUser['order_level'];
             $this->result = true;
         }
         else {

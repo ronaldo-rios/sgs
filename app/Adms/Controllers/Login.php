@@ -4,7 +4,7 @@ namespace App\Adms\Controllers;
 
 use App\Adms\Models\AdmsLogin;
 use Core\ConfigView;
-use Core\Redirect;
+use App\Helpers\Redirect;
 
 class Login
 {
@@ -15,7 +15,7 @@ class Login
         if (! empty($formData['sendLogin'])) {
             $validateLogin = new AdmsLogin();
             $validateLogin->login($formData);
-            
+
             if($validateLogin->getResult()) {
                 Redirect::to("dashboard/index");
             }  

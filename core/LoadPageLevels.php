@@ -4,6 +4,7 @@ namespace Core;
 
 use App\Adms\Enum\Permission;
 use App\Helpers\Connection;
+use App\Helpers\Flash;
 use Core\SlugControllerOrMethod;
 
 class LoadPageLevels
@@ -101,11 +102,8 @@ class LoadPageLevels
     //         self::searchIfUserHasAccessToPage();
     //     }
     //     else {
-    //         echo "não entrou";die;
-    //         $_SESSION['msg'] = "<div class='alert alert-danger'>Faça login para acessar.</div>";
-    //         $url = URL . "login/index";
-    //         header("Location: $url");
-    //         exit;
+    //         Flash::danger("Faça login para acessar.");
+    //         Redirect::to("login/index");
     //     }
     // }
 
