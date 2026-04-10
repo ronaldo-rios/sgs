@@ -1,3 +1,3 @@
 <?php
-echo $this->viewData['welcome'];
+echo $welcome;
 echo "<br><br>Dashboard!<br><br>";

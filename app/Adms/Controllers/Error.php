@@ -1,18 +1,21 @@
 <?php
 
-namespace App\adms\Controllers;
+namespace App\Adms\Controllers;
 
+use App\Helpers\Flash;
 use Core\ConfigView;
 
 class Error
 {
-    private array|string|null $data;
+    private array $data = [];
 
     public function index(): void
     {
-        $this->data = "<p style='text-align: center; color: red; font-size: 1.5rem; margin-top: 10rem;'>Erro: Página não encontrada</p>";
+        $this->data = [
+            'content' => Flash::danger("Erro: Página não encontrada</p>")
+        ];
 
         $view = new ConfigView("Adms/Views/error/error", $this->data);
-        $view->loadViewLogin();
+        $view->loadView();
     }
 }
