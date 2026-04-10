@@ -83,7 +83,7 @@ class AdmsLogin
         $message = match ($userSituationId) {
             UserSituation::CONFIRMED_EMAIL->value => $this->validatePassword($resultUser),
             UserSituation::WAITING_FOR_CONFIRMATION->value => "Você precisa confirmar seu e-mail para acessar. 
-            Clique <a href='" . Config::url() . "new-confirm-email/index'> aqui </a> para reenviar o e-mail de confirmação.",
+            Clique <a href='" . Config::url() . "/new-confirm-email/index'> aqui </a> para reenviar o e-mail de confirmação.",
             UserSituation::NOT_REGISTERED->value => "Usuário não cadastrado. Entre em contato com a empresa",
             default => "Usuário inativo. Entre em contato com a empresa",
         };
