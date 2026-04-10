@@ -7,6 +7,8 @@ use Core\SlugControllerOrMethod;
 
 class ConfigController 
 {
+    private const MAX_ROUTE_PATH_LENGTH = 512;
+
     private ?string $url;
     private array $urlArray;
     private string $urlController;
@@ -16,16 +18,17 @@ class ConfigController
 
     public function __construct()
     {
-        if (! empty(filter_input(INPUT_GET, 'url', FILTER_DEFAULT))) {
-            
-            $this->url = filter_input(INPUT_GET, 'url', FILTER_DEFAULT);
+        $route = $this->routePathFromRequest();
+
+        if ($route !== null && $route !== '') {
+            $this->url = $route;
             $this->clearUrl();
             $this->urlArray = explode('/', $this->url);
-            
+
             isset($this->urlArray[0]) 
                 ? $this->urlController = SlugControllerOrMethod::slugController($this->urlArray[0])
                 : $this->urlController = SlugControllerOrMethod::slugController(Config::CONTROLLER);
-    
+
             isset($this->urlArray[1]) 
                 ? $this->urlMethod = SlugControllerOrMethod::slugMethod($this->urlArray[1])
                 : $this->urlMethod = SlugControllerOrMethod::slugMethod(Config::METHOD);
@@ -39,6 +42,34 @@ class ConfigController
             $this->urlMethod = SlugControllerOrMethod::slugMethod(Config::METHOD);
             $this->urlParameter = '';
         }
+    }
+
+    private function routePathFromRequest(): ?string
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+        if (! is_string($path)) {
+            return null;
+        }
+
+        $path = trim($path, '/');
+
+        if ($path === '' || strcasecmp($path, 'index.php') === 0) {
+            return null;
+        }
+
+        if (strlen($path) > self::MAX_ROUTE_PATH_LENGTH) {
+            return null;
+        }
+
+        if (str_contains($path, "\0")) {
+            return null;
+        }
+
+        if (str_contains(rawurldecode($path), '..')) {
+            return null;
+        }
+
+        return $path;
     }
 
     public function loadPage(): void

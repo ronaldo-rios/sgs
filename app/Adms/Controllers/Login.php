@@ -15,7 +15,7 @@ class Login
         if (! empty($formData['sendLogin'])) {
             $validateLogin = new AdmsLogin();
             $validateLogin->login($formData);
-            
+
             if($validateLogin->getResult()) {
                 Redirect::to("dashboard/index");
             }  
