@@ -2,13 +2,11 @@ if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
 }
 
-const ALERT_AUTO_HIDE_MS = 5000
+const ALERT_AUTO_HIDE_MSG = 5000
 
 function scheduleAlertRemoval(alertEl) {
     if (!alertEl?.classList?.contains('alert')) return
-    setTimeout(() => {
-        alertEl.remove()
-    }, ALERT_AUTO_HIDE_MS)
+    setTimeout(() => alertEl.remove(), ALERT_AUTO_HIDE_MSG)
 }
 
 function setMsg(text, isError = true) {
