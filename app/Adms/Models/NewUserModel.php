@@ -9,6 +9,7 @@ use App\Adms\Models\EmailCredencialsModel;
 use App\Helpers\Connection;
 use App\Helpers\ConvertToCapitularString;
 use App\Helpers\Flash;
+use App\Validators\ValidateEmail;
 use App\Validators\ValidateEmptyField;
 use App\Validators\ValidatePassword;
 use Core\Config;
@@ -42,8 +43,8 @@ class NewUserModel
         if(ValidateEmptyField::getResult()){
 
             $sqlUser = $this->conn->prepare($this->queryUser());
-            $sqlUser->bindValue(':user', $this->data['user'], \PDO::PARAM_STR);
-            $sqlUser->bindValue(':email', $this->data['email'], \PDO::PARAM_STR);
+            $sqlUser->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
+            $sqlUser->bindValue(':email', trim($this->data['email']), \PDO::PARAM_STR);
             $sqlUser->execute();
             $ifExists = $sqlUser->fetch();
 
@@ -112,7 +113,7 @@ class NewUserModel
         }
     }
 
-    private function insertUser($email,$encriptPassword, $confirmEmail, $situation): string
+    private function insertUser($email, $encriptPassword, $confirmEmail, $situation): string
     {
         $insert = "INSERT INTO `users` 
             (`name`, `email`, `user`, `password`, `confirm_email`, `user_situation_id`, `access_level_id`, `created_at`) 
