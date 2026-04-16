@@ -2,7 +2,7 @@
 
 namespace App\Adms\Controllers;
 
-use App\Adms\Models\AdmsLogin;
+use App\Adms\Models\LoginModel;
 use Core\ConfigView;
 use App\Helpers\Redirect;
 
@@ -13,7 +13,7 @@ class Login
         $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
        
         if (! empty($formData['sendLogin'])) {
-            $validateLogin = new AdmsLogin();
+            $validateLogin = new LoginModel();
             $validateLogin->login($formData);
 
             if($validateLogin->getResult()) {

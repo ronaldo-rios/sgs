@@ -2,7 +2,7 @@
 
 namespace App\Adms\Controllers;
 
-use App\Adms\Models\NewUserModel;
+use App\Adms\Models\AddNewUserModel;
 use App\Helpers\Redirect;
 use Core\ConfigView;
 
@@ -15,7 +15,7 @@ class NewUser
         $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
         if(! empty($formData['sendNewUser'])) {
-            $register = new NewUserModel();
+            $register = new AddNewUserModel();
             $register->create($formData);
             $register->getResult() ? Redirect::to("login/index") : $this->viewNewUser();
         }

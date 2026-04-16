@@ -5,16 +5,14 @@ namespace App\Adms\Models;
 use App\Adms\Enum\AccessLevels;
 use App\Adms\Enum\ConfigEmails;
 use App\Adms\Enum\UserSituation;
-use App\Adms\Models\EmailCredencialsModel;
 use App\Helpers\Connection;
 use App\Helpers\ConvertToCapitularString;
 use App\Helpers\Flash;
-use App\Validators\ValidateEmail;
 use App\Validators\ValidateEmptyField;
 use App\Validators\ValidatePassword;
 use Core\Config;
 
-class NewUserModel 
+class AddNewUserModel 
 {
     private ?array $data;
     private object $conn;
@@ -74,10 +72,8 @@ class NewUserModel
                 $sqlInsert = $this->insertUser($email, $encriptPassword, $this->confirmEmail, $this->waitingConfirm);
 
                 if($sqlInsert) {
-                    Flash::success("Cadastrado com sucesso!");
-                    // $this->sendEmail();
-                } 
-                else {
+                    $this->sendEmail();
+                } else {
                     Flash::danger("Erro ao cadastrar usuário!");
                     $this->result = false;
                 }
@@ -140,7 +136,8 @@ class NewUserModel
         $emailCreencials->readEmailCredencials($this->emailData, $this->optionConfigEmail);
         if($emailCreencials->getResult()) {
             Flash::success("
-                Usuário cadastrado com sucesso! Um email de confirmação foi enviado para o email informado."
+                Usuário cadastrado com sucesso! 
+                Um email de confirmação foi enviado para o email informado."
             );
             $this->result = true;
         } 
