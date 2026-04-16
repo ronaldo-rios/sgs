@@ -5,6 +5,7 @@ namespace App\Adms\Models;
 use App\Adms\Enum\AccessLevels;
 use App\Adms\Enum\ConfigEmails;
 use App\Adms\Enum\UserSituation;
+use App\Adms\Models\ConfigEmailCredencialsModel;
 use App\Helpers\Connection;
 use App\Helpers\ConvertToCapitularString;
 use App\Helpers\Flash;
@@ -20,8 +21,6 @@ class AddNewUserModel
     private string $firstName;
     private array $emailData;
     private string $confirmEmail;
-    private int $waitingConfirm = UserSituation::WAITING_FOR_CONFIRMATION->value;
-    private int $optionConfigEmail = ConfigEmails::REGISTER_CONFIRMATION->value;
 
     public function __construct()
     {
@@ -69,7 +68,7 @@ class AddNewUserModel
                     return;
                 }
 
-                $sqlInsert = $this->insertUser($email, $encriptPassword, $this->confirmEmail, $this->waitingConfirm);
+                $sqlInsert = $this->insertUser($email, $encriptPassword, $this->confirmEmail);
 
                 if($sqlInsert) {
                     $this->sendEmail();
@@ -109,7 +108,7 @@ class AddNewUserModel
         }
     }
 
-    private function insertUser($email, $encriptPassword, $confirmEmail, $situation): string
+    private function insertUser($email, $encriptPassword, $confirmEmail): string
     {
         $insert = "INSERT INTO `users` 
             (`name`, `email`, `user`, `password`, `confirm_email`, `user_situation_id`, `access_level_id`, `created_at`) 
@@ -123,7 +122,7 @@ class AddNewUserModel
         $sqlInsert->bindValue(':password', $encriptPassword, \PDO::PARAM_STR);
         $sqlInsert->bindValue(':confirm_email', $confirmEmail, \PDO::PARAM_STR);
         $sqlInsert->bindValue(':access_level_id', AccessLevels::USER_DEFAULT->value, \PDO::PARAM_INT);
-        $sqlInsert->bindValue(':user_situation', $situation, \PDO::PARAM_INT);
+        $sqlInsert->bindValue(':user_situation', UserSituation::WAITING_FOR_CONFIRMATION->value, \PDO::PARAM_INT);
         return $sqlInsert->execute();
     }
 
@@ -132,8 +131,12 @@ class AddNewUserModel
         $this->contentEmailHtml();
         $this->contentEmailText();
 
-        $emailCreencials = new EmailCredencialsModel();
-        $emailCreencials->readEmailCredencials($this->emailData, $this->optionConfigEmail);
+        $emailCreencials = new ConfigEmailCredencialsModel();
+        $emailCreencials->readEmailCredencials(
+            $this->emailData, 
+            ConfigEmails::REGISTER_CONFIRMATION->value
+        );
+
         if($emailCreencials->getResult()) {
             Flash::success("
                 Usuário cadastrado com sucesso! 
@@ -155,14 +158,14 @@ class AddNewUserModel
         $this->emailData['toName'] = $this->data['name'];
         $this->emailData['subject'] = 'Confirmação de cadastro';
 
-        $url = Config::url() . '/confirm-email/index?key=' . $this->confirmEmail;
+        $url = Config::url() . "/confirm-email/index?key={$this->confirmEmail}";
         $this->emailData['contentHtml'] = "<a><p>Olá <Strong>{$this->firstName}</strong>! Clique no link para confirmar seu cadastro!</p>";
         $this->emailData['contentHtml'] .= "<a href='$url'>{$url}</a><br><br>";
     }
 
     private function contentEmailText(): void
     {
-        $url = Config::url() . '/conf-email/index?key=' . $this->confirmEmail;
+        $url = Config::url() . "/conf-email/index?key={$this->confirmEmail}";
         $this->emailData['contentText'] = "Olá {$this->firstName}! Clique no link para confirmar seu cadastro!";
         $this->emailData['contentText'] .= $url . "\n\n";
     }

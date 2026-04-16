@@ -7,7 +7,7 @@ use App\Helpers\Connection;
 use Core\Config;
 use PDO;
 
-class EmailCredencialsModel
+class ConfigEmailCredencialsModel
 {
     private bool $result = false;
     private PDO $conn;
@@ -29,13 +29,12 @@ class EmailCredencialsModel
         $readEmailCredencials->execute();
         $resultDb = (array) $readEmailCredencials->fetch();
 
-        if ($resultDb) {
+        if (!empty($resultDb)) {
             $sendEmail = new SendEmail();
             $sendEmail->send($resultDb, $emailData);
-            self::$result = true;
-        }
-        else {
-            self::$result = false;
+            $this->result = $sendEmail->getResult();
+        } else {
+            $this->result = false;
         }
     }
 
