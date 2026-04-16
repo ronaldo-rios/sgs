@@ -32,10 +32,9 @@ class ConfigEmailCredencialsModel
         if (!empty($resultDb)) {
             $sendEmail = new SendEmail();
             $sendEmail->send($resultDb, $emailData);
-            self::$result = true;
-        }
-        else {
-            self::$result = false;
+            $this->result = $sendEmail->getResult();
+        } else {
+            $this->result = false;
         }
     }
 
