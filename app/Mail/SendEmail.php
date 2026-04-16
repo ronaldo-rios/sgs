@@ -1,7 +1,6 @@
-
 <?php
 
-namespace App\adms\Models\helpers;
+namespace App\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -27,16 +26,16 @@ class SendEmail
      */
     public function send(array $resultDb, array $data): void
     {
-        $this->mailInfo['host'] = $resultDb['host'];
-        $this->mailInfo['username'] = $resultDb['username'];
-        $this->mailInfo['password'] = $resultDb['password'];
-        $this->mailInfo['fromEmail'] = $resultDb['email'];
-        $this->mailInfo['fromName'] = $resultDb['name'];
+        $this->mailInfo['host']       = $resultDb['host'];
+        $this->mailInfo['username']   = $resultDb['username'];
+        $this->mailInfo['password']   = $resultDb['password'];
+        $this->mailInfo['fromEmail']  = $resultDb['email'];
+        $this->mailInfo['fromName']   = $resultDb['name'];
         $this->mailInfo['smtpsecure'] = $resultDb['smtp_secure'];
-        $this->mailInfo['port'] = $resultDb['port'];
-        $this->fromEmail = $this->mailInfo['fromEmail'];
-        $this->optionConfigEmail = (int) $resultDb['id'];
-        $this->data = $data;
+        $this->mailInfo['port']       = $resultDb['port'];
+        $this->fromEmail              = $this->mailInfo['fromEmail'];
+        $this->optionConfigEmail      = (int) $resultDb['id'];
+        $this->data                   = $data;
 
         /*$this->data['toEmail'] = 'ronaldo@gmail.com';
         $this->data['toName'] = 'Fulaninho';

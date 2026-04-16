@@ -2,7 +2,7 @@
 
 namespace App\Adms\Models;
 
-use App\adms\Models\helpers\SendEmail;
+use App\Mail\SendEmail;
 use App\Helpers\Connection;
 use Core\Config;
 use PDO;

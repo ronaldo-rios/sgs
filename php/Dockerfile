@@ -31,10 +31,13 @@ RUN docker-php-ext-configure gd \
 # Set permissions
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+WORKDIR /var/www/html
+
 COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
-COPY ./composer.* ./
+COPY composer.json composer.lock ./
 
+# Idempotent: syncs vendor/ with composer.lock; Docker only reruns this layer when those files change.
 RUN composer install \
     --prefer-dist \
     --no-dev \

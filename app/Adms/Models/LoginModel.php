@@ -8,7 +8,7 @@ use App\Helpers\Flash;
 use Core\Config;
 use PDO;
 
-class AdmsLogin
+class LoginModel
 {
     private ?array $data = null;
     private bool $result = false;
