@@ -60,7 +60,7 @@ class AddNewUserModel
                 
                 $encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
                 $email = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
-                $this->confirmEmail = password_hash($encriptPassword . date('Y-m-d H:i:s'), PASSWORD_ARGON2ID);
+                $this->confirmEmail = password_hash($encriptPassword . date('Y-m-d H:i:s'), PASSWORD_BCRYPT);
 
                 if (! $email) {
                     Flash::danger("Email inválido!");
