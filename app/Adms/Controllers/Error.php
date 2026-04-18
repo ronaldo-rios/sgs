@@ -12,7 +12,7 @@ class Error
     public function index(): void
     {
         $this->data = [
-            'content' => Flash::danger("Erro: Página não encontrada</p>")
+            'content' => Flash::danger("<p>Erro: Página não encontrada</p>")
         ];
 
         $view = new ConfigView("Adms/Views/error/error", $this->data);
