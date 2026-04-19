@@ -5,5 +5,6 @@ session_start();
 ini_set('display_errors', 1);
 
 require_once __DIR__ . '/vendor/autoload.php';
+
 $home = new Core\ConfigController();
 $home->loadPage();

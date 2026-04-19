@@ -1,6 +1,6 @@
 <?php
 
-namespace App\adms\Enum;
+namespace App\Adms\Enum;
 
 enum AccessLevels: int
 {

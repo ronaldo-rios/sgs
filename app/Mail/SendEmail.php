@@ -8,22 +8,15 @@ use PHPMailer\PHPMailer\Exception;
 class SendEmail
 {
     private array $data;
-    private bool $result;
     private array $mailInfo;
     private string $fromEmail;
     private int $optionConfigEmail;
 
-    public function getResult(): bool
-    {
-        return $this->result;
-    }
-
     /**
      * Function to send email
      * @param array $resultDb [host, username, password, email, name, smtp_secure, port]
-     * @return void
      */
-    public function send(array $resultDb, array $data): void
+    public function send(array $resultDb, array $data): bool
     {
         $this->mailInfo['host']       = $resultDb['host'];
         $this->mailInfo['username']   = $resultDb['username'];
@@ -42,14 +35,13 @@ class SendEmail
         $this->data['contentHtml'] = '<p>Olá <Strong>Fulaninho</strong>! Clique no link para confirmar seu cadastro!</p>';
         $this->data['contentText'] = 'Olá Fulaninho! Clique no link para confirmar seu cadastro!';*/
 
-        $this->sendWithPHPMailer();
+        return $this->sendWithPHPMailer();
     }
 
     /**
      * Function to send email with PHPMailer
-     * @return void
      */
-    private function sendWithPHPMailer(): void
+    private function sendWithPHPMailer(): bool
     {
         $mail = new PHPMailer(true);
 
@@ -80,10 +72,10 @@ class SendEmail
             $mail->AltBody = $this->data['contentText'];
 
             $mail->send();
-            $this->result = true;  
+            return true;
         } 
         catch (Exception $e) {
-            $this->result = false;
+            return false;
         }
     }
 }

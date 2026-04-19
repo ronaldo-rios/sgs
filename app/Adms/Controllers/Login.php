@@ -14,9 +14,8 @@ class Login
        
         if (! empty($formData['sendLogin'])) {
             $validateLogin = new LoginModel();
-            $validateLogin->login($formData);
-
-            if($validateLogin->getResult()) {
+            
+            if ($validateLogin->login($formData)) {
                 Redirect::to("dashboard/index");
             }  
         } 
