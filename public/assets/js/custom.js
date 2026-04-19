@@ -85,3 +85,16 @@ if (formNewUser) {
         }
     })
 }
+
+const formNewConfirmEmail = document.getElementById('form-new-confirm-email')
+if (formNewConfirmEmail) {
+    formNewConfirmEmail.addEventListener('submit', (e) => {
+        // Check if the field email is empty
+        let confirmEmail = document.querySelector('#emailconfirm')?.value ?? ''
+        if (confirmEmail === '') {
+            e.preventDefault()
+            setMsg('Campo e-mail para confirmação é obrigatório.')
+            return
+        }
+    })
+}
