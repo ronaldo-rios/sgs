@@ -11,7 +11,6 @@ use PDO;
 class LoginModel
 {
     private ?array $data = null;
-    private bool $result = false;
     private PDO $conn;
 
     public function __construct()
@@ -19,12 +18,7 @@ class LoginModel
         $this->conn = Connection::connect(Config::db());
     }
 
-    public function getResult(): bool
-    {
-        return $this->result;
-    }
-
-    public function login(array $data): void
+    public function login(array $data): bool
     {
         $this->data = $data;
         $sqlUser = $this->conn->prepare(query: $this->validateUser());
@@ -33,12 +27,11 @@ class LoginModel
         $resultUser = $sqlUser->fetch();
 
         if ($resultUser) {
-            $this->validateIfEmailConfirm($resultUser);
-        } 
-        else {
-            Flash::danger("Usuário ou senha incorretos");
-            $this->result = false;
+            return $this->validateIfEmailConfirm($resultUser);
         }
+
+        Flash::danger("Usuário ou senha incorretos");
+        return false;
     }
 
     private function validateUser(): string
@@ -55,7 +48,7 @@ class LoginModel
                     LIMIT 1";
     }
 
-    private function validatePassword(?array $resultUser): void
+    private function validatePassword(?array $resultUser): bool
     {
         $hash = trim((string) ($resultUser['password']));
         if (password_verify($this->data['password'], $hash)) {
@@ -67,29 +60,30 @@ class LoginModel
             $_SESSION['user_situation_id'] = $resultUser['user_situation_id'];
             $_SESSION['access_level']      = $resultUser['access_level_id'];
             $_SESSION['order_level']       = $resultUser['order_level'];
-            $this->result = true;
-        }
+            return true;
+        } 
         else {
             Flash::danger("Usuário ou senha incorretos");
-            $this->result = false;
+            return false;
         }
     }
 
-    private function validateIfEmailConfirm(array $resultUser): void
+    private function validateIfEmailConfirm(array $resultUser): bool
     {
-        $userSituationId = $resultUser['user_situation_id'];
-        $message = "";
+        $userSituationId = (int) $resultUser['user_situation_id'];
+
+        if ($userSituationId === UserSituation::CONFIRMED_EMAIL->value) {
+            return $this->validatePassword($resultUser);
+        }
 
         $message = match ($userSituationId) {
-            UserSituation::CONFIRMED_EMAIL->value => $this->validatePassword($resultUser),
             UserSituation::WAITING_FOR_CONFIRMATION->value => "Você precisa confirmar seu e-mail para acessar. 
             Clique <a href='" . Config::url() . "/new-confirm-email/index'> aqui </a> para reenviar o e-mail de confirmação.",
             UserSituation::NOT_REGISTERED->value => "Usuário não cadastrado. Entre em contato com a empresa",
             default => "Usuário inativo. Entre em contato com a empresa",
         };
 
-        if (is_string($message)) {
-            Flash::danger($message);
-        }
+        Flash::danger($message);
+        return false;
     }
 }

@@ -17,7 +17,6 @@ class AddNewUserModel
 {
     private ?array $data;
     private object $conn;
-    private bool $result = false;
     private string $firstName;
     private array $emailData;
     private string $confirmEmail;
@@ -27,60 +26,49 @@ class AddNewUserModel
         $this->conn = Connection::connect(Config::db());
     }
 
-    public function getResult(): bool
-    {
-        return $this->result;
-    }
-
-    public function create(?array $data): void
+    public function create(?array $data): bool
     {
         $this->data = $data;
         ValidateEmptyField::validateField($this->data);
 
-        if(ValidateEmptyField::getResult()){
-
-            $sqlUser = $this->conn->prepare($this->queryUser());
-            $sqlUser->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
-            $sqlUser->bindValue(':email', trim($this->data['email']), \PDO::PARAM_STR);
-            $sqlUser->execute();
-            $ifExists = $sqlUser->fetch();
-
-            if ($ifExists) {
-                $this->verifyIfEmailExists($ifExists);
-                $this->verifyIfUserExists($ifExists);
-            }
-
-            if(! $ifExists) {
-
-                ValidatePassword::validate($this->data['password']);
-                if (ValidatePassword::getResult() === false) {
-                    $this->result = false;
-                    return;
-                }
-                
-                $encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
-                $email = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
-                $this->confirmEmail = password_hash($encriptPassword . date('Y-m-d H:i:s'), PASSWORD_BCRYPT);
-
-                if (! $email) {
-                    Flash::danger("Email inválido!");
-                    $this->result = false;
-                    return;
-                }
-
-                $sqlInsert = $this->insertUser($email, $encriptPassword, $this->confirmEmail);
-
-                if($sqlInsert) {
-                    $this->sendEmail();
-                } else {
-                    Flash::danger("Erro ao cadastrar usuário!");
-                    $this->result = false;
-                }
-            } 
+        if (! ValidateEmptyField::getResult()) {
+            return false;
         }
-        else {
-            $this->result = false;
+
+        $sqlUser = $this->conn->prepare($this->queryUser());
+        $sqlUser->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
+        $sqlUser->bindValue(':email', trim($this->data['email']), \PDO::PARAM_STR);
+        $sqlUser->execute();
+        $ifExists = $sqlUser->fetch();
+
+        if ($ifExists) {
+            $this->verifyIfEmailExists($ifExists);
+            $this->verifyIfUserExists($ifExists);
+            return false;
         }
+
+        ValidatePassword::validate($this->data['password']);
+        if (ValidatePassword::getResult() === false) {
+            return false;
+        }
+        
+        $encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
+        $email = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
+        $this->confirmEmail = password_hash($encriptPassword . date('Y-m-d H:i:s'), PASSWORD_BCRYPT);
+
+        if (! $email) {
+            Flash::danger("Email inválido!");
+            return false;
+        }
+
+        $sqlInsert = $this->insertUser($email, $encriptPassword, $this->confirmEmail);
+
+        if (! $sqlInsert) {
+            Flash::danger("Erro ao cadastrar usuário!");
+            return false;
+        }
+
+        return $this->sendEmail();
     }
 
     private function queryUser(): string
@@ -96,7 +84,6 @@ class AddNewUserModel
     {
         if($emailExists['email'] && $emailExists['email'] === $this->data['email']) {
             Flash::danger("Email já existe. Tente outro e-mail.");
-            $this->result = false;
         } 
     }
 
@@ -104,7 +91,6 @@ class AddNewUserModel
     {
         if($userExists['user'] && $userExists['user'] === $this->data['user']) {
             Flash::danger("Usuário já existe!");
-            $this->result = false;
         }
     }
 
@@ -126,28 +112,27 @@ class AddNewUserModel
         return $sqlInsert->execute();
     }
 
-    private function sendEmail(): void
+    private function sendEmail(): bool
     {
         $this->contentEmailHtml();
         $this->contentEmailText();
 
         $emailCreencials = new ConfigEmailCredencialsModel();
-        $emailCreencials->readEmailCredencials(
+        $sent = $emailCreencials->readEmailCredencials(
             $this->emailData, 
             ConfigEmails::REGISTER_CONFIRMATION->value
         );
 
-        if($emailCreencials->getResult()) {
+        if ($sent) {
             Flash::success("
                 Usuário cadastrado com sucesso! 
                 Um email de confirmação foi enviado para o email informado."
             );
-            $this->result = true;
-        } 
-        else {
-            Flash::danger("Erro ao enviar e-mail de confirmação! Entre em contato com " . Config::admEmail());
-            $this->result = false;
+            return true;
         }
+
+        Flash::danger("Erro ao enviar e-mail de confirmação! Entre em contato com " . Config::admEmail());
+        return false;
     }
 
     private function contentEmailHtml(): void

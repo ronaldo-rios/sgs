@@ -16,8 +16,9 @@ class NewUser
 
         if(! empty($formData['sendNewUser'])) {
             $register = new AddNewUserModel();
-            $register->create($formData);
-            $register->getResult() ? Redirect::to("login/index") : $this->viewNewUser();
+            $register->create($formData)
+                ? Redirect::to("login/index")
+                : $this->viewNewUser();
         }
         else {
             $this->viewNewUser();

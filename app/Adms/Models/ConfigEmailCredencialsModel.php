@@ -9,7 +9,6 @@ use PDO;
 
 class ConfigEmailCredencialsModel
 {
-    private bool $result = false;
     private PDO $conn;
 
     public function __construct()
@@ -17,12 +16,7 @@ class ConfigEmailCredencialsModel
         $this->conn = Connection::connect(Config::db());
     }
 
-    public function getResult(): bool
-    {
-        return $this->result;
-    }
-
-    public function readEmailCredencials(array $emailData, int $optionConfigEmail): void
+    public function readEmailCredencials(array $emailData, int $optionConfigEmail): bool
     {
         $readEmailCredencials = $this->conn->prepare(self::queryCredentials());
         $readEmailCredencials->bindValue(':id', $optionConfigEmail, \PDO::PARAM_INT);
@@ -31,11 +25,10 @@ class ConfigEmailCredencialsModel
 
         if (!empty($resultDb)) {
             $sendEmail = new SendEmail();
-            $sendEmail->send($resultDb, $emailData);
-            $this->result = $sendEmail->getResult();
-        } else {
-            $this->result = false;
+            return $sendEmail->send($resultDb, $emailData);
         }
+
+        return false;
     }
 
     private function queryCredentials(): string
