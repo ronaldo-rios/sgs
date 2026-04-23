@@ -79,8 +79,8 @@ class LoginModel
         $message = match ($userSituationId) {
             UserSituation::WAITING_FOR_CONFIRMATION->value => "Você precisa confirmar seu e-mail para acessar. 
             Clique <a href='" . Config::url() . "/new-confirm-email/index'> aqui </a> para reenviar o e-mail de confirmação.",
-            UserSituation::NOT_REGISTERED->value => "Usuário não cadastrado. Entre em contato com a empresa",
-            default => "Usuário inativo. Entre em contato com a empresa",
+            UserSituation::INACTIVE->value => "Usuário inativo ou não cadastrado. Entre em contato com a empresa.",
+            default => "Usuário não cadastrado. Entre em contato com a empresa.",
         };
 
         Flash::danger($message);

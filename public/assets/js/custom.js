@@ -98,3 +98,15 @@ if (formNewConfirmEmail) {
         }
     })
 }
+
+const formRecoverPassword = document.getElementById('recover-password')
+if (formRecoverPassword) {
+    formRecoverPassword.addEventListener('submit', (e) => {
+        let emailToRecover = document.querySelector('#emailrecover')?.value ?? ''
+        if (emailToRecover === '') {
+            e.preventDefault()
+            setMsg('Campo e-mail é obrigatório.')
+            return
+        }
+    })
+}
