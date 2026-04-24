@@ -12,7 +12,6 @@ use PDO;
 
 class RecoverPasswordModel
 {
-    private ?array $data;
     private PDO $conn;
     private array $emailData;
     private string $firstName;
@@ -24,14 +23,13 @@ class RecoverPasswordModel
 
     public function recover(?array $data): bool
     {
-        $this->data = $data;
-        ValidateEmptyField::validateField($this->data);
+        ValidateEmptyField::validateField($data);
 
         if(! ValidateEmptyField::getResult()) {
             return false;
         }
 
-        $resultUser = $this->validateUser();
+        $resultUser = $this->validateUser($data);
 
         if(! empty($resultUser)) {
             return $this->updateRecoverPassword($resultUser);
@@ -43,7 +41,7 @@ class RecoverPasswordModel
 
     }
 
-    private function validateUser(): array
+    private function validateUser(array $data): array
     {
         $query = "SELECT `id`, `name`, `email`, `recover_password` 
                   FROM `users` 
@@ -51,7 +49,7 @@ class RecoverPasswordModel
                   LIMIT 1";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':email', $this->data['email'], \PDO::PARAM_STR);
+        $stmt->bindValue(':email', $data['email'], \PDO::PARAM_STR);
         $stmt->execute();
         $resultUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -64,9 +62,8 @@ class RecoverPasswordModel
 
     private function updateRecoverPassword(array $resultUser): bool
     {
-        $this->data['recover_password'] = password_hash(
-            $this->data['email'] . date('Y-m-d H:i:s'), PASSWORD_BCRYPT
-        );
+        $recoverPasswordHash = password_hash($resultUser['email'] . date('Y-m-d H:i:s'), PASSWORD_BCRYPT);
+        $resultUser['recover_password'] = $recoverPasswordHash;
         $id = $resultUser['id'];
 
         $update = "UPDATE `users` 
@@ -75,7 +72,7 @@ class RecoverPasswordModel
                   WHERE `id` = :id";
 
         $stmt = $this->conn->prepare($update);
-        $stmt->bindValue(':recover_password', $this->data['recover_password'], \PDO::PARAM_STR);
+        $stmt->bindValue(':recover_password', $resultUser['recover_password'], \PDO::PARAM_STR);
         $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
 
@@ -90,7 +87,7 @@ class RecoverPasswordModel
     private function sendEmail(array $resultUser): bool
     {
         $this->emailHtml($resultUser);
-        $this->emailText();
+        $this->emailText($resultUser);
 
         $emailCreencials = new ConfigEmailCredencialsModel();
         $sent = $emailCreencials->readEmailCredencials(
@@ -116,15 +113,15 @@ class RecoverPasswordModel
         $this->emailData['toName'] = $result['name'];
         $this->emailData['subject'] = 'Recuperar Senha';
 
-        $url = Config::url() . "/update-password/index?key={$this->data['recover_password']}";
+        $url = Config::url() . "/update-password/index?key={$result['recover_password']}";
         $this->emailData['contentHtml'] = "<a><p>Olá <Strong>{$this->firstName}</strong>! Você solicitou a recuperação de seu acesso. 
         Clique no link para atualizar sua senha!</p>";
         $this->emailData['contentHtml'] .= "<a href='$url'>{$url}</a><br><br>";
     }
 
-    private function emailText(): void
+    private function emailText(array $result): void
     {
-        $url = Config::url() . "/update-password/index?key={$this->data['recover_password']}";
+        $url = Config::url() . "/update-password/index?key={$result['recover_password']}";
         $this->emailData['contentText'] = "Olá {$this->firstName}! Você solicitou a recuperação de seu acesso. 
         Clique no link para atualizar sua senha!";
         $this->emailData['contentText'] .= $url . "\n\n";

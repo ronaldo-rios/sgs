@@ -16,6 +16,6 @@ class Error
         ];
 
         $view = new ConfigView("Adms/Views/error/error", $this->data);
-        $view->loadView();
+        $view->loadViewLogin();
     }
 }
