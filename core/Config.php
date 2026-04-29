@@ -7,7 +7,7 @@ final class Config
     public const CONTROLLER = 'Login';
     public const METHOD = 'index';
     public const CONTROLLER_ERROR = 'Login';
-    public const PATH_USER_IMAGE = 'app/adms/assets/image/users/';
+    public const PATH_USER_IMAGE = '/assets/img/users/';
 
     public static function url(): string
     {

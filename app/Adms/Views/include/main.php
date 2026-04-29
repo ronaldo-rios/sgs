@@ -1,4 +1,5 @@
 <?php 
+
 if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu'])) {
     
     $permittedControllers = array_column(
@@ -23,3 +24,7 @@ if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu']))
         }
     }
 }
+
+echo '<a href="' . \Core\Config::url() . '/dashboard/index">Dashboard</a><br>';
+echo '<a href="' . \Core\Config::url() . '/users/index">Usuários</a><br>';
+echo '<a href="' . \Core\Config::url() . '/logout/index">Sair</a><br>';
