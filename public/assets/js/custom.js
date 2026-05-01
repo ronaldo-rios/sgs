@@ -111,6 +111,31 @@ if (formRecoverPassword) {
     })
 }
 
+const formUpdatePassword = document.getElementById('update-password')
+if (formUpdatePassword) {
+    formUpdatePassword.addEventListener('submit', (e) => {
+        const passwordUser = formUpdatePassword.querySelector('#password')?.value ?? ''
+        if (passwordUser === '') {
+            e.preventDefault()
+            setMsg('Campo senha é obrigatório.')
+            return
+        }
+
+        if (passwordUser.length < 6) {
+            e.preventDefault()
+            setMsg('Senha deve ter no mínimo 6 caracteres.')
+            return
+        }
+
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/
+        if (!regex.test(passwordUser)) {
+            e.preventDefault()
+            setMsg('Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número.')
+            return
+        }
+    })
+}
+
 const formAddUser = document.getElementById('form-adduser')
 if (formAddUser) {
     formAddUser.addEventListener('submit', (e) => {
