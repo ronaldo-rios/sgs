@@ -8,7 +8,7 @@
     <label for="emailconfirm">E-mail</label><br>
     <input type="email" id="emailconfirm" name="email" placeholder="Digite o seu e-mail" required><br><br>
 
-    <button type="submit" name="sendNewConfirmEmail" value="Enviar">Enviar</button>
+    <button type="submit" name="send_new_confirm_email" value="Enviar">Enviar</button>
 </form>
 
 <p><a href="<?= \Core\Config::url() . "/login/index"; ?>">Clique aqui</a> para acessar</p>

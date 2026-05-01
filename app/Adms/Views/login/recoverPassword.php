@@ -8,7 +8,7 @@
     <label for="emailrecover">E-mail</label><br>
     <input type="email" id="emailrecover" name="email" placeholder="Digite o seu e-mail" required><br><br>
 
-    <button type="submit" name="sendRecoverPassword" value="Recuperar">Recuperar</button>
+    <button type="submit" name="send_recover_password" value="Recuperar">Recuperar</button>
 </form>
 
 <p><a href="<?= \Core\Config::url() . "/login/index"; ?>">Clique aqui</a> para acessar</p>

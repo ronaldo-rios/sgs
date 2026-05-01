@@ -10,7 +10,7 @@ class ConfirmEmail
 {
     public function index(): void
     {
-        $key = (string) filter_input(INPUT_GET, "key", FILTER_DEFAULT);
+        $key = (string) filter_input(INPUT_GET, "key", FILTER_UNSAFE_RAW);
         if (! empty($key)) {
             $this->validateKey($key);
         }

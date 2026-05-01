@@ -12,10 +12,10 @@
     <label for="password">Senha</label><br>
     <input type="password" id="password" name="password" placeholder="Digite a senha" required><br><br>
 
-    <button type="submit" name="sendLogin" value="Acessar">Acessar</button>
+    <button type="submit" name="send_login" value="Acessar">Acessar</button>
 </form>
 
-<p><a href="<?= \Core\Config::url() . '/new-user/index'; ?>">Cadastrar</a></p>
+<p><a href="<?= \Core\Config::url() . '/register/index'; ?>">Cadastrar</a></p>
 <p><a href="<?= \Core\Config::url() . '/recover-password/index'; ?>">Esqueci minha senha</a></p>
 
 <script src="<?= \Core\Config::url() . '/assets/js/toUpper.js'?>"></script>

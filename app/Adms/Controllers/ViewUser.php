@@ -19,7 +19,7 @@ class ViewUser
             $userDetails = $user->viewInfo($idUser);
 
             if ($userDetails !== []) {
-                $this->data['viewUser'] = $userDetails;
+                $this->data['user'] = $userDetails;
                 $this->viewUserDetails();
             } else {
                 Flash::danger('Usuário não encontrado!');

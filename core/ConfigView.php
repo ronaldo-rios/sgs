@@ -15,7 +15,7 @@ class ConfigView
      */
     public function loadView(): void
     {
-        if(file_exists("app/{$this->viewName}.php")) {
+        if (file_exists("app/{$this->viewName}.php")) {
             extract($this->viewData, EXTR_SKIP);
             include "app/Adms/Views/include/head.php";
             include "app/Adms/Views/include/main.php";
@@ -34,7 +34,7 @@ class ConfigView
      */ 
     public function loadViewLogin(): void
     {
-        if(file_exists("app/{$this->viewName}.php")) {
+        if (file_exists("app/{$this->viewName}.php")) {
             extract($this->viewData, EXTR_SKIP);
             include "app/Adms/Views/include/head.php";
             include "app/{$this->viewName}.php";
