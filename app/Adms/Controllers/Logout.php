@@ -13,7 +13,6 @@ class Logout
             $_SESSION['user_name'], 
             $_SESSION['user_email'], 
             $_SESSION['user_id'], 
-            $_SESSION['user_nickname'], 
             $_SESSION['user_image'],
             $_SESSION['user_situation_id'],
             $_SESSION['access_level'],  

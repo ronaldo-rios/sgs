@@ -14,7 +14,7 @@
     <label for="password">Senha</label><br>
     <input type="password" id="password" name="password" placeholder="Digite a senha" required><br><br>
 
-    <button type="submit" name="sendNewUser" value="Cadastrar">Cadastrar</button>
+    <button type="submit" name="send_new_user" value="Cadastrar">Cadastrar</button>
 </form>
 
 <p><a href="<?= \Core\Config::url() . "/login/index"; ?>">Clique aqui</a> para acessar</p>

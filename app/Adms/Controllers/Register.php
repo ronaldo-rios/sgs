@@ -6,15 +6,15 @@ use App\Adms\Models\AddNewUserModel;
 use App\Helpers\Redirect;
 use Core\ConfigView;
 
-class NewUser
+class Register
 {
     private ?array $data = [];
 
     public function index(): void
     {
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
-        if(! empty($formData['sendNewUser'])) {
+        if(! empty($formData['send_new_user'])) {
             $register = new AddNewUserModel();
             $register->create($formData)
                 ? Redirect::to("login/index")

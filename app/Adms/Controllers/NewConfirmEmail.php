@@ -10,9 +10,9 @@ class NewConfirmEmail
 {
     public function index(): void
     {
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT) ?? [];
+        $formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) ?? [];
        
-        ! empty($formData['sendNewConfirmEmail'])
+        ! empty($formData['send_new_confirm_email'])
             ? $this->getNewConfirmEmail($formData)
             : $this->viewNewConfirmEmail();
     }
@@ -23,7 +23,7 @@ class NewConfirmEmail
         $view->loadViewLogin();
     }
 
-    private function getNewConfirmEmail($formData): void
+    private function getNewConfirmEmail(array $formData): void
     {
         $newConfirmEmail = new NewConfirmEmailModel();
 

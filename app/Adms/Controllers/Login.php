@@ -10,9 +10,9 @@ class Login
 {
     public function index(): void
     {
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
        
-        if (! empty($formData['sendLogin'])) {
+        if (! empty($formData['send_login'])) {
             $validateLogin = new LoginModel();
             
             if ($validateLogin->login($formData)) {

@@ -1,24 +1,23 @@
 <?php
 
-namespace App\adms\Controllers;
+namespace App\Adms\Controllers;
 
 use App\Adms\Models\RecoverPasswordModel;
 use App\Helpers\Redirect;
+use Core\ConfigView;
 
 class RecoverPassword
 {
-    private string|array|null $data = null;
-
     public function index(): void
     {
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        ! empty($formData['sendRecoverPassword']) 
+        $formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
+        ! empty($formData['send_recover_password']) 
             ? $this->recoverPassword($formData) : $this->viewRecoverPassword();
     }
 
     private function viewRecoverPassword(): void
     {
-        $view = new \Core\ConfigView("Adms/Views/login/recoverPassword");
+        $view = new ConfigView('Adms/Views/login/recoverPassword');
         $view->loadViewLogin();
     }
 

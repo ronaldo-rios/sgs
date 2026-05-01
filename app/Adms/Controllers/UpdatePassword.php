@@ -1,6 +1,6 @@
 <?php
 
-namespace App\adms\Controllers;
+namespace App\Adms\Controllers;
 
 use App\Adms\Models\UpdatePasswordModel;
 use Core\ConfigView;
@@ -13,10 +13,10 @@ class UpdatePassword
 
     public function index(): void
     {
-        $keyHash = (string) filter_input(INPUT_GET, 'key', FILTER_DEFAULT);
-        $this->formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $keyHash = (string) filter_input(INPUT_GET, 'key', FILTER_UNSAFE_RAW);
+        $this->formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
    
-        ! empty($keyHash) && empty($this->formData['sendUpdatePassword'])
+        ! empty($keyHash) && empty($this->formData['send_update_password'])
             ? $this->validateKey($keyHash)
             : $this->updatePassword($keyHash);
     }
@@ -41,7 +41,7 @@ class UpdatePassword
 
     private function updatePassword(string $key): void
     {
-        if (! empty($this->formData['sendUpdatePassword'])) {
+        if (! empty($this->formData['send_update_password'])) {
             $this->formData['key'] = $key;
             $updatePass = new UpdatePasswordModel();
             $updated = $updatePass->update($this->formData);
