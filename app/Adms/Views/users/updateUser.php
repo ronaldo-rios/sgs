@@ -17,12 +17,12 @@ $selectAccessLevel = $level;
     <input type="hidden" name="id" value="<?=$infoUser['id'];?>">
 
     <?php
-    $old_image = (! empty($infoUser['image'])) 
+    $oldImage = (! empty($infoUser['image'])) 
         ? \Core\Config::url() . \Core\Config::PATH_USER_IMAGE . $infoUser['id'] . "/" . $infoUser['image']
         : \Core\Config::url() . \Core\Config::PATH_USER_IMAGE . "default.png";
     ?>
     <span id="preview-img">
-        <img src="<?php echo $old_image; ?>" alt="Imagem" style="width: 100px; height: 100px;">
+        <img src="<?php echo $oldImage; ?>" alt="Imagem" style="width: 100px; height: 100px;">
     </span><br><br>
 
     <label for="image">Imagem</label><br>

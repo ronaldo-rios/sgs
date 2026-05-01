@@ -46,7 +46,7 @@ class UpdateUser
         if (! empty($formData['send_edit_user'])) {
 
             $user = new UpdateUserModel();
-            $edited = $user->edit($formData);
+            $edited = $user->update($formData);
 
             if ($edited) {
                 Redirect::to("view-user/index/{$formData['id']}");

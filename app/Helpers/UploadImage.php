@@ -24,7 +24,7 @@ class UploadImage
         // Validate image extension
         $fileExtension = strtolower(pathinfo($dataImage['image']['name'], PATHINFO_EXTENSION));
         if (! in_array($fileExtension, self::ALLOWED_EXTENSIONS)) {
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Formato de imagem inválido!</div>";
+            Flash::danger('Formato de imagem inválido!');
             return false;
         }
 
@@ -35,7 +35,7 @@ class UploadImage
             return $dataImage['image'];
         }
         else {
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Erro ao fazer upload da imagem!</div>";
+            Flash::danger('Erro ao fazer upload da imagem!');
             return false;
         }
     }
