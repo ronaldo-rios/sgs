@@ -27,7 +27,7 @@ class UpdateUserModel
         return $this->detailsUser($id);
     }
 
-    public function edit(?array $formData): bool
+    public function update(?array $formData): bool
     {
         $this->data = $formData;
         $ignoreFields = ['image'];
@@ -51,7 +51,7 @@ class UpdateUserModel
         }
 
         $this->data['image'] = !empty($_FILES['image']['name']) ? $_FILES['image'] : null;
-        $this->encriptPassword = password_hash($this->data['password'], PASSWORD_BCRYPT);
+        $this->encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
         $this->data['email'] = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
 
         if (! $this->data['email']) {
