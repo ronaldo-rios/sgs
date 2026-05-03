@@ -5,7 +5,8 @@ namespace App\Adms\Models;
 use App\Helpers\Connection;
 use App\Helpers\ConvertToCapitularString;
 use App\Helpers\Flash;
-use App\Helpers\UploadImage;
+use App\Upload\FileUpload;
+use App\Upload\UploadPathResolver;
 use App\Validators\ValidateEmptyField;
 use App\Validators\ValidatePassword;
 use Core\Config;
@@ -50,7 +51,12 @@ class UpdateUserModel
             return false;
         }
 
-        $this->data['image'] = !empty($_FILES['image']['name']) ? $_FILES['image'] : null;
+        $file = FileUpload::requestUploadedFile('image');
+        if ($file === false) {
+            return false;
+        }
+        $this->data['image'] = $file;
+
         $this->encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
         $this->data['email'] = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
 
@@ -142,27 +148,37 @@ class UpdateUserModel
         $sqlUser->execute();
         $user = (array) $sqlUser->fetch(\PDO::FETCH_ASSOC);
 
-        if ($sqlUser->rowCount() > 0) {
-            return $user;
-        }
-
-        return [];
+        return ! empty($user) ? $user : [];
     }
 
     private function updateUser(): bool
     {
-        
-        if($this->data['image'] !== null) {
-            // Get user details to delete old image if !empty
-            $oldImage = $this->fetchCurrentUserImage((int) $this->data['id']);
-           
-            if ($oldImage) {
-                UploadImage::deleteBeforeImage($this->data, $oldImage);
-            } 
+        $existingImage = $this->fetchCurrentUserImage((int) $this->data['id']);
 
-            $this->data['image'] = UploadImage::uploadUserImage($this->data);
+        if ($this->data['image'] !== null) {
+            $dir = UploadPathResolver::directoryFromConfiguredBase(
+                basePath: Config::PATH_USER_IMAGE,
+                relativeSegments: [(string) $this->data['id']]
+            );
+            
+            $uploaded = FileUpload::upload(
+                file: $this->data['image'], 
+                directoryAbsolute: $dir, 
+                allowedExtensions: ['jpg', 'jpeg', 'png'], 
+                maxBytes: null
+            );
+
+            if ($uploaded === false) {
+                return false;
+            }
+            if ($existingImage !== null && $existingImage !== '' && $existingImage !== $uploaded) {
+                FileUpload::unlinkIfExists($dir . basename($existingImage));
+            }
+            $this->data['image'] = $uploaded;
+        } else {
+            $this->data['image'] = $existingImage;
         }
-     
+
         $update = "UPDATE `users`
                         SET `name` = :name, `email` = :email, `password` = :password,
                             `user` = :user, `access_level_id` = :access_level_id,
@@ -175,7 +191,10 @@ class UpdateUserModel
         $stmt->bindValue(':email', $this->data['email'], \PDO::PARAM_STR);
         $stmt->bindValue(':password', $this->encriptPassword, \PDO::PARAM_STR);
         $stmt->bindValue(':user', $this->data['user'], \PDO::PARAM_STR);
-        $stmt->bindValue(':image', $this->data['image'], \PDO::PARAM_STR);
+        (! empty($this->data['image'])) 
+            ? $stmt->bindValue(':image', (string) $this->data['image'], \PDO::PARAM_STR)
+            : $stmt->bindValue(':image', null, \PDO::PARAM_NULL);
+        
         $stmt->bindValue(':user_situation_id', $this->data['user_situation_id'], \PDO::PARAM_INT);
         $stmt->bindValue(':access_level_id', $this->data['access_level_id'], \PDO::PARAM_INT);
         $stmt->bindValue(':id', $this->data['id'], \PDO::PARAM_INT);
