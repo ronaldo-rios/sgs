@@ -46,4 +46,9 @@ RUN composer install \
     --no-progress \
     --no-scripts
 
+COPY php/docker-entrypoint.sh /usr/local/bin/sgs-php-entrypoint.sh
+RUN chmod +x /usr/local/bin/sgs-php-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/sgs-php-entrypoint.sh"]
+CMD ["php-fpm"]
 

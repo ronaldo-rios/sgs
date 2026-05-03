@@ -50,7 +50,18 @@ class UpdateUserModel
             return false;
         }
 
-        $this->data['image'] = !empty($_FILES['image']['name']) ? $_FILES['image'] : null;
+        $file = $_FILES['image'] ?? null;
+        $this->data['image'] = null;
+        if (is_array($file)) {
+            $error = (int) ($file['error'] ?? -1);
+            if ($error === \UPLOAD_ERR_OK && is_uploaded_file($file['tmp_name'] ?? '')) {
+                $this->data['image'] = $file;
+            } elseif ($error !== \UPLOAD_ERR_NO_FILE) {
+                Flash::danger('Falha no envio da imagem.');
+                return false;
+            }
+        }
+
         $this->encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
         $this->data['email'] = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
 
@@ -151,18 +162,21 @@ class UpdateUserModel
 
     private function updateUser(): bool
     {
-        
-        if($this->data['image'] !== null) {
-            // Get user details to delete old image if !empty
-            $oldImage = $this->fetchCurrentUserImage((int) $this->data['id']);
-           
-            if ($oldImage) {
-                UploadImage::deleteBeforeImage($this->data, $oldImage);
-            } 
+        $existingImage = $this->fetchCurrentUserImage((int) $this->data['id']);
 
-            $this->data['image'] = UploadImage::uploadUserImage($this->data);
+        if ($this->data['image'] !== null) {
+            $uploaded = UploadImage::uploadUserImage($this->data);
+            if ($uploaded === false) {
+                return false;
+            }
+            if ($existingImage !== null && $existingImage !== '' && $existingImage !== $uploaded) {
+                UploadImage::deleteBeforeImage($this->data, $existingImage);
+            }
+            $this->data['image'] = $uploaded;
+        } else {
+            $this->data['image'] = $existingImage;
         }
-     
+
         $update = "UPDATE `users`
                         SET `name` = :name, `email` = :email, `password` = :password,
                             `user` = :user, `access_level_id` = :access_level_id,
@@ -175,7 +189,10 @@ class UpdateUserModel
         $stmt->bindValue(':email', $this->data['email'], \PDO::PARAM_STR);
         $stmt->bindValue(':password', $this->encriptPassword, \PDO::PARAM_STR);
         $stmt->bindValue(':user', $this->data['user'], \PDO::PARAM_STR);
-        $stmt->bindValue(':image', $this->data['image'], \PDO::PARAM_STR);
+        (! empty($this->data['image'])) 
+            ? $stmt->bindValue(':image', (string) $this->data['image'], \PDO::PARAM_STR)
+            : $stmt->bindValue(':image', null, \PDO::PARAM_NULL);
+        
         $stmt->bindValue(':user_situation_id', $this->data['user_situation_id'], \PDO::PARAM_INT);
         $stmt->bindValue(':access_level_id', $this->data['access_level_id'], \PDO::PARAM_INT);
         $stmt->bindValue(':id', $this->data['id'], \PDO::PARAM_INT);

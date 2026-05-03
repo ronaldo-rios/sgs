@@ -21,6 +21,7 @@ services:
     volumes:
       - ./app:/var/www/html/app
       - ./core:/var/www/html/core
+      - ./public:/var/www/html/public
       - ./index.php:/var/www/html/index.php
     env_file:
       - .env

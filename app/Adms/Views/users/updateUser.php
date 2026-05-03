@@ -26,7 +26,7 @@ $selectAccessLevel = $level;
     </span><br><br>
 
     <label for="image">Imagem</label><br>
-    <input type="file" id="image" name="image" onchange="inputFileValImg()" accept="image/png, image/jpeg, image/jpg" value="<?=$infoUser['image'];?>"><br><br>
+    <input type="file" id="image" name="image" onchange="inputFileValImg()" accept="image/png, image/jpeg, image/jpg"><br><br>
     <label for="name">Nome</label><br>
     <input type="text" id="name" name="name" placeholder="Digite o nome completo" value="<?=$infoUser['name'];?>" required><br><br>
     <label for="email">E-mail</label><br>
@@ -46,7 +46,7 @@ $selectAccessLevel = $level;
                 <?php else: ?>
                     <option value='<?= $situation['id']; ?>'><?= $situation['situation_name'];?></option>
                 <?php endif; ?>
-            <? endforeach;
+            <?php endforeach;
         ?>
     </select><br><br>
 
@@ -60,7 +60,7 @@ $selectAccessLevel = $level;
                 <?php else: ?>
                     <option value='<?= $accessLevel['id']; ?>'><?= $accessLevel['access_level'];?></option>
                 <?php endif; ?>
-            <? endforeach;
+            <?php endforeach;
         ?>
     </select><br><br>
 
