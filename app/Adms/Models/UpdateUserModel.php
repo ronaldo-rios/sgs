@@ -5,7 +5,8 @@ namespace App\Adms\Models;
 use App\Helpers\Connection;
 use App\Helpers\ConvertToCapitularString;
 use App\Helpers\Flash;
-use App\Helpers\UploadImage;
+use App\Upload\FileUpload;
+use App\Upload\UploadPathResolver;
 use App\Validators\ValidateEmptyField;
 use App\Validators\ValidatePassword;
 use Core\Config;
@@ -50,17 +51,11 @@ class UpdateUserModel
             return false;
         }
 
-        $file = $_FILES['image'] ?? null;
-        $this->data['image'] = null;
-        if (is_array($file)) {
-            $error = (int) ($file['error'] ?? -1);
-            if ($error === \UPLOAD_ERR_OK && is_uploaded_file($file['tmp_name'] ?? '')) {
-                $this->data['image'] = $file;
-            } elseif ($error !== \UPLOAD_ERR_NO_FILE) {
-                Flash::danger('Falha no envio da imagem.');
-                return false;
-            }
+        $file = FileUpload::requestUploadedFile('image');
+        if ($file === false) {
+            return false;
         }
+        $this->data['image'] = $file;
 
         $this->encriptPassword = password_hash($this->data['password'], PASSWORD_ARGON2ID);
         $this->data['email'] = trim(filter_var($this->data['email'], FILTER_VALIDATE_EMAIL));
@@ -153,11 +148,7 @@ class UpdateUserModel
         $sqlUser->execute();
         $user = (array) $sqlUser->fetch(\PDO::FETCH_ASSOC);
 
-        if ($sqlUser->rowCount() > 0) {
-            return $user;
-        }
-
-        return [];
+        return ! empty($user) ? $user : [];
     }
 
     private function updateUser(): bool
@@ -165,12 +156,23 @@ class UpdateUserModel
         $existingImage = $this->fetchCurrentUserImage((int) $this->data['id']);
 
         if ($this->data['image'] !== null) {
-            $uploaded = UploadImage::uploadUserImage($this->data);
+            $dir = UploadPathResolver::directoryFromConfiguredBase(
+                basePath: Config::PATH_USER_IMAGE,
+                relativeSegments: [(string) $this->data['id']]
+            );
+            
+            $uploaded = FileUpload::upload(
+                file: $this->data['image'], 
+                directoryAbsolute: $dir, 
+                allowedExtensions: ['jpg', 'jpeg', 'png'], 
+                maxBytes: null
+            );
+
             if ($uploaded === false) {
                 return false;
             }
             if ($existingImage !== null && $existingImage !== '' && $existingImage !== $uploaded) {
-                UploadImage::deleteBeforeImage($this->data, $existingImage);
+                FileUpload::unlinkIfExists($dir . basename($existingImage));
             }
             $this->data['image'] = $uploaded;
         } else {
