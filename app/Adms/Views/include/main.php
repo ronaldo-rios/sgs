@@ -27,4 +27,5 @@ if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu']))
 
 echo '<a href="' . \Core\Config::url() . '/dashboard/index">Dashboard</a><br>';
 echo '<a href="' . \Core\Config::url() . '/users/index">Usuários</a><br>';
+echo '<a href="' . \Core\Config::url() . '/view-profile/index">Perfil</a><br>';
 echo '<a href="' . \Core\Config::url() . '/logout/index">Sair</a><br>';
