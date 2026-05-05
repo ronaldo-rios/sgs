@@ -12,7 +12,6 @@ if(isset($profile)) {
         'Nome' => 'name',
         'Email' => 'email',
         'Usuário' => 'user',
-        'Apelido' => 'nickname',
         'Permissão de Acesso' => 'access_level'
     ];
 
