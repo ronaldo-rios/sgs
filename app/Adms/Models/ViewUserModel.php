@@ -8,9 +8,9 @@ use Core\Config;
 
 class ViewUserModel
 {
-    private object $conn;
+    private PDO $conn;
 
-     public function __construct()
+    public function __construct()
     {
         $this->conn = Connection::connect(Config::db());
     }
