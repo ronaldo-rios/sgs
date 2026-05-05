@@ -14,7 +14,6 @@ if (isset($viewUser)) {
         'Nome' => 'name',
         'Email' => 'email',
         'Usuário' => 'user',
-        'Apelido' => 'nickname',
         'Situação' => 'situation',
         'Nível de Permissão' => 'access_level',
         'Criado em' => 'created_at',
