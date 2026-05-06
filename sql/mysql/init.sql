@@ -76,3 +76,113 @@ CREATE TABLE `users` (
     ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB 
 COMMENT='Principal table for users';
+
+-- CREATE TABLE `page_status`(
+--     `id` INT NOT NULL AUTO_INCREMENT,
+--     `status` VARCHAR(100) NOT NULL,
+--     `color_id` INT NOT NULL,
+--     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     PRIMARY KEY(`id`),
+--     CONSTRAINT `fk_page_status_with_color_id`
+--     FOREIGN KEY (`color_id`) REFERENCES `colors`(`id`)
+--     ON DELETE RESTRICT ON UPDATE CASCADE
+-- ) ENGINE=InnoDB;
+
+-- CREATE TABLE `page_groups` (
+--     `id` INT NOT NULL AUTO_INCREMENT,
+--     `group_name` VARCHAR(225) NOT NULL,
+--     `order_page_group` INT NOT NULL,
+--     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     PRIMARY KEY(`id`)
+-- ) ENGINE=InnoDB;
+
+-- CREATE TABLE `page_modules` (
+--     `id` INT NOT NULL AUTO_INCREMENT,
+--     `type` VARCHAR(225) NOT NULL,
+--     `name` VARCHAR(225) NOT NULL,
+--     `order_module` INT NOT NULL,
+--     `obs` TEXT NULL,
+--     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     PRIMARY KEY(`id`)
+-- ) ENGINE=InnoDB;
+
+-- CREATE TABLE `pages` (
+--     `id` INT NOT NULL AUTO_INCREMENT,
+--     `controller` VARCHAR(225) NOT NULL,
+--     `method` VARCHAR(225) NOT NULL,
+--     `controller_in_the_main` VARCHAR(225) NOT NULL,
+--     `method_in_the_main` VARCHAR(225) NOT NULL,
+--     `name_page` VARCHAR(225) NOT NULL,
+--     `public` INT NOT NULL,
+--     `enable_in_sidebar` INT NOT NULL,
+--     `icon` VARCHAR(225) NULL,
+--     `obs` TEXT NULL, 
+--     `page_status_id` INT NOT NULL,
+--     `page_group_id` INT NOT NULL,
+--     `page_module_id` INT NOT NULL,
+--     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     PRIMARY KEY(`id`),
+--     CONSTRAINT `fk_pages_with_page_status_id`
+--     FOREIGN KEY (`page_status_id`) REFERENCES `page_status`(`id`)
+--         ON DELETE RESTRICT ON UPDATE CASCADE,
+--     CONSTRAINT `fk_pages_with_page_group_id`
+--     FOREIGN KEY (`page_group_id`) REFERENCES `page_groups`(`id`)
+--         ON DELETE RESTRICT ON UPDATE CASCADE,
+--     CONSTRAINT `fk_pages_with_page_module_id`
+--     FOREIGN KEY (`page_module_id`) REFERENCES `page_modules`(`id`)
+--         ON DELETE RESTRICT ON UPDATE CASCADE
+-- ) ENGINE=InnoDB;
+
+-- CREATE TABLE `page_levels`(
+--     `id` INT NOT NULL AUTO_INCREMENT,
+--     `permission` INT NOT NULL,
+--     `order_level_page` INT NOT NULL,
+--     `access_level_id` INT NOT NULL,
+--     `page_id` INT NOT NULL,
+--     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     PRIMARY KEY(`id`),
+--     CONSTRAINT `fk_page_levels_with_access_level_id`
+--     FOREIGN KEY (`access_level_id`) REFERENCES `access_levels`(`id`)
+--         ON DELETE RESTRICT ON UPDATE CASCADE,
+--     CONSTRAINT `fk_page_levels_with_page_id`
+--     FOREIGN KEY (`page_id`) REFERENCES `pages`(`id`)
+--         ON DELETE RESTRICT ON UPDATE CASCADE
+-- ) ENGINE=InnoDB;
+
+INSERT INTO `colors`(color_name, color, created_at) 
+VALUES
+    ('Azul', '#0275D8', NOW()),
+    ('Cinza', '#868E95', NOW()),
+    ('Verde', '#5CB85C', NOW()),
+    ('Vermelho', '#D9534F', NOW()),
+    ('Laranja', '#F0AD4E', NOW()),
+    ('Azul Claro', '#17A2B8', NOW()),
+    ('Cinza Claro', '#343140', NOW()),
+    ('Branco', '#FFFFFF', NOW());
+
+INSERT INTO `users_situation`(id, situation_name, color_id, created_at) 
+VALUES
+    (1, 'Confirmado', 3, NOW()), 
+    (2, 'Aguardando Confirmação', 5, NOW()), 
+    (3, 'Inativo', 4, NOW());
+
+INSERT INTO `access_levels` (access_level, order_level, created_at) 
+VALUES
+    ('Super Admin', 1, NOW()),
+    ('Administrador', 2, NOW()),
+    ('Paciente', 3, NOW()),
+    ('Médico', 4, NOW()),
+    ('Enfermeiro', 5, NOW()),
+    ('Financeiro', 6, NOW());
+
+INSERT INTO `users`
+(`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)
+VALUES -- Senha do usuário padrão sem o hash: Secret123
+('Test User', 'super.adm@teste.com', 'SUPERADM' , '$argon2id$v=19$m=65536,t=4,p=1$eE93QlNBaS5mVm9taUR2Tg$fNszblqZo9l6xSdrmyn4+/9qGHDfwvHzH7kVOCzOn/4', 1, 1, NOW());
+
+
