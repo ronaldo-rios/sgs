@@ -14,7 +14,7 @@ class Users
         $users = $listUsers->list($page);
 
         $data['users'] = is_array($users) ? $users : [];
-        // $this->data['pagination'] = $listUsers->getPagination();
+        $data['pagination'] = $listUsers->getPagination();
 
         // $buttons = [
         //     'add_user' => ['menu_controller' => 'add-user', 'menu_method' => 'index'],
@@ -23,8 +23,8 @@ class Users
         //     'delete_user' => ['menu_controller' => 'delete-user', 'menu_method' => 'index']
         // ];
        
-        // $this->data['button_permissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        // $data['button_permissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
+        // $data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
 
         $view = new ConfigView("Adms/Views/users/users", $data);
         $view->loadView();
