@@ -10,7 +10,7 @@ if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu']))
         'dashboard' => 'Dashboard',
         'users' => 'Usuários',
         'view-profile' => 'Perfil',
-        'email-servers' => 'Servidores de Email',
+        'config-emails' => 'Configurações de Emails',
         'access-levels' => 'Níveis de Acesso',
         'page-groups' => 'Grupos de Páginas',
         'page-modules' => 'Módulos',
@@ -27,5 +27,6 @@ if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu']))
 
 echo '<a href="' . \Core\Config::url() . '/dashboard/index">Dashboard</a><br>';
 echo '<a href="' . \Core\Config::url() . '/users/index">Usuários</a><br>';
+echo '<a href="' . \Core\Config::url() . '/config-emails/index">Configurações de Emails</a><br>';
 echo '<a href="' . \Core\Config::url() . '/view-profile/index">Perfil</a><br>';
 echo '<a href="' . \Core\Config::url() . '/logout/index">Sair</a><br>';
