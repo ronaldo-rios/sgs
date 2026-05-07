@@ -24,8 +24,8 @@
     <input type="text" id="smtp_secure" name="smtp_secure" placeholder="Digite o smtp" value="<?=$editConfigEmail['smtp_secure'];?>" required><br><br>
     <label for="host">Host</label><br>
     <input type="text" id="host" name="host" placeholder="Digite o host" value="<?=$editConfigEmail['host'];?>" required><br><br>
-    <label for="password">Senha</label><br>
-    <input type="password" id="password" name="password" placeholder="Digite a senha" value="<?=$editConfigEmail['password'];?>"required><br><br>
+    <label for="password">Senha SMTP</label><br>
+    <input type="password" id="password" name="password" placeholder="Deixe em branco para manter a senha atual" autocomplete="new-password"><br><br>
 
     <button type="submit" name="send_edit_email_config" value="Atualizar">Atualizar</button>
 </form>

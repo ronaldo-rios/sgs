@@ -30,7 +30,7 @@ class AddConfiEmailModel
 
         $formData['title'] = trim($formData['title']);
         $formData['name'] = trim($formData['name']);
-        $formData['password'] = password_hash($formData['password'], PASSWORD_BCRYPT);
+        $formData['password'] = trim((string) $formData['password']);
         $formData['email'] = trim(filter_var($formData['email'], FILTER_VALIDATE_EMAIL));
 
         if (! $formData['email']) {
