@@ -1,3 +1,91 @@
+:root {
+    --color-bg-start: #e9f2ff;
+    --color-bg-end: #f6f8fc;
+    --color-surface: #ffffff;
+    --color-primary: #2f5fcb;
+    --color-primary-hover: #234ca8;
+    --color-primary-dark: #17336e;
+    --color-primary-soft: #264a97;
+    --color-link: #2d57bb;
+    --color-border-soft: #cfd9ed;
+    --color-focus-ring: rgba(63, 111, 216, 0.18);
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--color-link);
+}
+
+a:hover {
+    color: var(--color-primary-hover);
+}
+
+/* Global form defaults */
+.app-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.app-form label {
+    color: var(--color-primary-soft);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.app-form input[type="text"],
+.app-form input[type="password"],
+.app-form input[type="email"],
+.app-form input[type="tel"],
+.app-form input[type="number"],
+.app-form select,
+.app-form textarea {
+    border: 1px solid var(--color-border-soft);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.app-form input[type="text"]:focus,
+.app-form input[type="password"]:focus,
+.app-form input[type="email"]:focus,
+.app-form input[type="tel"]:focus,
+.app-form input[type="number"]:focus,
+.app-form select:focus,
+.app-form textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.app-form button,
+.app-form input[type="submit"] {
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 11px 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+.app-form button:hover,
+.app-form input[type="submit"]:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+
 /* Base alert styles */
 .alert {
     padding: 12px 16px;
