@@ -8,7 +8,7 @@
         <h1>Atualizar Senha</h1>
         <div class="login-form-wrapper">
             <form action="" method="POST" id="update-password" class="app-form">
-                <label for="password">Senha</label>
+                <label for="password"><i class="fa-solid fa-key"></i> Senha</label>
                 <input type="password" id="password" name="password" placeholder="Digite sua nova senha" required>
 
                 <button type="submit" name="send_update_password" value="Atualizar">Atualizar</button>
