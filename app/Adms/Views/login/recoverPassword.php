@@ -8,7 +8,7 @@
         <h1>Recuperação de Senha</h1>
         <div class="login-form-wrapper">
             <form action="" method="POST" id="recover-password" class="app-form">
-                <label for="emailrecover">E-mail</label>
+                <label for="emailrecover"><i class="fa-solid fa-envelope"></i> E-mail</label>
                 <input type="email" id="emailrecover" name="email" placeholder="Digite o seu e-mail" required>
 
                 <button type="submit" name="send_recover_password" value="Recuperar">Recuperar</button>
