@@ -1,32 +1,52 @@
-<?php 
+<?php
 
-if (isset($this->data['sidebar_menu']) && is_array($this->data['sidebar_menu'])) {
-    
-    $permittedControllers = array_column(
-        $this->data['sidebar_menu'], 'controller_in_the_main'
-    );
+use Core\Config;
 
-    $controllersInTheMain = [
-        'dashboard' => 'Dashboard',
-        'users' => 'Usuários',
-        'view-profile' => 'Perfil',
-        'config-emails' => 'Configurações de Emails',
-        'access-levels' => 'Níveis de Acesso',
-        'page-groups' => 'Grupos de Páginas',
-        'page-modules' => 'Módulos',
-        'pages' => 'Páginas',
-        'logout' => 'Sair'
-    ];
+/* Signal to footer.php that the main layout (with sidebar) has been loaded,
+so that it closes the .wrapper and .content containers correctly. */
+$renderMainLayout = true;
 
-    foreach ($controllersInTheMain as $controller => $label) {
-        if (in_array($controller, $permittedControllers)) {
-            echo '<a href="' . \Core\Config::url() . $controller . '/index">' . $label . '</a><br>';
-        }
-    }
-}
+// Identify the current controller from the URL to mark the active menu item
+$currentPath = strtolower(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '');
+$isActive = static fn (string $controller): string =>
+    str_contains($currentPath, '/' . $controller) ? ' active' : '';
+?>
 
-echo '<a href="' . \Core\Config::url() . '/dashboard/index">Dashboard</a><br>';
-echo '<a href="' . \Core\Config::url() . '/users/index">Usuários</a><br>';
-echo '<a href="' . \Core\Config::url() . '/config-emails/index">Configurações de Emails</a><br>';
-echo '<a href="' . \Core\Config::url() . '/view-profile/index">Perfil</a><br>';
-echo '<a href="' . \Core\Config::url() . '/logout/index">Sair</a><br>';
+<!-- div start content -->
+<div class="content">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <!-- Sidebar header: menu icon + logo -->
+        <div class="sidebar__header">
+            <div class="sidebar__bars" id="sidebar-toggle" title="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <a href="<?= Config::url() ?>/dashboard/index" class="sidebar__brand">
+                <img src="<?= Config::url() ?>/assets/img/system/logo.png" alt="SGS" class="sidebar__logo">
+            </a>
+        </div>
+
+        <a href="<?= Config::url() ?>/dashboard/index" class="sidebar__nav<?= $isActive('dashboard') ?>">
+            <i class="icon fa-solid fa-house"></i><span>Dashboard</span>
+        </a>
+
+        <a href="<?= Config::url() ?>/users/index" class="sidebar__nav<?= $isActive('users') ?>">
+            <i class="icon fa-solid fa-users"></i><span>Usuários</span>
+        </a>
+
+        <a href="<?= Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
+            <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
+        </a>
+
+        <a href="<?= Config::url() ?>/view-profile/index" class="sidebar__nav<?= $isActive('view-profile') ?>">
+            <i class="icon fa-solid fa-user"></i><span>Perfil</span>
+        </a>
+
+        <a href="<?= Config::url() ?>/logout/index" class="sidebar__nav<?= $isActive('logout') ?>">
+            <i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span>
+        </a>
+    </div>
+    <!-- End sidebar -->
+
+    <!-- Start page content -->
+    <div class="wrapper">

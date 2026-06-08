@@ -1,7 +1,3 @@
 <?php
 
-/** @var string $welcome */
-echo $welcome;
-echo "<br><br>Dashboard!<br><br>";
-
-echo "<a href='" . \Core\Config::url() . "/logout/index'>Sair</a>";
+echo  "Bem Vindo(a), {$_SESSION['user_name']}!<br><br>";
