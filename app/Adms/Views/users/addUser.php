@@ -1,22 +1,37 @@
-<h1>Novo Usuário</h1>
+<link rel="stylesheet" href="<?= \Core\Config::url() . '/assets/css/pages/form.css' ?>">
 
-<?php \App\Helpers\Flash::display(); ?>
+<div class="form-page">
+    <div class="form-page__header">
+        <h2 class="form-page__title">Novo Usuário</h2>
+        <div class="form-page__actions">
+            <a href="<?= \Core\Config::url() ?>/users/index" class="btn btn-outline">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </div>
 
-<div id="msg"></div>
+    <?php \App\Helpers\Flash::display(); ?>
+    <div id="msg"></div>
 
-<form action="" method="POST" id="form-adduser">
-    <label for="name">Nome</label><br>
-    <input type="text" id="name" name="name" placeholder="Digite o nome completo" required><br><br>
-    <label for="email">E-mail</label><br>
-    <input type="email" id="email" name="email" placeholder="Digite o e-mail" required><br><br>
-    <label for="user">Usuário</label><br>
-    <input type="text" id="user" name="user" oninput="toUpperCase(event)" placeholder="Digite o usuário" required><br><br>
-    <label for="password">Senha</label><br>
-    <input type="password" id="password" name="password" placeholder="Digite a senha" required><br><br>
+    <div class="form-card">
+        <form action="" method="POST" id="form-adduser" class="app-form">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" placeholder="Digite o nome completo" required>
 
-    <button type="submit" name="send_add_user" value="Cadastrar">Cadastrar</button>
-</form>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
 
-<p><a href="<?= \Core\Config::url() . "/login/index"; ?>">Clique aqui</a> para acessar</p>
+            <label for="user">Usuário</label>
+            <input type="text" id="user" name="user" oninput="toUpperCase(event)" placeholder="Digite o usuário" required>
 
-<script src="<?= \Core\Config::url() . '/assets/js/toUpper.js'?>"></script>
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Digite a senha" required>
+
+            <button type="submit" name="send_add_user" value="Cadastrar">
+                Cadastrar
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="<?= \Core\Config::url() . '/assets/js/toUpper.js' ?>"></script>

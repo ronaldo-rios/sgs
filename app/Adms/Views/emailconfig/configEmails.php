@@ -1,56 +1,65 @@
+<link rel="stylesheet" href="<?= \Core\Config::url() . '/assets/css/pages/list.css' ?>">
+
 <?php
-
-echo "<H2>Servidores de Email</H2>";
-
-echo "<a href='". \Core\Config::url() . "/add-config-email/index'>Adicionar novo e-mail de configuração</a><br>";
-
-\App\Helpers\Flash::display();
-
 /** @var array $emails */
 $configEmails = $emails;
 /** @var string $pagination */
 $pagination = $pagination;
+?>
 
-if(isset($configEmails)) {
+<div class="list-page">
+    <div class="list-page__header">
+        <h2 class="list-page__title">Servidores de Email</h2>
+        <div class="list-page__actions">
+            <a href="<?= \Core\Config::url() ?>/add-config-email/index" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Adicionar servidor
+            </a>
+        </div>
+    </div>
 
-    $infoProfile = [
-        'Nome' => 'name',
-        'Título' => 'title',
-        'Host' => 'host',
-        'Porta' => 'port',
-        'Usuário' => 'username',
-        'Email' => 'email',
-        'Smtp' => 'smtp_secure',
-        'Criado em' => 'created_at',
-        'Atualizado em' => 'updated_at'
-    ];
+    <?php \App\Helpers\Flash::display(); ?>
 
-    foreach($configEmails as $emailServer) {
-        echo "<br>";
-        foreach ($infoProfile as $label => $key) {
-            $value = isset($emailServer[$key]) ? $emailServer[$key] : null;
+    <?php if (isset($configEmails)) : ?>
+        <div class="list-table-wrapper">
+            <table class="list-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Título</th>
+                        <th>Host</th>
+                        <th>Porta</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($configEmails as $emailServer) : ?>
+                        <tr>
+                            <td><?= $emailServer['name'] ?></td>
+                            <td><?= $emailServer['title'] ?></td>
+                            <td><?= $emailServer['host'] ?></td>
+                            <td><?= (string) $emailServer['port'] ?></td>
+                            <td><?= $emailServer['email'] ?></td>
+                            <td>
+                                <div class="list-table__actions">
+                                    <a href="<?= \Core\Config::url() ?>/update-config-email/index/<?= $emailServer['id'] ?>" class="btn btn-sm btn-outline">
+                                        <i class="fa-solid fa-pen"></i> Editar
+                                    </a>
+                                    <a href="<?= \Core\Config::url() ?>/delete-config-email/index/<?= $emailServer['id'] ?>"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Tem certeza que deseja excluir este registro?');">
+                                        <i class="fa-solid fa-trash"></i> Excluir
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
 
-            if ($key === 'created_at' || $key === 'updated_at') {
-                // Adjust the date format and verify if the date is not null:
-                if ($value !== null) {
-                    $date = date_create_from_format('Y-m-d H:i:s', $value);
-                    if ($date !== false) {
-                        echo "<span>{$label}: " . $date->format('d/m/Y') . "</span><br>";
-                    }
-                }
-            }
-            else {
-                if($value !== null) {
-                    echo "<span>{$label}: {$value}</span><br>";
-                }
-            
-            }
-        }
-        echo "<a href='". \Core\Config::url() . "/update-config-email/index/{$emailServer['id']}'>Editar</a><br>";
-        echo "<a href='". \Core\Config::url() . "/delete-config-email/index/{$emailServer['id']}' 
-            onclick='return confirm(\"Tem certeza que deseja excluir este registro?\");'>Excluir</a><br><br>";
-    }
-
-}
-
-echo $pagination;
+    <nav class="list-pagination" aria-label="Paginação">
+        <?php echo $pagination; ?>
+    </nav>
+</div>

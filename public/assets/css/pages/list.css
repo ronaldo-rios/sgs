@@ -1,0 +1,278 @@
+/* Listing pages */
+
+.list-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+    box-sizing: border-box;
+}
+
+.list-page__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.list-page__title {
+    margin: 0;
+    color: var(--color-primary-dark);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.list-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Buttons — aligned with .app-form button in main.css */
+.list-page .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.list-page .btn:hover {
+    transform: translateY(-1px);
+}
+
+.list-page .btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.list-page .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: #fff;
+}
+
+.list-page .btn-outline {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border-soft);
+}
+
+.list-page .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-hover);
+}
+
+.list-page .btn-danger {
+    background-color: #fff;
+    color: #c00313;
+    border: 1px solid #f5c2c7;
+}
+
+.list-page .btn-danger:hover {
+    background-color: #f8d7da;
+    color: #a00210;
+}
+
+.list-page .btn-sm {
+    padding: 7px 11px;
+    font-size: 0.88rem;
+}
+
+/* Table listing */
+.list-table-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(20, 43, 102, 0.08);
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.list-table thead {
+    background: linear-gradient(180deg, #f4f7fd 0%, #eef3fb 100%);
+}
+
+.list-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: var(--color-primary-soft);
+    font-weight: 700;
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.list-table td {
+    padding: 12px 16px;
+    color: #2b3448;
+    border-bottom: 1px solid #e8edf7;
+    vertical-align: middle;
+}
+
+.list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.list-table tbody tr:hover {
+    background-color: #f8faff;
+}
+
+.list-table__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+/* Card listing */
+.list-cards {
+    display: grid;
+    gap: 16px;
+}
+
+.list-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(20, 43, 102, 0.08);
+}
+
+.list-card__body {
+    padding: 18px 20px 8px;
+}
+
+.list-card__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px 20px;
+    margin: 0;
+}
+
+.list-card__field {
+    margin: 0;
+}
+
+.list-card__field dt {
+    margin: 0 0 4px;
+    color: var(--color-primary-soft);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.list-card__field dd {
+    margin: 0;
+    color: #2b3448;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+.list-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 20px 16px;
+    border-top: 1px solid #e8edf7;
+    background: #fafcff;
+}
+
+/* Empty state */
+.list-empty {
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--color-primary-soft);
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border-soft);
+    border-radius: 14px;
+    font-size: 0.95rem;
+}
+
+/* Pagination — matches Pagination helper output (<ul><li>) */
+.list-pagination {
+    margin-top: 24px;
+}
+
+.list-pagination ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list-pagination li {
+    margin: 0;
+}
+
+.list-pagination a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-soft);
+    background: var(--color-surface);
+    color: var(--color-link);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.list-pagination a:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-hover);
+    background: #f4f7fd;
+}
+
+.list-pagination li:not(:has(a)) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .list-page {
+        padding: 16px 12px 32px;
+    }
+
+    .list-page__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .list-table {
+        min-width: 560px;
+    }
+
+    .list-card__fields {
+        grid-template-columns: 1fr;
+    }
+}
