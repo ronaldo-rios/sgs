@@ -1,0 +1,158 @@
+/* CRUD forms (add + edit) — reuses tokens from main.css (:root) and .app-form inputs */
+
+.form-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+    box-sizing: border-box;
+}
+
+.form-page--wide {
+    max-width: 860px;
+}
+
+.form-page__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.form-page__title {
+    margin: 0;
+    color: var(--color-primary-dark);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.form-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.form-page .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.form-page .btn:hover {
+    transform: translateY(-1px);
+}
+
+.form-page .btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.form-page .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: #fff;
+}
+
+.form-page .btn-outline {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border-soft);
+}
+
+.form-page .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary-hover);
+}
+
+.form-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 14px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 28px rgba(20, 43, 102, 0.08);
+}
+
+.form-card .app-form {
+    gap: 14px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-field--full {
+    grid-column: 1 / -1;
+}
+
+.form-grid > button,
+.form-grid > input[type="submit"] {
+    grid-column: 1 / -1;
+    justify-self: start;
+}
+
+.form-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border-soft);
+    background: #f4f7fd;
+    overflow: hidden;
+}
+
+.form-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-page #msg {
+    margin-bottom: 16px;
+}
+
+.form-page #msg:empty {
+    display: none;
+}
+
+.form-page .alert {
+    width: 100%;
+    margin: 0 0 16px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .form-page {
+        padding: 16px 12px 32px;
+    }
+
+    .form-page__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-card {
+        padding: 20px 16px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
