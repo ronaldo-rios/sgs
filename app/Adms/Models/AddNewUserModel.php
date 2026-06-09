@@ -2,7 +2,6 @@
 
 namespace App\Adms\Models;
 
-use App\Adms\Enum\AccessLevels;
 use App\Adms\Enum\ConfigEmails;
 use App\Adms\Enum\UserSituation;
 use App\Adms\Models\ConfigEmailCredencialsModel;
@@ -13,8 +12,10 @@ use App\Validators\ValidateEmptyField;
 use App\Validators\ValidatePassword;
 use Core\Config;
 
-class AddNewUserModel 
+class AddNewUserModel
 {
+    private const ACCESS_LEVEL_USER_DEFAULT = 3;
+
     private ?array $data;
     private object $conn;
     private string $firstName;
@@ -107,7 +108,7 @@ class AddNewUserModel
         $sqlInsert->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
         $sqlInsert->bindValue(':password', $encriptPassword, \PDO::PARAM_STR);
         $sqlInsert->bindValue(':confirm_email', $confirmEmail, \PDO::PARAM_STR);
-        $sqlInsert->bindValue(':access_level_id', AccessLevels::USER_DEFAULT->value, \PDO::PARAM_INT);
+        $sqlInsert->bindValue(':access_level_id', self::ACCESS_LEVEL_USER_DEFAULT, \PDO::PARAM_INT);
         $sqlInsert->bindValue(':user_situation', UserSituation::WAITING_FOR_CONFIRMATION->value, \PDO::PARAM_INT);
         return $sqlInsert->execute();
     }

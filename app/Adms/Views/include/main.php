@@ -1,7 +1,5 @@
 <?php
 
-use Core\Config;
-
 /* Signal to footer.php that the main layout (with sidebar) has been loaded,
 so that it closes the .wrapper and .content containers correctly. */
 $renderMainLayout = true;
@@ -21,28 +19,28 @@ $isActive = static fn (string $controller): string =>
             <div class="sidebar__bars" id="sidebar-toggle" title="Menu">
                 <i class="fa-solid fa-bars"></i>
             </div>
-            <a href="<?= Config::url() ?>/dashboard/index" class="sidebar__brand">
-                <img src="<?= Config::url() ?>/assets/img/system/logo.png" alt="SGS" class="sidebar__logo">
+            <a href="<?= \Core\Config::url() ?>/dashboard/index" class="sidebar__brand">
+                <img src="<?= \Core\Config::url() ?>/assets/img/system/logo.png" alt="SGS" class="sidebar__logo">
             </a>
         </div>
 
-        <a href="<?= Config::url() ?>/dashboard/index" class="sidebar__nav<?= $isActive('dashboard') ?>">
+        <a href="<?= \Core\Config::url() ?>/dashboard/index" class="sidebar__nav<?= $isActive('dashboard') ?>">
             <i class="icon fa-solid fa-house"></i><span>Dashboard</span>
         </a>
 
-        <a href="<?= Config::url() ?>/users/index" class="sidebar__nav<?= $isActive('users') ?>">
+        <a href="<?= \Core\Config::url() ?>/users/index" class="sidebar__nav<?= $isActive('users') ?>">
             <i class="icon fa-solid fa-users"></i><span>Usuários</span>
         </a>
 
-        <a href="<?= Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
+        <a href="<?= \Core\Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
             <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
         </a>
 
-        <a href="<?= Config::url() ?>/view-profile/index" class="sidebar__nav<?= $isActive('view-profile') ?>">
+        <a href="<?= \Core\Config::url() ?>/view-profile/index" class="sidebar__nav<?= $isActive('view-profile') ?>">
             <i class="icon fa-solid fa-user"></i><span>Perfil</span>
         </a>
 
-        <a href="<?= Config::url() ?>/logout/index" class="sidebar__nav<?= $isActive('logout') ?>">
+        <a href="<?= \Core\Config::url() ?>/logout/index" class="sidebar__nav<?= $isActive('logout') ?>">
             <i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span>
         </a>
     </div>
