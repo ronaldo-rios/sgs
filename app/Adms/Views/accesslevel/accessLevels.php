@@ -35,6 +35,9 @@
                             <td>
                                 <div class="list-table__actions">
                                     <?php // echo "<a href='" . \Core\Config::url() . "/permissions/index?level={$access['id']}'>Permissões</a>"; ?>
+                                    <a href="<?= \Core\Config::url() ?>/view-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
+                                        <i class="fa-solid fa-eye"></i> Visualizar
+                                    </a>
                                     <a href="<?= \Core\Config::url() ?>/update-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
                                         <i class="fa-solid fa-pen"></i> Editar
                                     </a>
