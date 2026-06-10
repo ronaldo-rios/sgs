@@ -51,10 +51,11 @@ class DeleteAccessLevelModel
     private function deleteAccessLevel(int $id): bool
     {
         $delete = "DELETE FROM `access_levels` 
-                   WHERE id = :id";
+                   WHERE id = :id AND `order_level` > :order_level";
 
         $stmt = $this->conn->prepare($delete);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmt->bindValue(':order_level', $_SESSION['order_level'], \PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
