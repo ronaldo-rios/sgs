@@ -32,6 +32,10 @@ $isActive = static fn (string $controller): string =>
             <i class="icon fa-solid fa-users"></i><span>Usuários</span>
         </a>
 
+        <a href="<?= \Core\Config::url() ?>/access-levels/index" class="sidebar__nav<?= $isActive('access-level') ?>">
+            <i class="icon fa-solid fa-user-shield"></i><span>Níveis de Acesso</span>
+        </a>
+
         <a href="<?= \Core\Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
             <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
         </a>

@@ -13,7 +13,7 @@ class UpdateConfigEmail
 
     public function index(int|string $id)
     {
-        $formData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $formData = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
         if(! empty($id) && empty($formData['send_edit_email_config'])) {
             $id = (int) $id;
