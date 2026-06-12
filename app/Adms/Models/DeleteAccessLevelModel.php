@@ -18,6 +18,11 @@ class DeleteAccessLevelModel
 
     public function delete(int $id): void
     {
+        if ($id === Config::ACCESS_LEVEL_USER_DEFAULT) {
+            Flash::danger('Este é o nível padrão de cadastro de usuários e não pode ser excluído!');
+            return;
+        }
+
         $accessLevelIsNotInUse = $this->checkIfAccessLevelIsLinkedToUser($id);
 
         if ($accessLevelIsNotInUse) {

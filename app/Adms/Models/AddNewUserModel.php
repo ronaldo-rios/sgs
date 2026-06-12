@@ -14,8 +14,6 @@ use Core\Config;
 
 class AddNewUserModel
 {
-    private const ACCESS_LEVEL_USER_DEFAULT = 3;
-
     private ?array $data;
     private object $conn;
     private string $firstName;
@@ -108,7 +106,7 @@ class AddNewUserModel
         $sqlInsert->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
         $sqlInsert->bindValue(':password', $encriptPassword, \PDO::PARAM_STR);
         $sqlInsert->bindValue(':confirm_email', $confirmEmail, \PDO::PARAM_STR);
-        $sqlInsert->bindValue(':access_level_id', self::ACCESS_LEVEL_USER_DEFAULT, \PDO::PARAM_INT);
+        $sqlInsert->bindValue(':access_level_id', Config::ACCESS_LEVEL_USER_DEFAULT, \PDO::PARAM_INT);
         $sqlInsert->bindValue(':user_situation', UserSituation::WAITING_FOR_CONFIRMATION->value, \PDO::PARAM_INT);
         return $sqlInsert->execute();
     }

@@ -171,14 +171,14 @@ VALUES
     (2, 'Aguardando Confirmação', 5, NOW()), 
     (3, 'Inativo', 4, NOW());
 
-INSERT INTO `access_levels` (access_level, order_level, created_at) 
+INSERT INTO `access_levels` (id, access_level, order_level, created_at)
 VALUES
-    ('Super Admin', 1, NOW()),
-    ('Administrador', 2, NOW()),
-    ('Paciente', 3, NOW()),
-    ('Médico', 4, NOW()),
-    ('Enfermeiro', 5, NOW()),
-    ('Financeiro', 6, NOW());
+    (1, 'Super Admin', 1, NOW()),
+    (2, 'Administrador', 2, NOW()),
+    (3, 'Médico', 3, NOW()),
+    (4, 'Enfermeiro', 4, NOW()),
+    (5, 'Financeiro', 5, NOW()),
+    (6, 'Paciente', 6, NOW());
 
 INSERT INTO `users`
 (`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)
