@@ -41,17 +41,17 @@ class ViewUserModel
                       INNER JOIN access_levels AS al
                         ON users.access_level_id = al.id
                       WHERE users.id = :id 
-                      AND al.order_level > :order_level
+                        AND al.order_level > :order_level
                       LIMIT 1";
                       
         $stmt = $this->conn->prepare($queryUser);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->bindValue(':order_level', $_SESSION['order_level'], PDO::PARAM_INT);
         $stmt->execute();
-        $dataResult = (array) $stmt->fetch(PDO::FETCH_ASSOC);
+        $dataResult = $stmt->fetch(PDO::FETCH_ASSOC);
        
         if(! empty($dataResult)) {
-            return $dataResult;
+          return $dataResult;
         }
 
         return [];

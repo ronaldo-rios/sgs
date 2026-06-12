@@ -8,6 +8,7 @@ final class Config
     public const METHOD = 'index';
     public const CONTROLLER_ERROR = 'Login';
     public const PATH_USER_IMAGE = '/public/assets/img/users/';
+    public const ACCESS_LEVEL_USER_DEFAULT = 6;
 
     public static function url(): string
     {

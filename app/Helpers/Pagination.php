@@ -44,9 +44,16 @@ class Pagination
     */
     private function pageInstruction(): void
     {
-        $this->totalPages = ceil($this->count / $this->limit);
-        $this->totalPages >= $this->page 
-            ? $this->layoutPagination() 
+        $this->totalPages = (int) ceil($this->count / $this->limit);
+
+        // Without records there are no pages: there's nowhere to redirect to (avoids redirect loops).
+        if ($this->totalPages === 0) {
+            $this->result = '';
+            return;
+        }
+
+        $this->totalPages >= $this->page
+            ? $this->layoutPagination()
             : header("Location: {$this->link}");
     }
 

@@ -107,9 +107,9 @@ class UpdateUserModel
         $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
         $stmt->bindValue(':order_level', $_SESSION['order_level'], \PDO::PARAM_INT);
         $stmt->execute();
-        $dataResult = (array) $stmt->fetch(\PDO::FETCH_ASSOC);
+        $dataResult = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if (! empty($dataResult)) {
+        if ($dataResult) {
             return $dataResult;
         }
 
@@ -146,9 +146,9 @@ class UpdateUserModel
         $sqlUser->bindValue(':email', $this->data['email'], \PDO::PARAM_STR);
         $sqlUser->bindValue(':id', $this->data['id'], \PDO::PARAM_INT);
         $sqlUser->execute();
-        $user = (array) $sqlUser->fetch(\PDO::FETCH_ASSOC);
+        $user = $sqlUser->fetch(\PDO::FETCH_ASSOC);
 
-        return ! empty($user) ? $user : [];
+        return $user !== false ? $user : [];
     }
 
     private function updateUser(): bool
