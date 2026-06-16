@@ -77,82 +77,87 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB 
 COMMENT='Principal table for users';
 
--- CREATE TABLE `page_status`(
---     `id` INT NOT NULL AUTO_INCREMENT,
---     `status` VARCHAR(100) NOT NULL,
---     `color_id` INT NOT NULL,
---     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     `updated_at` TIMESTAMP NULL DEFAULT NULL,
---     PRIMARY KEY(`id`),
---     CONSTRAINT `fk_page_status_with_color_id`
---     FOREIGN KEY (`color_id`) REFERENCES `colors`(`id`)
---     ON DELETE RESTRICT ON UPDATE CASCADE
--- ) ENGINE=InnoDB;
+CREATE TABLE `page_status`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `status` VARCHAR(100) NOT NULL,
+    `color_id` INT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_page_status_with_color_id`
+    FOREIGN KEY (`color_id`) REFERENCES `colors`(`id`)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB
+COMMENT='Page situation';
 
--- CREATE TABLE `page_groups` (
---     `id` INT NOT NULL AUTO_INCREMENT,
---     `group_name` VARCHAR(225) NOT NULL,
---     `order_page_group` INT NOT NULL,
---     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     `updated_at` TIMESTAMP NULL DEFAULT NULL,
---     PRIMARY KEY(`id`)
--- ) ENGINE=InnoDB;
+CREATE TABLE `page_types` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `type_name` VARCHAR(225) NOT NULL,
+    `order_page_type` INT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(`id`)
+) ENGINE=InnoDB
+COMMENT='The type or category to which the page belongs';
 
--- CREATE TABLE `page_modules` (
---     `id` INT NOT NULL AUTO_INCREMENT,
---     `type` VARCHAR(225) NOT NULL,
---     `name` VARCHAR(225) NOT NULL,
---     `order_module` INT NOT NULL,
---     `obs` TEXT NULL,
---     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     `updated_at` TIMESTAMP NULL DEFAULT NULL,
---     PRIMARY KEY(`id`)
--- ) ENGINE=InnoDB;
+CREATE TABLE `page_modules` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `type` VARCHAR(225) NOT NULL,
+    `name` VARCHAR(225) NOT NULL,
+    `order_module` INT NOT NULL,
+    `obs` TEXT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(`id`)
+) ENGINE=InnoDB
+COMMENT='Module or package that the page is part of';
 
--- CREATE TABLE `pages` (
---     `id` INT NOT NULL AUTO_INCREMENT,
---     `controller` VARCHAR(225) NOT NULL,
---     `method` VARCHAR(225) NOT NULL,
---     `controller_in_the_main` VARCHAR(225) NOT NULL,
---     `method_in_the_main` VARCHAR(225) NOT NULL,
---     `name_page` VARCHAR(225) NOT NULL,
---     `public` INT NOT NULL,
---     `enable_in_sidebar` INT NOT NULL,
---     `icon` VARCHAR(225) NULL,
---     `obs` TEXT NULL, 
---     `page_status_id` INT NOT NULL,
---     `page_group_id` INT NOT NULL,
---     `page_module_id` INT NOT NULL,
---     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     `updated_at` TIMESTAMP NULL DEFAULT NULL,
---     PRIMARY KEY(`id`),
---     CONSTRAINT `fk_pages_with_page_status_id`
---     FOREIGN KEY (`page_status_id`) REFERENCES `page_status`(`id`)
---         ON DELETE RESTRICT ON UPDATE CASCADE,
---     CONSTRAINT `fk_pages_with_page_group_id`
---     FOREIGN KEY (`page_group_id`) REFERENCES `page_groups`(`id`)
---         ON DELETE RESTRICT ON UPDATE CASCADE,
---     CONSTRAINT `fk_pages_with_page_module_id`
---     FOREIGN KEY (`page_module_id`) REFERENCES `page_modules`(`id`)
---         ON DELETE RESTRICT ON UPDATE CASCADE
--- ) ENGINE=InnoDB;
+CREATE TABLE `pages` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `controller` VARCHAR(225) NOT NULL,
+    `method` VARCHAR(225) NOT NULL,
+    `controller_in_the_main` VARCHAR(225) NOT NULL,
+    `method_in_the_main` VARCHAR(225) NOT NULL,
+    `name_page` VARCHAR(225) NOT NULL,
+    `public` INT NOT NULL,
+    `enable_in_sidebar` INT NOT NULL,
+    `icon` VARCHAR(225) NULL,
+    `obs` TEXT NULL, 
+    `page_status_id` INT NOT NULL,
+    `page_type_id` INT NOT NULL,
+    `page_module_id` INT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_pages_with_page_status_id`
+    FOREIGN KEY (`page_status_id`) REFERENCES `page_status`(`id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_pages_with_page_type_id`
+    FOREIGN KEY (`page_type_id`) REFERENCES `page_types`(`id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_pages_with_page_module_id`
+    FOREIGN KEY (`page_module_id`) REFERENCES `page_modules`(`id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB
+COMMENT='Routine flow pages';
 
--- CREATE TABLE `page_levels`(
---     `id` INT NOT NULL AUTO_INCREMENT,
---     `permission` INT NOT NULL,
---     `order_level_page` INT NOT NULL,
---     `access_level_id` INT NOT NULL,
---     `page_id` INT NOT NULL,
---     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     `updated_at` TIMESTAMP NULL DEFAULT NULL,
---     PRIMARY KEY(`id`),
---     CONSTRAINT `fk_page_levels_with_access_level_id`
---     FOREIGN KEY (`access_level_id`) REFERENCES `access_levels`(`id`)
---         ON DELETE RESTRICT ON UPDATE CASCADE,
---     CONSTRAINT `fk_page_levels_with_page_id`
---     FOREIGN KEY (`page_id`) REFERENCES `pages`(`id`)
---         ON DELETE RESTRICT ON UPDATE CASCADE
--- ) ENGINE=InnoDB;
+CREATE TABLE `page_levels`(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `permission` INT NOT NULL,
+    `order_level_page` INT NOT NULL,
+    `access_level_id` INT NOT NULL,
+    `page_id` INT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_page_levels_with_access_level_id`
+    FOREIGN KEY (`access_level_id`) REFERENCES `access_levels`(`id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT `fk_page_levels_with_page_id`
+    FOREIGN KEY (`page_id`) REFERENCES `pages`(`id`)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB
+COMMENT='Pages that the user can access according to their permissions';
 
 INSERT INTO `colors`(color_name, color, created_at) 
 VALUES
