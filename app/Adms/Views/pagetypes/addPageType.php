@@ -15,8 +15,8 @@
 
     <div class="form-card">
         <form action="" method="POST" id="form-addpagetype" class="app-form">
-            <label for="name">Nome</label>
-            <input type="text" id="name" name="name" placeholder="Nome do tipo de página" required>
+            <label for="type_name">Nome</label>
+            <input type="text" id="type_name" name="type_name" placeholder="Nome do tipo de página" required>
 
             <button type="submit" name="send_add_page_type" value="Cadastrar">Cadastrar</button>
         </form>

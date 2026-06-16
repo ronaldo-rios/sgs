@@ -1,6 +1,6 @@
 <?php
 
-namespace App\adms\Controllers;
+namespace App\Adms\Controllers;
 
 use Core\ConfigView;
 // use App\adms\Models\helpers\SidebarMenuPermissions;
@@ -17,10 +17,10 @@ class PageTypes
         $pageTypesResult = $pageTypes->list($page);
 
         if($pageTypesResult !== []){
-            $this->data['page_types'] = $pageTypesResult;
+            $this->data['pagetypes'] = $pageTypesResult;
             $this->data['pagination'] = $pageTypes->getPagination();
         } else {
-            $this->data['page_types'] = [];
+            $this->data['pagetypes'] = [];
         }
         // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewPageTypes();
