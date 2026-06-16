@@ -62,9 +62,9 @@ class AddPageTypeModel
         $stmt->execute();
 
         if ($stmt->rowCount()) {
-            Flash::success('Grupo cadastrado com sucesso!');
+            Flash::success('Tipo de página cadastrado com sucesso!');
         } else {
-            Flash::danger('Erro na criação de Grupo');
+            Flash::danger('Erro na criação do tipo de página!');
         }
     }
 }
