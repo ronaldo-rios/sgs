@@ -36,6 +36,10 @@ $isActive = static fn (string $controller): string =>
             <i class="icon fa-solid fa-user-shield"></i><span>Níveis de Acesso</span>
         </a>
 
+        <a href="<?= \Core\Config::url() ?>/page-types/index" class="sidebar__nav<?= $isActive('page-type') ?>">
+            <i class="icon fa-solid fa-layer-group"></i><span>Tipos de Página</span>
+        </a>
+
         <a href="<?= \Core\Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
             <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
         </a>
