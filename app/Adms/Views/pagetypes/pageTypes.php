@@ -50,6 +50,10 @@
                 </tbody>
             </table>
         </div>
+
+        <?php if (!empty($pagination)) : ?>
+            <div class="list-pagination"><?= $pagination ?></div>
+        <?php endif; ?>
     <?php else : ?>
         <p class="list-empty">Nenhum tipo de página encontrado.</p>
     <?php endif; ?>
