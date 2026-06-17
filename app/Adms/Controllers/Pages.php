@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Adms\Controllers;
+
+use Core\ConfigView;
+// use App\adms\Models\helpers\SidebarMenuPermissions;
+use App\Adms\Models\ListPagesModel;
+
+class Pages
+{
+    private array $data;
+
+    public function index(int|string|null $page = null): void
+    {
+        $page = (int) $page ? $page : 1;
+        $pages = new ListPagesModel();
+        $pagesResult = $pages->list($page);
+
+        if($pagesResult !== []){
+            $this->data['pages'] = $pagesResult;
+            $this->data['pagination'] = $pages->getPagination();
+        } else {
+            $this->data['pages'] = [];
+        }
+        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        $this->viewPages();
+    }
+
+    private function viewPages(): void
+    {
+        $view = new ConfigView("Adms/Views/pages/pages", $this->data);
+        $view->loadView();
+    }
+
+}

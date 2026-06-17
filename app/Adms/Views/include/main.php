@@ -44,6 +44,10 @@ $isActive = static fn (string $controller): string =>
             <i class="icon fa-solid fa-cubes"></i><span>Módulos de Página</span>
         </a>
 
+        <a href="<?= \Core\Config::url() ?>/pages/index" class="sidebar__nav<?= $isActive('pages') ?>">
+            <i class="icon fa-solid fa-file-lines"></i><span>Páginas</span>
+        </a>
+
         <a href="<?= \Core\Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
             <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
         </a>
