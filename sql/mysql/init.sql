@@ -77,19 +77,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB 
 COMMENT='Principal table for users';
 
-CREATE TABLE `page_status`(
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `status` VARCHAR(100) NOT NULL,
-    `color_id` INT NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NULL DEFAULT NULL,
-    PRIMARY KEY(`id`),
-    CONSTRAINT `fk_page_status_with_color_id`
-    FOREIGN KEY (`color_id`) REFERENCES `colors`(`id`)
-    ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB
-COMMENT='Page situation';
-
 CREATE TABLE `page_types` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `type_name` VARCHAR(225) NOT NULL,
@@ -123,15 +110,12 @@ CREATE TABLE `pages` (
     `enable_in_sidebar` INT NOT NULL,
     `icon` VARCHAR(225) NULL,
     `obs` TEXT NULL, 
-    `page_status_id` INT NOT NULL,
+    `active_status` INT NOT NULL,
     `page_type_id` INT NOT NULL,
     `page_module_id` INT NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY(`id`),
-    CONSTRAINT `fk_pages_with_page_status_id`
-    FOREIGN KEY (`page_status_id`) REFERENCES `page_status`(`id`)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT `fk_pages_with_page_type_id`
     FOREIGN KEY (`page_type_id`) REFERENCES `page_types`(`id`)
         ON DELETE RESTRICT ON UPDATE CASCADE,
