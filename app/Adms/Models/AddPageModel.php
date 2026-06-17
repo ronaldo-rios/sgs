@@ -28,10 +28,6 @@ class AddPageModel
         return $this->insertNewPage($data);
     }
 
-    /**
-     * List all page types to populate the form select.
-     * @return array<int, array<string, mixed>>
-     */
     public function listPageTypes(): array
     {
         $query = "SELECT `id`, `type_name` FROM `page_types` ORDER BY `order_page_type`";
@@ -40,11 +36,7 @@ class AddPageModel
 
         return (array) $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    /**
-     * List all page modules to populate the form select.
-     * @return array<int, array<string, mixed>>
-     */
+    
     public function listPageModules(): array
     {
         $query = "SELECT `id`, `name` FROM `page_modules` ORDER BY `order_module`";
