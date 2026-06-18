@@ -134,12 +134,13 @@ CREATE TABLE `page_levels`(
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY(`id`),
+    UNIQUE KEY `uq_page_levels_level_page` (`access_level_id`, `page_id`),
     CONSTRAINT `fk_page_levels_with_access_level_id`
     FOREIGN KEY (`access_level_id`) REFERENCES `access_levels`(`id`)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
+        ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_page_levels_with_page_id`
     FOREIGN KEY (`page_id`) REFERENCES `pages`(`id`)
-        ON DELETE RESTRICT ON UPDATE CASCADE
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB
 COMMENT='Pages that the user can access according to their permissions';
 
@@ -168,6 +169,16 @@ VALUES
     (4, 'Enfermeiro', 4, NOW()),
     (5, 'Financeiro', 5, NOW()),
     (6, 'Paciente', 6, NOW());
+
+INSERT INTO `page_types`(id, group_name, order_page_group, created_at) 
+VALUES
+    (1, 'Listar', 1, NOW()),
+    (2, 'Visualizar', 2, NOW()),
+    (3, 'Cadastrar', 3, NOW()),
+    (4, 'Editar', 4, NOW()),
+    (5, 'Excluir', 5, NOW()),
+    (6, 'Acesso', 6, NOW()),
+    (7, 'Outros', 7, NOW());
 
 INSERT INTO `users`
 (`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)

@@ -7,7 +7,9 @@
             <a href="<?= \Core\Config::url() ?>/add-access-level/index" class="btn btn-primary">
                 <i class="fa-solid fa-plus"></i> Adicionar nível
             </a>
-            <?php // echo "<a href='" . \Core\Config::url() . "/sync-page-levels/index'>Sincronizar</a>"; ?>
+            <a href="<?= \Core\Config::url() ?>/sync-page-levels/index" class="btn btn-sync">
+                <i class="fa-solid fa-arrows-rotate"></i> Sincronizar
+            </a>
         </div>
     </div>
 
@@ -34,7 +36,9 @@
                             <td><?= htmlspecialchars($access['order_level']) ?></td>
                             <td>
                                 <div class="list-table__actions">
-                                    <?php // echo "<a href='" . \Core\Config::url() . "/permissions/index?level={$access['id']}'>Permissões</a>"; ?>
+                                    <a href="<?= \Core\Config::url() ?>/permissions/index?level=<?= $access['id'] ?>" class="btn btn-sm btn-outline">
+                                        <i class="fa-solid fa-lock"></i> Permissões
+                                    </a>
                                     <a href="<?= \Core\Config::url() ?>/view-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
                                         <i class="fa-solid fa-eye"></i> Visualizar
                                     </a>
