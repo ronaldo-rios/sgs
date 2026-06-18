@@ -80,6 +80,18 @@
     color: #a00210;
 }
 
+.list-page .btn-sync {
+    background-color: transparent;
+    color: #1f9d57;
+    border: 1px solid #1f9d57;
+}
+
+.list-page .btn-sync:hover {
+    background-color: #a6f2c8;
+    border-color: #188046;
+    color: #188046;
+}
+
 .list-page .btn-sm {
     padding: 7px 11px;
     font-size: 0.88rem;
