@@ -2,6 +2,7 @@
 
 namespace App\Adms\Models;
 
+use App\Helpers\DefaultAccessLevel;
 use App\Helpers\Connection;
 use App\Helpers\Flash;
 use Core\Config;
@@ -18,7 +19,7 @@ class DeleteAccessLevelModel
 
     public function delete(int $id): void
     {
-        if ($id === Config::ACCESS_LEVEL_USER_DEFAULT) {
+        if ($id === DefaultAccessLevel::defaultId()) {
             Flash::danger('Este é o nível padrão de cadastro de usuários e não pode ser excluído!');
             return;
         }
