@@ -19,7 +19,7 @@ class DeleteAccessLevelModel
 
     public function delete(int $id): void
     {
-        if ($id === DefaultAccessLevel::defaultId()) {
+        if ($id === DefaultAccessLevel::getId()) {
             Flash::danger('Este é o nível padrão de cadastro de usuários e não pode ser excluído!');
             return;
         }

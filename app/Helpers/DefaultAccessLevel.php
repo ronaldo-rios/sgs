@@ -11,10 +11,9 @@ class DefaultAccessLevel
 
     /**
      * Resolve the access level assigned to newly registered users.
-     * The default is declared in the database (is_default = 1), not hardcoded,
-     * so each tenant can define its own default without touching the code.
+     * The default is declared in the database (is_default = 1)
      */
-    public static function defaultId(): int
+    public static function getId(): int
     {
         if (self::$defaultId !== null) {
             return self::$defaultId;

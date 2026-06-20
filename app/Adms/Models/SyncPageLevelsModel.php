@@ -203,7 +203,7 @@ class SyncPageLevelsModel
 
         $statement = $this->conn->prepare($sql);
         $statement->bindValue(':page_id', $pageId, \PDO::PARAM_INT);
-        $statement->bindValue(':access_level_default', DefaultAccessLevel::defaultId(), \PDO::PARAM_INT);
+        $statement->bindValue(':access_level_default', DefaultAccessLevel::getId(), \PDO::PARAM_INT);
         $statement->execute();
         $resultLevelDefault = $statement->fetchColumn();
 
