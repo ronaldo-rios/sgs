@@ -94,7 +94,7 @@ class AddNewUserModel
         }
     }
 
-    private function insertUser($email, $encriptPassword, $confirmEmail): string
+    private function insertUser(string $email, string $encriptPassword, string $confirmEmail): bool
     {
         $insert = "INSERT INTO `users` 
             (`name`, `email`, `user`, `password`, `confirm_email`, `user_situation_id`, `access_level_id`, `created_at`) 
@@ -107,7 +107,7 @@ class AddNewUserModel
         $sqlInsert->bindValue(':user', trim($this->data['user']), \PDO::PARAM_STR);
         $sqlInsert->bindValue(':password', $encriptPassword, \PDO::PARAM_STR);
         $sqlInsert->bindValue(':confirm_email', $confirmEmail, \PDO::PARAM_STR);
-        $sqlInsert->bindValue(':access_level_id', DefaultAccessLevel::defaultId(), \PDO::PARAM_INT);
+        $sqlInsert->bindValue(':access_level_id', DefaultAccessLevel::getId(), \PDO::PARAM_INT);
         $sqlInsert->bindValue(':user_situation', UserSituation::WAITING_FOR_CONFIRMATION->value, \PDO::PARAM_INT);
         return $sqlInsert->execute();
     }
