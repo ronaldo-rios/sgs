@@ -9,6 +9,7 @@ CREATE TABLE `access_levels` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Id',
     `access_level` VARCHAR(100) NOT NULL COMMENT 'Name access level',
     `order_level` INT NOT NULL COMMENT 'Hierarchical order of the level',
+    `is_default` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Level assigned to newly registered users',
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY (`id`)
@@ -161,15 +162,6 @@ VALUES
     (2, 'Aguardando Confirmação', 5, NOW()), 
     (3, 'Inativo', 4, NOW());
 
-INSERT INTO `access_levels` (id, access_level, order_level, created_at)
-VALUES
-    (1, 'Super Admin', 1, NOW()),
-    (2, 'Administrador', 2, NOW()),
-    (3, 'Médico', 3, NOW()),
-    (4, 'Enfermeiro', 4, NOW()),
-    (5, 'Financeiro', 5, NOW()),
-    (6, 'Paciente', 6, NOW());
-
 INSERT INTO `page_types`(id, group_name, order_page_group, created_at) 
 VALUES
     (1, 'Listar', 1, NOW()),
@@ -179,6 +171,15 @@ VALUES
     (5, 'Excluir', 5, NOW()),
     (6, 'Acesso', 6, NOW()),
     (7, 'Outros', 7, NOW());
+
+INSERT INTO `access_levels` (access_level, order_level, is_default, created_at)
+VALUES
+    ('Super Admin', 1, 0, NOW()),
+    ('Administrador', 2, 0, NOW()),
+    ('Médico', 3, 0, NOW()),
+    ('Enfermeiro', 4, 0, NOW()),
+    ('Financeiro', 5, 0, NOW()),
+    ('Paciente', 6, 1, NOW());
 
 INSERT INTO `users`
 (`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)

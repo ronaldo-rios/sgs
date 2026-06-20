@@ -3,6 +3,7 @@
 namespace App\Adms\Models;
 
 use App\Adms\Enum\Permission;
+use App\Helpers\DefaultAccessLevel;
 use App\Helpers\Connection;
 use App\Helpers\Flash;
 use Core\Config;
@@ -202,7 +203,7 @@ class SyncPageLevelsModel
 
         $statement = $this->conn->prepare($sql);
         $statement->bindValue(':page_id', $pageId, \PDO::PARAM_INT);
-        $statement->bindValue(':access_level_default', Config::ACCESS_LEVEL_USER_DEFAULT, \PDO::PARAM_INT);
+        $statement->bindValue(':access_level_default', DefaultAccessLevel::defaultId(), \PDO::PARAM_INT);
         $statement->execute();
         $resultLevelDefault = $statement->fetchColumn();
 
