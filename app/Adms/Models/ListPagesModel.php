@@ -26,7 +26,7 @@ class ListPagesModel
 
     public function list(?int $page): ?array
     {
-        $pagination = new Pagination(Config::url() . 'pages/index');
+        $pagination = new Pagination(Config::url() . '/pages/index');
         $pagination->condiction($page, self::LIMIT);
         $countPages = $this->countPages();
         $pagination->paginate($countPages);
