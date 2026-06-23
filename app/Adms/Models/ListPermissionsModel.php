@@ -37,7 +37,7 @@ class ListPermissionsModel
         $verifiedHasPermission = VerifyAccessLevel::verifyAccessLevel($accessLevelId);
         
         if (! empty($verifiedHasPermission)){
-            $pagination = new Pagination(Config::url() . 'permissions/index', '?level=' . $accessLevelId);
+            $pagination = new Pagination(Config::url() . '/permissions/index', '?level=' . $accessLevelId);
             $pagination->condiction($page, self::LIMIT);
             $countConfEmails = $this->countPermissions($accessLevelId);
             $pagination->paginate($countConfEmails);

@@ -26,7 +26,7 @@ class ListPageModulesModel
 
     public function list(?int $page): ?array
     {
-        $pagination = new Pagination(Config::url() . 'page-modules/index');
+        $pagination = new Pagination(Config::url() . '/page-modules/index');
         $pagination->condiction($page, self::LIMIT);
         $countModules = $this->countPageModules();
         $pagination->paginate($countModules);

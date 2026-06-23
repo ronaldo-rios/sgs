@@ -162,7 +162,7 @@ VALUES
     (2, 'Aguardando Confirmação', 5, NOW()), 
     (3, 'Inativo', 4, NOW());
 
-INSERT INTO `page_types`(id, group_name, order_page_group, created_at) 
+INSERT INTO `page_types`(id, type_name, order_page_type,, created_at) 
 VALUES
     (1, 'Listar', 1, NOW()),
     (2, 'Visualizar', 2, NOW()),
@@ -180,6 +180,53 @@ VALUES
     ('Enfermeiro', 4, 0, NOW()),
     ('Financeiro', 5, 0, NOW()),
     ('Paciente', 6, 1, NOW());
+
+INSERT INTO `pages`
+    (controller, method, controller_in_the_main, method_in_the_main, name_page, public, enable_in_sidebar, page_status_id, page_group_id, page_module_id, created_at)
+VALUES
+    ('Login', 'index', 'login', 'index', 'Login', 1, 0, 1, 6, 1, NOW()),
+    ('Register', 'index', 'new-user', 'index', 'Cadastro', 1, 0, 1, 6, 1, NOW()),
+    ('Logout', 'index', 'logout', 'index', 'Logout',1, 0, 1, 6, 1, NOW()),
+    ('Error', 'index', 'error', 'index', 'Página de erro', 1, 0, 1, 6, 1, NOW()),
+    ('ConfirmEmail', 'index', 'confirm-email', 'index', 'Confirmação de Email', 1, 0, 1, 6, 1, NOW()),
+    ('NewConfirmEmail', 'index', 'new-confirm-email', 'index', 'Nova Confirmação de Email', 1, 0, 1, 6, 1, NOW()),
+    ('RecoverPassword', 'index', 'recover-password', 'index', 'Esqueci Minha Senha', 1, 0, 1, 6, 1, NOW()),
+    ('UpdatePassword', 'index', 'update-password', 'index', 'Atualizar Senha', 1, 0, 1, 6, 1, NOW()),
+    ('Permissions', 'index', 'permissions', 'index','Permissões de Acesso', 0, 0, 1, 1, 1, NOW()),
+    ('UpdatePermission', 'index', 'edit-permission', 'index', 'Atualizar Permissões de Nível de Acesso', 0, 0, 1, 4, 1, NOW()),
+    ('Dashboard', 'index', 'dashboard', 'index', 'Dashboard', 0, 1, 1, 7, 1, NOW()),
+    ('SyncPageLevels', 'index', 'sync-page-levels', 'index', 'Sincronizar Página e Nível de Acesso', 0, 0, 1, 7, 1, NOW()),
+    ('ViewProfile', 'index', 'view-profile', 'index', 'Visualizar Perfil de Usuário Logado', 0, 1, 1, 2, 1, NOW()),
+    ('UpdateProfile', 'index', 'edit-profile', 'index', 'Atualizar Perfil de Usuário Logado', 0, 0, 1, 4, 1, NOW()),
+    ('Users', 'index', 'users', 'index', 'Usuários', 0, 1, 1, 1, 1, NOW()),
+    ('ViewUser', 'index', 'view-user', 'index', 'Visualizar Usuário', 0, 0, 1, 2, 1, NOW()),
+    ('AddUser', 'index', 'add-user', 'index', 'Adicionar Usuário', 0, 0, 1, 3, 1, NOW()),
+    ('UpdateUser', 'index', 'edit-user', 'index', 'Editar Usuário', 0, 0, 1, 4, 1, NOW()),
+    ('DeleteUser', 'index', 'delete-user', 'index', 'Excluir Usuário', 0, 0, 1, 5, 1, NOW()),
+    ('AccessLevels', 'index', 'access-levels', 'index', 'Níveis de Acesso', 0, 1, 1, 1, 1, NOW()),
+    ('AddAccessLevel', 'index', 'add-access-level', 'index', 'Adicionar Novo Nível de Acesso', 0, 0, 1,3, 1, NOW()),
+    ('UpdateAccessLevel', 'index', 'edit-access-level', 'index', 'Editar Nível de Acesso', 0, 0, 1, 4, 1, NOW()),
+    ('DeleteAccessLevel', 'index', 'delete-access-level', 'index', 'Deletar Nível de Acesso', 0, 0, 1, 5, 1, NOW()),
+    ('ConfigEmails', 'index', 'email-servers', 'index', 'Servidores de Email', 0, 1, 1, 1, 1, NOW()),
+    ('ViewConfigEmail', 'index', 'view-email-servers', 'index', 'Visualizar Servidor de Email', 0, 0, 1, 2, 1, NOW()),
+    ('AddConfigEmail', 'index', 'add-email-server', 'index', 'Adicionar Novo Servidor de Email', 0, 0, 1, 3, 1, NOW()),
+    ('UpdateConfigEmail', 'index', 'edit-email-server', 'index', 'Editar Servidor de Email', 0, 0, 1, 4, 1, NOW()),
+    ('DeleteEmailServer', 'index', 'delete-email-server', 'index', 'Remover Servidor de Email', 0, 0, 1, 5, 1, NOW()),
+    ('Pages', 'index', 'pages', 'index', 'Páginas para acesso', 0, 1, 1, 1, 1, NOW()),
+    ('ViewPage', 'index', 'view-page', 'index', 'Visualizar Página', 0, 0, 1, 2, 1, NOW()),
+    ('AddPage', 'index', 'add-page', 'index', 'Cadastrar Nova Página', 0, 0, 1, 3, 1, NOW()),
+    ('UpdatePage', 'index', 'edit-page', 'index', 'Editar Página', 0, 0, 1, 4, 1, NOW()),
+    ('DeletePage', 'index', 'delete-page', 'index', 'Deletar Página', 0, 0, 1, 5, 1, NOW()),
+    ('PageTypes', 'index', 'page-groups', 'index', 'Listar Grupos de Páginas', 0, 1, 1, 1, 1, NOW()),
+    ('ViewPageType', 'index', 'view-page-group', 'index', 'Visualizar Grupo de Página', 0, 0, 1, 2, 1, NOW()),
+    ('AddPageType', 'index', 'add-page-group', 'index', 'Cadastrar Novo Grupo de Página', 0, 0, 1, 3, 1, NOW()),
+    ('UpdatePageType', 'index', 'edit-page-group', 'index', 'Editar Grupo', 0, 0, 1, 4, 1, NOW()),
+    ('DeletePageType', 'index', 'delete-page-group', 'index', 'Deletar Grupo de Página', 0, 0, 1, 5, 1, NOW()),
+    ('PageModules', 'index', 'page-modules', 'index', 'Listar Módulos', 0, 1, 1, 1, 1, NOW()),
+    ('ViewPageModule', 'index', 'view-page-module', 'index', 'Visualizar Módulo', 0, 0, 1, 2, 1, NOW()),
+    ('AddPageModule', 'index', 'add-page-module', 'index', 'Cadastrar Novo Módulo', 0, 0, 1, 3, 1, NOW()),
+    ('UpdatePageModule', 'index', 'edit-page-module', 'index', 'Editar Módulo', 0, 0, 1, 4, 1, NOW()),
+    ('DeletePageModule', 'index', 'delete-page-module', 'index', 'Deletar Módulo', 0, 0, 1, 5, 1, NOW());
 
 INSERT INTO `users`
 (`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)

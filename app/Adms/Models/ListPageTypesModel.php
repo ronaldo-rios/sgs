@@ -26,7 +26,7 @@ class ListPageTypesModel
 
     public function list(?int $page): ?array
     {
-        $pagination = new Pagination(Config::url() . 'page-types/index');
+        $pagination = new Pagination(Config::url() . '/page-types/index');
         $pagination->condiction($page, self::LIMIT);
         $countUsers = $this->countpageTypes();
         $pagination->paginate($countUsers);
