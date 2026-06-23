@@ -80,6 +80,17 @@
     color: #a00210;
 }
 
+.list-page .btn-success {
+    background-color: #fff;
+    color: #188046;
+    border: 1px solid #a6dcbb;
+}
+
+.list-page .btn-success:hover {
+    background-color: #d4f3e1;
+    color: #0f5f33;
+}
+
 .list-page .btn-sync {
     background-color: transparent;
     color: #1f9d57;

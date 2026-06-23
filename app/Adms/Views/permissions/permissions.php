@@ -7,6 +7,8 @@ $listPermissions = $permissions;
 $accessLevel = $access_level;
 /** @var string $pagination */
 $pagination = $pagination;
+/** @var int $page */
+$currentPage = $page;
 ?>
 
 <div class="list-page">
@@ -37,9 +39,17 @@ $pagination = $pagination;
                 </thead>
                 <tbody>
                     <?php foreach ($listPermissions as $permission) : ?>
+                        <?php $liberado = $permission['permission'] === 'Liberado'; ?>
                         <tr>
                             <td><?= $permission['name_page'] ?></td>
-                            <td><?= $permission['permission'] ?></td>
+                            <td>
+                                <a href="<?= \Core\Config::url() ?>/update-permission/index/<?= $permission['id'] ?>?level=<?= $permission['access_level_id'] ?>&page=<?= $currentPage ?>"
+                                    class="btn btn-sm <?= $liberado ? 'btn-success' : 'btn-danger' ?>"
+                                    title="Clique para <?= $liberado ? 'bloquear' : 'liberar' ?>">
+                                    <i class="fa-solid <?= $liberado ? 'fa-lock-open' : 'fa-lock' ?>"></i>
+                                    <?= $permission['permission'] ?>
+                                </a>
+                            </td>
                             <td><?= $permission['sidebar'] ?></td>
                             <td><?= $permission['order_level_page'] ?></td>
                         </tr>

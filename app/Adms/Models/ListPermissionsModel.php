@@ -73,7 +73,7 @@ class ListPermissionsModel
                             INNER JOIN `access_levels` AS al
                                 ON pl.access_level_id = al.id
                         WHERE pl.access_level_id = :access_level_id
-                            AND al.order_level >= :order_level
+                            AND al.order_level > :order_level
                             AND 
                             (
                                 (
@@ -102,7 +102,7 @@ class ListPermissionsModel
 
         $stmt = $this->conn->prepare($permissions);
         $stmt->bindValue(':access_level_id', $accessLevelId, PDO::PARAM_INT);
-        $stmt->bindValue(':order_level', $_SESSION['access_level'], PDO::PARAM_INT);
+        $stmt->bindValue(':order_level', $_SESSION['order_level'], PDO::PARAM_INT);
         $stmt->bindValue(':access_level_session', $_SESSION['access_level'], PDO::PARAM_INT);
         $stmt->bindValue(':have_permission', Permission::HAVE_PERMISSION->value, PDO::PARAM_INT);
         $stmt->bindValue(':limit', self::LIMIT, PDO::PARAM_INT);
