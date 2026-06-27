@@ -51,7 +51,7 @@ class ListPageModulesModel
 
     private function queryAllModules(): string
     {
-        return "SELECT `id`, UPPER(`type`) AS `type`, `name`, `order_module`
+        return "SELECT `id`, UPPER(`type_module`) AS `type_module`, `name_module`, `order_module`
                 FROM `page_modules`
                     ORDER BY `order_module`
                     LIMIT :limit OFFSET :offset";

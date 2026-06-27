@@ -19,14 +19,14 @@
         <form action="" method="POST" id="form-editpagemodule" class="app-form">
             <input type="hidden" name="id" value="<?= htmlspecialchars($pagemodule['id']) ?>">
 
-            <label for="name">Nome</label>
-            <input type="text" id="name" name="name"
-                value="<?= htmlspecialchars($pagemodule['name'] ?? '') ?>"
+            <label for="name_module">Nome</label>
+            <input type="text" id="name_module" name="name_module"
+                value="<?= htmlspecialchars($pagemodule['name_module'] ?? '') ?>"
                 placeholder="Nome do módulo de página" required>
 
-            <label for="type">Tipo</label>
-            <input type="text" id="type" name="type"
-                value="<?= htmlspecialchars($pagemodule['type'] ?? '') ?>"
+            <label for="type_module">Tipo</label>
+            <input type="text" id="type_module" name="type_module"
+                value="<?= htmlspecialchars($pagemodule['type_module'] ?? '') ?>"
                 placeholder="Tipo do módulo de página" required>
 
             <label for="obs">Observação</label>

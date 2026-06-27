@@ -22,7 +22,7 @@ class ViewPageModuleModel
 
     private function detailsPageModule(int $id): array
     {
-        $query = "SELECT `id`, `type`, `name`, `order_module`, `obs`, `created_at`, `updated_at`
+        $query = "SELECT `id`, `type_module`, `name_module`, `order_module`, `obs`, `created_at`, `updated_at`
                   FROM `page_modules`
                   WHERE id = :id
                   LIMIT 1";

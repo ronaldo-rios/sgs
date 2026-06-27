@@ -58,13 +58,13 @@ class UpdatePageModuleModel
     private function updatePageModule(array $formData): bool
     {
         $query = "UPDATE `page_modules`
-                  SET type = :type, name = :name, obs = :obs, updated_at = NOW()
+                  SET type_module = :type_module, name_module = :name_module, obs = :obs, updated_at = NOW()
                   WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(':id', $formData['id'], \PDO::PARAM_INT);
-        $stmt->bindValue(':type', ConvertToCapitularString::format($formData['type']), \PDO::PARAM_STR);
-        $stmt->bindValue(':name', ConvertToCapitularString::format($formData['name']), \PDO::PARAM_STR);
+        $stmt->bindValue(':type_module', ConvertToCapitularString::format($formData['type_module']), \PDO::PARAM_STR);
+        $stmt->bindValue(':name_module', ConvertToCapitularString::format($formData['name_module']), \PDO::PARAM_STR);
         $stmt->bindValue(':obs', ucfirst(mb_strtolower($formData['obs'],'UTF-8')) ?: null, \PDO::PARAM_STR);
         $stmt->execute();
 

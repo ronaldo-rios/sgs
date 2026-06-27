@@ -52,7 +52,7 @@ class ListPagesModel
     private function queryAllPages(): string
     {
         return "SELECT p.`id`, p.`name_page`, p.`active_status`,
-                       pt.`type_name`, pm.`name` AS module_name
+                       pt.`type_name`, pm.`name_module` AS module_name
                 FROM `pages` p
                 INNER JOIN `page_types` pt ON pt.`id` = p.`page_type_id`
                 INNER JOIN `page_modules` pm ON pm.`id` = p.`page_module_id`

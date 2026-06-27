@@ -41,7 +41,7 @@ class LoadPageLevels
 
     private static function searchPages()
     {
-        $sql = "SELECT p.id, p.public, m.type 
+        $sql = "SELECT p.id, p.public, m.type_module
                 FROM `pages` AS p
                     INNER JOIN `page_modules`AS m
                         ON m.id = p.page_module_id
@@ -57,7 +57,7 @@ class LoadPageLevels
         
         if (self::$pageResult) {
             if ((int) self::$pageResult['public'] === self::PUBLIC_PAGE) {
-                self::$classLoad = "App\\" . self::$pageResult['type'] . "\\Controllers\\" . self::$urlController;
+                self::$classLoad = "App\\" . self::$pageResult['type_module'] . "\\Controllers\\" . self::$urlController;
                 self::loadMethod();
             } else {
                 self::verifyLoged();
@@ -127,7 +127,7 @@ class LoadPageLevels
         $resultPageLevel = (array) $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
         if (! empty($resultPageLevel)) {
-            self::$classLoad = "\\App\\". self::$pageResult['type'] ."\\Controllers\\" . self::$urlController;
+            self::$classLoad = "\\App\\". self::$pageResult['type_module'] ."\\Controllers\\" . self::$urlController;
             self::loadMethod();
         }
         else {
