@@ -81,7 +81,7 @@
                     <option value="" disabled <?= empty($page_module_id) ? 'selected' : '' ?>>Selecione...</option>
                     <?php foreach ($page_modules as $module) : ?>
                         <option value="<?= $module['id'] ?>" <?= ($page_module_id ?? '') == $module['id'] ? 'selected' : '' ?>>
-                            <?= $module['name'] ?>
+                            <?= $module['name_module'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

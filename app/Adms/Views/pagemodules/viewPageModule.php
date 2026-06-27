@@ -19,8 +19,8 @@
 
     if (isset($viewPageModule)) {
         $pageModuleDetails = [
-            'Módulo' => 'name',
-            'Tipo' => 'type',
+            'Módulo' => 'name_module',
+            'Tipo' => 'type_module',
             'Ordem' => 'order_module',
             'Observação' => 'obs',
             'Criado em' => 'created_at',

@@ -45,12 +45,12 @@ class AddPageModuleModel
         $orderModule = $this->queryToLastOrderModule();
         $orderModule += 1;
 
-        $insert = "INSERT INTO `page_modules` (`type`, `name`, `order_module`, `obs`, `created_at`)
-                   VALUES (:type, :name, :order_module, :obs, NOW())";
+        $insert = "INSERT INTO `page_modules` (`type_module`, `name_module`, `order_module`, `obs`, `created_at`)
+                   VALUES (:type_module, :name_module, :order_module, :obs, NOW())";
 
         $stmt = $this->conn->prepare($insert);
-        $stmt->bindValue(':type', ConvertToCapitularString::format($data['type']), \PDO::PARAM_STR);
-        $stmt->bindValue(':name', ConvertToCapitularString::format($data['name']), \PDO::PARAM_STR);
+        $stmt->bindValue(':type_module', ConvertToCapitularString::format($data['type_module']), \PDO::PARAM_STR);
+        $stmt->bindValue(':name_module', ConvertToCapitularString::format($data['name_module']), \PDO::PARAM_STR);
         $stmt->bindValue(':order_module', $orderModule, \PDO::PARAM_INT);
         $stmt->bindValue(':obs', ucfirst(mb_strtolower($data['obs'],'UTF-8')) ?: null, \PDO::PARAM_STR);
         $stmt->execute();

@@ -48,7 +48,7 @@ class UpdatePageModel
 
     public function listPageModules(): array
     {
-        $query = "SELECT `id`, `name` FROM `page_modules` ORDER BY `order_module`";
+        $query = "SELECT `id`, `name_module` FROM `page_modules` ORDER BY `order_module`";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 

@@ -15,11 +15,11 @@
 
     <div class="form-card">
         <form action="" method="POST" id="form-addpagemodule" class="app-form">
-            <label for="name">Nome</label>
-            <input type="text" id="name" name="name" placeholder="Nome do módulo de página" required>
+            <label for="name_module">Nome</label>
+            <input type="text" id="name_module" name="name_module" placeholder="Nome do módulo de página" required>
 
-            <label for="type">Tipo</label>
-            <input type="text" id="type" name="type" placeholder="Tipo do módulo de página" required>
+            <label for="type_module">Tipo</label>
+            <input type="text" id="type_module" name="type_module" placeholder="Tipo do módulo de página" required>
 
             <label for="obs">Observação</label>
             <textarea id="obs" name="obs" placeholder="Observação (opcional)"></textarea>

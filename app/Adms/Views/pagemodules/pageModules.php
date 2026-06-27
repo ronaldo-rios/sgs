@@ -30,8 +30,8 @@
                 <tbody>
                     <?php foreach ($pagemodules as $module) : ?>
                         <tr>
-                            <td><?= htmlspecialchars($module['name']) ?></td>
-                            <td><?= htmlspecialchars($module['type']) ?></td>
+                            <td><?= htmlspecialchars($module['name_module']) ?></td>
+                            <td><?= htmlspecialchars($module['type_module']) ?></td>
                             <td><?= htmlspecialchars($module['order_module']) ?></td>
                             <td>
                                 <div class="list-table__actions">
