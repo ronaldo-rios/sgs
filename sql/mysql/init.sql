@@ -145,16 +145,16 @@ CREATE TABLE `page_levels`(
 ) ENGINE=InnoDB
 COMMENT='Pages that the user can access according to their permissions';
 
-INSERT INTO `colors`(color_name, color, created_at) 
+INSERT INTO `colors`(id, color_name, color, created_at) 
 VALUES
-    ('Azul', '#0275D8', NOW()),
-    ('Cinza', '#868E95', NOW()),
-    ('Verde', '#5CB85C', NOW()),
-    ('Vermelho', '#D9534F', NOW()),
-    ('Laranja', '#F0AD4E', NOW()),
-    ('Azul Claro', '#17A2B8', NOW()),
-    ('Cinza Claro', '#343140', NOW()),
-    ('Branco', '#FFFFFF', NOW());
+    (1, 'Azul', '#0275D8', NOW()),
+    (2, 'Cinza', '#868E95', NOW()),
+    (3, 'Verde', '#5CB85C', NOW()),
+    (4, 'Vermelho', '#D9534F', NOW()),
+    (5, 'Laranja', '#F0AD4E', NOW()),
+    (6, 'Azul Claro', '#17A2B8', NOW()),
+    (7, 'Cinza Claro', '#343140', NOW()),
+    (8, 'Branco', '#FFFFFF', NOW());
 
 INSERT INTO `users_situation`(id, situation_name, color_id, created_at) 
 VALUES
