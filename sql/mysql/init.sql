@@ -1,4 +1,4 @@
-CREATE DATABASE sgs
+CREATE DATABASE IF NOT EXISTS sgs
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
@@ -232,6 +232,29 @@ VALUES
     ('AddPageModule', 'index', 'add-page-module', 'index', 'Cadastrar Novo Módulo', 0, 0, NULL, 1, 3, 1, NOW()),
     ('UpdatePageModule', 'index', 'edit-page-module', 'index', 'Editar Módulo', 0, 0, NULL, 1, 4, 1, NOW()),
     ('DeletePageModule', 'index', 'delete-page-module', 'index', 'Deletar Módulo', 0, 0, NULL, 1, 5, 1, NOW());
+
+-- Grants access permission to the order_level = 1 access level (Super Admin)
+-- on the pages below, so the default user can log in already having these permissions.
+INSERT INTO `page_levels` (`permission`, `order_level_page`, `access_level_id`, `page_id`, `created_at`)
+SELECT
+    1 AS permission,
+    ROW_NUMBER() OVER (ORDER BY p.id) AS order_level_page,
+    al.id AS access_level_id,
+    p.id AS page_id,
+    NOW() AS created_at
+FROM `pages` AS p
+CROSS JOIN `access_levels` AS al
+WHERE al.order_level = 1
+  AND p.controller IN (
+        'Dashboard',
+        'Permissions',
+        'UpdatePermission',
+        'SyncPageLevels',
+        'AccessLevels',
+        'ViewAccessLevel',
+        'AddAccessLevel',
+        'UpdateAccessLevel'
+  );
 
 INSERT INTO `users`
 (`name`, `email`, `user`, `password`, `user_situation_id`, `access_level_id`, `created_at`)
