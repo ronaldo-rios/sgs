@@ -18,7 +18,7 @@ class ConfigEmails
 
         $this->data['emails'] = $response;
         $this->data['pagination'] = $emailServers->getPagination();
-        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        // $this->data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewEmailServers();
     }
 

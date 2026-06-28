@@ -20,16 +20,16 @@ class Permissions
         
         if ($resultPermissions !== []) {
             $this->data['permissions'] = $resultPermissions;
-            $this->data['access_level'] = $permissions->getAccessLevel();
+            $this->data['accesslevels'] = $permissions->getAccessLevel();
             $this->data['pagination'] = $permissions->getPagination();
         } else {
             $this->data['permissions'] = [];
-            $this->data['access_level'] = '';
+            $this->data['accesslevels'] = '';
             $this->data['pagination'] = null;
         }
 
         $this->data['page'] = $page;
-        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        // $this->data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
 
         $view = new ConfigView('Adms/Views/permissions/permissions', $this->data);
         $view->loadView();

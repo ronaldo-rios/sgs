@@ -261,4 +261,7 @@ INSERT INTO `users`
 VALUES -- Senha do usuário padrão sem o hash: Secret123
 ('Test User', 'super.adm@teste.com', 'SUPERADM' , '$argon2id$v=19$m=65536,t=4,p=1$eE93QlNBaS5mVm9taUR2Tg$fNszblqZo9l6xSdrmyn4+/9qGHDfwvHzH7kVOCzOn/4', 1, 1, NOW());
 
-
+-- Example of email configuration. Select the email configuration that you want to use and insert the data in the table config_emails
+-- INSERT INTO `config_emails` (`title`, `name`, `email`, `host`, `username`, `password`, `smtp_secure`, `port`, `created_at`)
+-- VALUES 
+-- ('Confirmação', 'Confirmação de Cadastro', 'noreplay@easyschedule.com.br', 'smtp.gmail.com', '*******', '*******', 'tls', 587, NOW());
