@@ -5,15 +5,19 @@
 $configEmails = $emails;
 /** @var string $pagination */
 $pagination = $pagination;
+/** @var array<string, bool> $buttonpermissions */
+$buttonPermissions = $buttonpermissions ?? [];
 ?>
 
 <div class="list-page">
     <div class="list-page__header">
         <h2 class="list-page__title">Servidores de Email</h2>
         <div class="list-page__actions">
-            <a href="<?= \Core\Config::url() ?>/add-config-email/index" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Adicionar servidor
-            </a>
+            <?php if (!empty($buttonPermissions['add'])) : ?>
+                <a href="<?= \Core\Config::url() ?>/add-config-email/index" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Adicionar servidor
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -42,14 +46,18 @@ $pagination = $pagination;
                             <td><?= $emailServer['email'] ?></td>
                             <td>
                                 <div class="list-table__actions">
-                                    <a href="<?= \Core\Config::url() ?>/update-config-email/index/<?= $emailServer['id'] ?>" class="btn btn-sm btn-outline">
-                                        <i class="fa-solid fa-pen"></i> Editar
-                                    </a>
-                                    <a href="<?= \Core\Config::url() ?>/delete-config-email/index/<?= $emailServer['id'] ?>"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Tem certeza que deseja excluir este registro?');">
-                                        <i class="fa-solid fa-trash"></i> Excluir
-                                    </a>
+                                    <?php if (!empty($buttonPermissions['update'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/update-config-email/index/<?= $emailServer['id'] ?>" class="btn btn-sm btn-outline">
+                                            <i class="fa-solid fa-pen"></i> Editar
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($buttonPermissions['delete'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/delete-config-email/index/<?= $emailServer['id'] ?>"
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('Tem certeza que deseja excluir este registro?');">
+                                            <i class="fa-solid fa-trash"></i> Excluir
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>

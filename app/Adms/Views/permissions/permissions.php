@@ -9,12 +9,14 @@ $accessLevel = $accesslevels;
 $pagination = $pagination;
 /** @var int $page */
 $currentPage = $page;
+/** @var array<string, bool> $buttonpermissions */
+$buttonPermissions = $buttonpermissions ?? [];
 ?>
 
 <div class="list-page">
     <div class="list-page__header">
         <h2 class="list-page__title">
-            Permissões<?= !empty($accessLevel) ? ' — ' . $accessLevel : '' ?>
+            Permissões<?= !empty($accessLevel) ? ' ' . $accessLevel : '' ?>
         </h2>
         <div class="list-page__actions">
             <a href="<?= \Core\Config::url() ?>/access-levels/index" class="btn btn-outline">
@@ -43,12 +45,19 @@ $currentPage = $page;
                         <tr>
                             <td><?= $permission['name_page'] ?></td>
                             <td>
-                                <a href="<?= \Core\Config::url() ?>/update-permission/index/<?= $permission['id'] ?>?level=<?= $permission['access_level_id'] ?>&page=<?= $currentPage ?>"
-                                    class="btn btn-sm <?= $liberado ? 'btn-success' : 'btn-danger' ?>"
-                                    title="Clique para <?= $liberado ? 'bloquear' : 'liberar' ?>">
-                                    <i class="fa-solid <?= $liberado ? 'fa-lock-open' : 'fa-lock' ?>"></i>
-                                    <?= $permission['permission'] ?>
-                                </a>
+                                <?php if (!empty($buttonPermissions['update'])) : ?>
+                                    <a href="<?= \Core\Config::url() ?>/update-permission/index/<?= $permission['id'] ?>?level=<?= $permission['access_level_id'] ?>&page=<?= $currentPage ?>"
+                                        class="btn btn-sm <?= $liberado ? 'btn-success' : 'btn-danger' ?>"
+                                        title="Clique para <?= $liberado ? 'bloquear' : 'liberar' ?>">
+                                        <i class="fa-solid <?= $liberado ? 'fa-lock-open' : 'fa-lock' ?>"></i>
+                                        <?= $permission['permission'] ?>
+                                    </a>
+                                <?php else : ?>
+                                    <span class="btn btn-sm <?= $liberado ? 'btn-success' : 'btn-danger' ?>">
+                                        <i class="fa-solid <?= $liberado ? 'fa-lock-open' : 'fa-lock' ?>"></i>
+                                        <?= $permission['permission'] ?>
+                                    </span>
+                                <?php endif; ?>
                             </td>
                             <td><?= $permission['sidebar'] ?></td>
                             <td><?= $permission['order_level_page'] ?></td>
