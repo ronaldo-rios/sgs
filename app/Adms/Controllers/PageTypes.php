@@ -5,6 +5,7 @@ namespace App\Adms\Controllers;
 use Core\ConfigView;
 // use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ListPageTypesModel;
+use App\Helpers\ButtonPermissions;
 
 class PageTypes
 {
@@ -22,6 +23,15 @@ class PageTypes
         } else {
             $this->data['pagetypes'] = [];
         }
+
+        $buttons = [
+            'add'    => ['menu_controller' => 'add-page-type', 'menu_method' => 'index'],
+            'view'   => ['menu_controller' => 'view-page-type', 'menu_method' => 'index'],
+            'update' => ['menu_controller' => 'update-page-type', 'menu_method' => 'index'],
+            'delete' => ['menu_controller' => 'delete-page-type', 'menu_method' => 'index']
+        ];
+
+        $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
         // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewPageTypes();
     }

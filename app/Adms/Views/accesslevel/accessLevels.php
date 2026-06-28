@@ -1,15 +1,24 @@
 <link rel="stylesheet" href="<?= \Core\Config::url() . '/assets/css/pages/list.css' ?>">
 
+<?php
+/** @var array<string, bool> $buttonpermissions */
+$buttonPermissions = $buttonpermissions ?? [];
+?>
+
 <div class="list-page">
     <div class="list-page__header">
         <h2 class="list-page__title">Níveis de Acesso</h2>
         <div class="list-page__actions">
-            <a href="<?= \Core\Config::url() ?>/add-access-level/index" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Adicionar nível
-            </a>
-            <a href="<?= \Core\Config::url() ?>/sync-page-levels/index" class="btn btn-sync">
-                <i class="fa-solid fa-arrows-rotate"></i> Sincronizar
-            </a>
+            <?php if (!empty($buttonPermissions['add'])) : ?>
+                <a href="<?= \Core\Config::url() ?>/add-access-level/index" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Adicionar nível
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($buttonPermissions['sync'])) : ?>
+                <a href="<?= \Core\Config::url() ?>/sync-page-levels/index" class="btn btn-sync">
+                    <i class="fa-solid fa-arrows-rotate"></i> Sincronizar
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -36,19 +45,27 @@
                             <td><?= htmlspecialchars($access['order_level']) ?></td>
                             <td>
                                 <div class="list-table__actions">
-                                    <a href="<?= \Core\Config::url() ?>/permissions/index?level=<?= $access['id'] ?>" class="btn btn-sm btn-outline">
-                                        <i class="fa-solid fa-lock"></i> Permissões
-                                    </a>
-                                    <a href="<?= \Core\Config::url() ?>/view-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
-                                        <i class="fa-solid fa-eye"></i> Visualizar
-                                    </a>
-                                    <a href="<?= \Core\Config::url() ?>/update-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
-                                        <i class="fa-solid fa-pen"></i> Editar
-                                    </a>
-                                    <a href="<?= \Core\Config::url() ?>/delete-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline"
-                                        onclick="return confirm('Tem certeza que deseja excluir este nível de acesso?');">
-                                        <i class="fa-solid fa-trash"></i> Excluir
-                                    </a>
+                                    <?php if (!empty($buttonPermissions['permissions'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/permissions/index?level=<?= $access['id'] ?>" class="btn btn-sm btn-outline">
+                                            <i class="fa-solid fa-lock"></i> Permissões
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($buttonPermissions['view'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/view-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
+                                            <i class="fa-solid fa-eye"></i> Visualizar
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($buttonPermissions['update'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/update-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline">
+                                            <i class="fa-solid fa-pen"></i> Editar
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($buttonPermissions['delete'])) : ?>
+                                        <a href="<?= \Core\Config::url() ?>/delete-access-level/index/<?= $access['id'] ?>" class="btn btn-sm btn-outline"
+                                            onclick="return confirm('Tem certeza que deseja excluir este nível de acesso?');">
+                                            <i class="fa-solid fa-trash"></i> Excluir
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>

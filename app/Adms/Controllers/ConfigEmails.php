@@ -4,6 +4,7 @@ namespace App\Adms\Controllers;
 
 use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ListConfigEmailsModel;
+use App\Helpers\ButtonPermissions;
 use Core\ConfigView;
 
 class ConfigEmails
@@ -18,6 +19,14 @@ class ConfigEmails
 
         $this->data['emails'] = $response;
         $this->data['pagination'] = $emailServers->getPagination();
+
+        $buttons = [
+            'add'    => ['menu_controller' => 'add-config-email', 'menu_method' => 'index'],
+            'update' => ['menu_controller' => 'update-config-email', 'menu_method' => 'index'],
+            'delete' => ['menu_controller' => 'delete-config-email', 'menu_method' => 'index']
+        ];
+
+        $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
         // $this->data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewEmailServers();
     }

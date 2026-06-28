@@ -5,6 +5,7 @@ namespace App\Adms\Controllers;
 use Core\ConfigView;
 // use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ListPageModulesModel;
+use App\Helpers\ButtonPermissions;
 
 class PageModules
 {
@@ -22,6 +23,15 @@ class PageModules
         } else {
             $this->data['pagemodules'] = [];
         }
+
+        $buttons = [
+            'add'    => ['menu_controller' => 'add-page-module', 'menu_method' => 'index'],
+            'view'   => ['menu_controller' => 'view-page-module', 'menu_method' => 'index'],
+            'update' => ['menu_controller' => 'update-page-module', 'menu_method' => 'index'],
+            'delete' => ['menu_controller' => 'delete-page-module', 'menu_method' => 'index']
+        ];
+
+        $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
         // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewPageModules();
     }
