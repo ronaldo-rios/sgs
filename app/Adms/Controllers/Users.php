@@ -17,14 +17,14 @@ class Users
         $data['pagination'] = $listUsers->getPagination();
 
         // $buttons = [
-        //     'add_user' => ['menu_controller' => 'add-user', 'menu_method' => 'index'],
-        //     'view_user' => ['menu_controller' => 'view-user', 'menu_method' => 'index'],
-        //     'edit_user' => ['menu_controller' => 'edit-user', 'menu_method' => 'index'],
-        //     'delete_user' => ['menu_controller' => 'delete-user', 'menu_method' => 'index']
+        //     'add' => ['menu_controller' => 'add-user', 'menu_method' => 'index'],
+        //     'view' => ['menu_controller' => 'view-user', 'menu_method' => 'index'],
+        //     'update' => ['menu_controller' => 'edit-user', 'menu_method' => 'index'],
+        //     'delete' => ['menu_controller' => 'delete-user', 'menu_method' => 'index']
         // ];
        
-        // $data['button_permissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        // $data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
+        // $data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
 
         $view = new ConfigView("Adms/Views/users/users", $data);
         $view->loadView();

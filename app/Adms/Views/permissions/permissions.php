@@ -3,8 +3,8 @@
 <?php
 /** @var array<int, array<string, mixed>> $permissions */
 $listPermissions = $permissions;
-/** @var string $access_level */
-$accessLevel = $access_level;
+/** @var string $accesslevels */
+$accessLevel = $accesslevels;
 /** @var string $pagination */
 $pagination = $pagination;
 /** @var int $page */
