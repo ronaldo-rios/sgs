@@ -24,38 +24,17 @@ $isActive = static fn (string $controller): string =>
             </a>
         </div>
 
-        <a href="<?= \Core\Config::url() ?>/dashboard/index" class="sidebar__nav<?= $isActive('dashboard') ?>">
-            <i class="icon fa-solid fa-house"></i><span>Dashboard</span>
-        </a>
+        <?php
+        // Menu items driven by the access level's permissions (enable_in_sidebar = 1).
+        $sidebarMenuItems = \App\Helpers\SidebarMenuPermissions::checkPermissionsSidebarMenus();
+        foreach ($sidebarMenuItems as $menuItem):
+        ?>
+            <a href="<?= \Core\Config::url() ?>/<?= $menuItem['controller_in_the_main'] ?>/<?= $menuItem['method_in_the_main'] ?>" class="sidebar__nav<?= $isActive($menuItem['controller_in_the_main']) ?>">
+                <i class="icon <?= $menuItem['icon'] ?>"></i><span><?= $menuItem['name_page'] ?></span>
+            </a>
+        <?php endforeach ?>
 
-        <a href="<?= \Core\Config::url() ?>/users/index" class="sidebar__nav<?= $isActive('users') ?>">
-            <i class="icon fa-solid fa-users"></i><span>Usuários</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/access-levels/index" class="sidebar__nav<?= $isActive('access-level') ?>">
-            <i class="icon fa-solid fa-user-shield"></i><span>Níveis de Acesso</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/page-types/index" class="sidebar__nav<?= $isActive('page-type') ?>">
-            <i class="icon fa-solid fa-layer-group"></i><span>Tipos de Página</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/page-modules/index" class="sidebar__nav<?= $isActive('page-module') ?>">
-            <i class="icon fa-solid fa-cubes"></i><span>Módulos de Página</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/pages/index" class="sidebar__nav<?= $isActive('pages') ?>">
-            <i class="icon fa-solid fa-file-lines"></i><span>Páginas</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/config-emails/index" class="sidebar__nav<?= $isActive('config-emails') ?>">
-            <i class="icon fa-solid fa-envelope"></i><span>Configurações de Emails</span>
-        </a>
-
-        <a href="<?= \Core\Config::url() ?>/view-profile/index" class="sidebar__nav<?= $isActive('view-profile') ?>">
-            <i class="icon fa-solid fa-user"></i><span>Perfil</span>
-        </a>
-
+        <!-- Always visible: logout is not stored as a sidebar page (enable_in_sidebar = 0) -->
         <a href="<?= \Core\Config::url() ?>/logout/index" class="sidebar__nav<?= $isActive('logout') ?>">
             <i class="icon fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span>
         </a>

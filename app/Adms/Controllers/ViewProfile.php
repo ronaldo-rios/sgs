@@ -3,7 +3,6 @@
 namespace App\Adms\Controllers;
 
 use Core\ConfigView;
-use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ViewProfileModel;
 use App\Helpers\Flash;
 use App\Helpers\Redirect;
@@ -19,7 +18,6 @@ class ViewProfile
 
         if (! empty($infoProfile)) {
             $this->data['profile'] = $infoProfile;
-            // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
             $this->viewProfile();
         }
         else {

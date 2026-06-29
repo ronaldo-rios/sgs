@@ -5,7 +5,6 @@ namespace App\adms\Controllers;
 use Core\ConfigView;
 use App\Adms\Models\ListPermissionsModel;
 use App\Helpers\ButtonPermissions;
-// use App\adms\Models\helpers\SidebarMenuPermissions;
 
 class Permissions
 {
@@ -36,7 +35,6 @@ class Permissions
         ];
 
         $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $this->data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
 
         $view = new ConfigView('Adms/Views/permissions/permissions', $this->data);
         $view->loadView();

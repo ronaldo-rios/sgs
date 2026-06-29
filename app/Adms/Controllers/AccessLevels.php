@@ -29,7 +29,6 @@ class AccessLevels
         ];
 
         $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $view = new ConfigView("Adms/Views/accesslevel/accessLevels", $this->data);
         $view->loadView();
     }
