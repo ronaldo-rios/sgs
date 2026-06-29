@@ -15,9 +15,10 @@ class Logout
             $_SESSION['user_id'], 
             $_SESSION['user_image'],
             $_SESSION['user_situation_id'],
-            $_SESSION['access_level'],  
-            $_SESSION['order_level']
-        );     
+            $_SESSION['access_level'],
+            $_SESSION['order_level'],
+            $_SESSION['sidebar']
+        );
 
         Flash::info("Logout realizado com sucesso!");
         Redirect::to("login/index");

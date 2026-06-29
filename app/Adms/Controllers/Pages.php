@@ -3,7 +3,6 @@
 namespace App\Adms\Controllers;
 
 use Core\ConfigView;
-// use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ListPagesModel;
 use App\Helpers\ButtonPermissions;
 
@@ -32,7 +31,6 @@ class Pages
         ];
 
         $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $this->data['sidebar_menu'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewPages();
     }
 

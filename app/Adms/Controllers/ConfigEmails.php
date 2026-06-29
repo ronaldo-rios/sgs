@@ -2,7 +2,6 @@
 
 namespace App\Adms\Controllers;
 
-use App\adms\Models\helpers\SidebarMenuPermissions;
 use App\Adms\Models\ListConfigEmailsModel;
 use App\Helpers\ButtonPermissions;
 use Core\ConfigView;
@@ -27,7 +26,6 @@ class ConfigEmails
         ];
 
         $this->data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $this->data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
         $this->viewEmailServers();
     }
 

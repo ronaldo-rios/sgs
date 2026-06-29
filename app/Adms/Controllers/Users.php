@@ -25,7 +25,6 @@ class Users
         ];
        
         $data['buttonpermissions'] = ButtonPermissions::checkPermissionsButtons($buttons);
-        // $data['sidebar'] = SidebarMenuPermissions::checkPermissionsSidebarMenus();
 
         $view = new ConfigView("Adms/Views/users/users", $data);
         $view->loadView();
